@@ -38,7 +38,9 @@
             app:itemTextColor="@color/black"
             app:menu="@menu/drawermenu"
             android:layout_marginTop="-24dp"
+            app:headerLayout="@layout/nav_header_main"
             />
+
 
 
 

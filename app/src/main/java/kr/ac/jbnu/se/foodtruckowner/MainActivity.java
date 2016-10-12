@@ -10,10 +10,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.Window;
 
-import kr.ac.jbnu.se.foodtruckowner.R;
-import kr.ac.jbnu.se.foodtruckowner.SentFragment;
-import kr.ac.jbnu.se.foodtruckowner.TabFragment;
-
 public class MainActivity extends AppCompatActivity{
     DrawerLayout mDrawerLayout;
     NavigationView mNavigationView;
@@ -49,16 +45,12 @@ public class MainActivity extends AppCompatActivity{
             @Override
             public boolean onNavigationItemSelected(MenuItem menuItem) {
                 mDrawerLayout.closeDrawers();
+                    if (menuItem.getItemId() == R.id.nav_item_notice) {
+                        FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
+                        fragmentTransaction.replace(R.id.containerView,new SentFragment()).commit();
+                    }
 
-
-
-                if (menuItem.getItemId() == R.id.nav_item_sent) {
-                    FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
-                    fragmentTransaction.replace(R.id.containerView,new SentFragment()).commit();
-
-                }
-
-                if (menuItem.getItemId() == R.id.nav_item_inbox) {
+                    if (menuItem.getItemId() == R.id.nav_item_home) {
                     FragmentTransaction xfragmentTransaction = mFragmentManager.beginTransaction();
                     xfragmentTransaction.replace(R.id.containerView,new TabFragment()).commit();
                 }

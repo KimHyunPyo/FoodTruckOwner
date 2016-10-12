@@ -4,10 +4,6 @@
             <item android:title="Inbox"  android:icon="@drawable/inbox" ></item>
             <item android:title="Sent" android:icon="@drawable/senta"></item>
             <item android:title="Drafts" android:icon="@drawable/draft"></item>
-
-
-
-
     <item android:title="Others">
         <menu>
             <item
