@@ -24,7 +24,7 @@ public class SigninActivity extends AppCompatActivity {
         overridePendingTransition(R.anim.trans_left_in, R.anim.trans_left_out);
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("이메일로 로그인");
+        toolbar.setTitle("로그인");
         toolbar.setTitleTextColor(Color.WHITE);
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
@@ -52,7 +52,7 @@ public class SigninActivity extends AppCompatActivity {
 
     public void Onclick_Signin(View v){
         Toast.makeText(this, "환영합니다. 푸드트럭", Toast.LENGTH_LONG).show();
-        Intent loginIntent = new Intent(SigninActivity.this,CustomViewFragment.class);
+        Intent loginIntent = new Intent(SigninActivity.this, MainActivity.class);
         startActivity(loginIntent);
         finish();
     }
