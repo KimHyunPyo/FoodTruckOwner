@@ -80,7 +80,7 @@ public class ListViewAdapter extends BaseAdapter{
         item.setIcon(icon);
         item.setTitle(title);
         item.setDesc(desc);
-        item.setStar(star);
+        //item.setStar(star);
 
         listViewItemList.add(item);
     }

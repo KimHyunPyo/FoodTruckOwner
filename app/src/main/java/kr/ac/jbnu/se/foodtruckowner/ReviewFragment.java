@@ -1,5 +1,6 @@
 package kr.ac.jbnu.se.foodtruckowner;
 
+import android.app.ListFragment;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -17,6 +18,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.RatingBar;
 
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
@@ -24,7 +26,7 @@ import java.util.ArrayList;
 /**
  * Created by Ratan on 7/29/2015.
  */
-public class ReviewFragment extends ListFragment {
+public class ReviewFragment extends android.app.ListFragment {
 
     ListViewAdapter adapter ;
 
@@ -40,7 +42,7 @@ public class ReviewFragment extends ListFragment {
 
         // ? ?? ??? ??.
         adapter.addItem(ContextCompat.getDrawable(getActivity(), R.drawable.profle),
-                "HyunJung94","kingwangjjang") ;
+                "HyunJung94","kingwangjjang", ) ;
         // ? ?? ??? ??.
         adapter.addItem(ContextCompat.getDrawable(getActivity(), R.drawable.profle),
                 "kwangkwang", "chinjeolBoss") ;
@@ -68,12 +70,13 @@ public class ReviewFragment extends ListFragment {
         String titleStr = item.getTitle() ;
         String descStr = item.getDesc() ;
         Drawable iconDrawable = item.getIcon() ;
+        RatingBar starRat = item.getStar();
 
         // TODO : use item data.
     }
 
-    public void addItem(Drawable icon, String title, String desc) {
-        adapter.addItem(icon, title, desc) ;
+    public void addItem(Drawable icon, String title, String desc , RatingBar star) {
+        adapter.addItem(icon, title, desc, star) ;
     }
 
 
