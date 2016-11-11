@@ -15,7 +15,7 @@ public class ListViewItem {
     private Drawable iconDrawable ;
     private String titleStr ;
     private String descStr ;
-    private RatingBar starRat;
+    //private RatingBar Ratstar;
    // String currentDateTimeString = DateFormat.getDateTimeInstance().format(new Date());
 
     public void setIcon(Drawable icon) {
@@ -27,7 +27,7 @@ public class ListViewItem {
     public void setDesc(String desc) {
         descStr = desc ;
     }
-    public void setStar(RatingBar star){ starRat = star ;}
+    //public void setStar(RatingBar star){ Ratstar = star ;}
 
     public Drawable getIcon() {
         return this.iconDrawable ;
@@ -38,7 +38,7 @@ public class ListViewItem {
     public String getDesc() {
         return this.descStr ;
     }
-    public RatingBar getStar() { return starRat; }
+    //public RatingBar getStar() { return Ratstar; }
 
 
 }

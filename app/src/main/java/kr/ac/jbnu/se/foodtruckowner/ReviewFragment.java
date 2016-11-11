@@ -1,6 +1,6 @@
 package kr.ac.jbnu.se.foodtruckowner;
 
-import android.app.ListFragment;
+
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -19,6 +19,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.RatingBar;
+import android.widget.Toast;
 
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
@@ -26,7 +27,7 @@ import java.util.ArrayList;
 /**
  * Created by Ratan on 7/29/2015.
  */
-public class ReviewFragment extends android.app.ListFragment {
+public class ReviewFragment extends ListFragment {
 
     ListViewAdapter adapter ;
 
@@ -42,13 +43,14 @@ public class ReviewFragment extends android.app.ListFragment {
 
         // ? ?? ??? ??.
         adapter.addItem(ContextCompat.getDrawable(getActivity(), R.drawable.profle),
-                "HyunJung94","kingwangjjang", ) ;
+                "HyunJung94","kingwangjjang"  ) ;
         // ? ?? ??? ??.
         adapter.addItem(ContextCompat.getDrawable(getActivity(), R.drawable.profle),
                 "kwangkwang", "chinjeolBoss") ;
         // ? ?? ??? ??.
         adapter.addItem(ContextCompat.getDrawable(getActivity(), R.drawable.profle),
-                "Hyunjung's Mom", "My son very like this steak~^^") ;
+                "Hyunjung's Mom", "My son very like this steak~^^" ) ;
+
 
         return super.onCreateView(inflater, container, savedInstanceState);
 
@@ -70,13 +72,13 @@ public class ReviewFragment extends android.app.ListFragment {
         String titleStr = item.getTitle() ;
         String descStr = item.getDesc() ;
         Drawable iconDrawable = item.getIcon() ;
-        RatingBar starRat = item.getStar();
+        //RatingBar starRat = item.getStar();
 
         // TODO : use item data.
     }
 
-    public void addItem(Drawable icon, String title, String desc , RatingBar star) {
-        adapter.addItem(icon, title, desc, star) ;
+    public void addItem(Drawable icon, String title, String desc ) {
+        adapter.addItem(icon, title, desc ) ;
     }
 
 

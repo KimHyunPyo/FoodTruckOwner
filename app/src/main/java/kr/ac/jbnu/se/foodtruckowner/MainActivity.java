@@ -24,17 +24,6 @@ public class MainActivity extends AppCompatActivity{
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main);
 
-//        ReviewFragment reviewFragment = (ReviewFragment) getSupportFragmentManager().findFragmentById(R.id.reviewListFragment);
-//        reviewFragment.addItem(ContextCompat.getDrawable(this, R.drawable.profle),
-//                "New Box", "New Account Box Black 36dp");
-//        @Override
-//        protected void onCreate (Bundle savedInstanceState){
-//            ReviewFragment reviewFragment = (ReviewFragment) getSupportFragmentManager().findFragmentById(R.id.reviewListFragment);
-//            reviewFragment.addItem(ContextCompat.getDrawable(this, R.drawable.profle),
-//                    "New Box", "New Account Box Black 36dp");
-//        }
-
-
         /**
          *Setup the DrawerLayout and NavigationView
          */

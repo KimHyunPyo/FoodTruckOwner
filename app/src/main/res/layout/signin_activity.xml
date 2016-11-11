@@ -4,7 +4,8 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:custom="http://schemas.android.com/tools">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
@@ -51,13 +52,18 @@
     <Button android:textSize="14.0sp"
         android:textColor="@color/black"
         android:id="@+id/bt_singin_login"
-        android:background="@drawable/bin"
         android:layout_width="fill_parent"
         android:layout_height="40.0dip"
         android:layout_marginLeft="20.0dip"
         android:layout_marginRight="20.0dip"
         android:layout_marginBottom="10.0dip"
         android:text="로그인하기"
+        custom:pb_colorComplete="@color/green_complete"
+        custom:pb_colorNormal="@color/blue_normal"
+        custom:pb_colorPressed="@color/blue_pressed"
+        custom:pb_colorProgress="@color/purple_progress"
+        custom:pb_textComplete="Success"
+        custom:pb_textProgress="Loading"
         android:layout_below="@id/et_signin_pw"
         android:layout_centerHorizontal="true"
         android:onClick="Onclick_Signin" />
