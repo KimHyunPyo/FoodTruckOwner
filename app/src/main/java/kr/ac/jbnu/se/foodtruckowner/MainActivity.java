@@ -4,11 +4,13 @@ import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.Window;
+import android.widget.ListView;
 
 public class MainActivity extends AppCompatActivity{
     DrawerLayout mDrawerLayout;
@@ -21,6 +23,17 @@ public class MainActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main);
+
+//        ReviewFragment reviewFragment = (ReviewFragment) getSupportFragmentManager().findFragmentById(R.id.reviewListFragment);
+//        reviewFragment.addItem(ContextCompat.getDrawable(this, R.drawable.profle),
+//                "New Box", "New Account Box Black 36dp");
+//        @Override
+//        protected void onCreate (Bundle savedInstanceState){
+//            ReviewFragment reviewFragment = (ReviewFragment) getSupportFragmentManager().findFragmentById(R.id.reviewListFragment);
+//            reviewFragment.addItem(ContextCompat.getDrawable(this, R.drawable.profle),
+//                    "New Box", "New Account Box Black 36dp");
+//        }
+
 
         /**
          *Setup the DrawerLayout and NavigationView
