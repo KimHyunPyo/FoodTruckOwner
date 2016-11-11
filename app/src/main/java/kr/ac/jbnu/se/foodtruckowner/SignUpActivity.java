@@ -22,7 +22,7 @@ import java.util.regex.Pattern;
 
 
 
-public class SignupActivity extends AppCompatActivity implements ProgressGenerator.OnCompleteListener {
+public class SignUpActivity extends AppCompatActivity implements ProgressGenerator.OnCompleteListener {
 
     private Toolbar toolbar;
     private EditText et_signup_id;
@@ -113,13 +113,13 @@ public class SignupActivity extends AppCompatActivity implements ProgressGenerat
                     getSignUpRequest();
                     return true;
                 }
-                Toast.makeText(SignupActivity.this, "이름을 2자 이상 20자 이내로 입력해 주세요", Toast.LENGTH_SHORT).show();
+                Toast.makeText(SignUpActivity.this, "이름을 2자 이상 20자 이내로 입력해 주세요", Toast.LENGTH_SHORT).show();
                 return false;
             }
-            Toast.makeText(SignupActivity.this, "비밀번호를 8자이상 입력해주세요", Toast.LENGTH_SHORT).show();
+            Toast.makeText(SignUpActivity.this, "비밀번호를 8자이상 입력해주세요", Toast.LENGTH_SHORT).show();
             return false;
         }
-        Toast.makeText(SignupActivity.this, "올바른 아이디 형식이 아닙니다", Toast.LENGTH_SHORT).show();
+        Toast.makeText(SignUpActivity.this, "올바른 아이디 형식이 아닙니다", Toast.LENGTH_SHORT).show();
         return false;
     }
 
@@ -133,9 +133,9 @@ public class SignupActivity extends AppCompatActivity implements ProgressGenerat
     @Override
     public void onComplete() {
         Toast.makeText(this, "Loading Complete, button is disabled", Toast.LENGTH_LONG).show();
-        Intent loginIntent = new Intent(SignupActivity.this, SigninActivity.class);
-        SignupActivity.this.startActivity(loginIntent);
-        SignupActivity.this.finish();
+        Intent loginIntent = new Intent(SignUpActivity.this, SigninActivity.class);
+        SignUpActivity.this.startActivity(loginIntent);
+        SignUpActivity.this.finish();
     }
 }
 
