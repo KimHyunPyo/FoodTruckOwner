@@ -55,7 +55,17 @@ public class MainActivity extends AppCompatActivity{
                     if (menuItem.getItemId() == R.id.nav_item_home) {
                     FragmentTransaction xfragmentTransaction = mFragmentManager.beginTransaction();
                     xfragmentTransaction.replace(R.id.containerView,new TabFragment()).commit();
-                }
+                    }
+
+                    if (menuItem.getItemId() == R.id.nav_item_festive) {
+                    FragmentTransaction xfragmentTransaction = mFragmentManager.beginTransaction();
+                    xfragmentTransaction.replace(R.id.containerView,new FestiveFragment()).commit();
+                     }
+
+                    if (menuItem.getItemId() == R.id.nav_item_settings) {
+                    FragmentTransaction xfragmentTransaction = mFragmentManager.beginTransaction();
+                    xfragmentTransaction.replace(R.id.containerView,new TabFragment()).commit();
+                     }
 
                 return false;
             }
