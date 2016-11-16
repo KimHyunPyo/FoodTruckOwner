@@ -5,9 +5,5 @@ package kr.ac.jbnu.se.foodtruckowner.model;
  */
 public class Owner {
 
-
-
-
-
     }
 
