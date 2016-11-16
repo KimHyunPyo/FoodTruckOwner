@@ -33,4 +33,5 @@ dependencies {
     compile 'com.ramotion.foldingcell:folding-cell:1.0.1'
     compile 'com.github.dmytrodanylyk.android-process-button:library:1.0.4'
     compile 'com.google.android.gms:play-services:9.0.2'
+    compile 'com.ramotion.foldingcell:folding-cell:1.0.1'
 }

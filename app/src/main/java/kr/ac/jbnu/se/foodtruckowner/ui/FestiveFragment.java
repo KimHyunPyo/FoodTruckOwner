@@ -1,4 +1,4 @@
-package kr.ac.jbnu.se.foodtruckowner;
+package kr.ac.jbnu.se.foodtruckowner.ui;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -13,6 +13,10 @@ import android.widget.Toast;
 import com.ramotion.foldingcell.FoldingCell;
 
 import java.util.ArrayList;
+
+import kr.ac.jbnu.se.foodtruckowner.R;
+import kr.ac.jbnu.se.foodtruckowner.adapter.FoldingCellListAdapter;
+import kr.ac.jbnu.se.foodtruckowner.model.Item;
 
 /**
  * Created by Ratan on 7/29/2015.

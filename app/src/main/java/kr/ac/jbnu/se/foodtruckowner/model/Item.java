@@ -1,4 +1,4 @@
-package kr.ac.jbnu.se.foodtruckowner;
+package kr.ac.jbnu.se.foodtruckowner.model;
 
 import android.view.View;
 

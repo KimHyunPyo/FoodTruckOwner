@@ -1,4 +1,4 @@
-package kr.ac.jbnu.se.foodtruckowner;
+package kr.ac.jbnu.se.foodtruckowner.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -11,6 +11,9 @@ import com.ramotion.foldingcell.FoldingCell;
 
 import java.util.HashSet;
 import java.util.List;
+
+import kr.ac.jbnu.se.foodtruckowner.R;
+import kr.ac.jbnu.se.foodtruckowner.model.Item;
 
 /**
  * Simple example of ListAdapter for using with Folding Cell

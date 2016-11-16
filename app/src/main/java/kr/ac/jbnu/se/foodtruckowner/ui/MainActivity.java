@@ -1,10 +1,8 @@
-package kr.ac.jbnu.se.foodtruckowner;
-
+package kr.ac.jbnu.se.foodtruckowner.ui;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -12,6 +10,7 @@ import android.view.MenuItem;
 import android.view.Window;
 
 import kr.ac.jbnu.se.foodtruckowner.R;
+import kr.ac.jbnu.se.foodtruckowner.ui.FestiveFragment;
 
 public class MainActivity extends AppCompatActivity{
     DrawerLayout mDrawerLayout;

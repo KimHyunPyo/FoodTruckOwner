@@ -1,10 +1,8 @@
-package kr.ac.jbnu.se.foodtruckowner;
+package kr.ac.jbnu.se.foodtruckowner.ui;
 
-import android.app.ListFragment;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
 import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
@@ -43,7 +41,7 @@ public class ReviewFragment extends ListFragment {
 
         // ? ?? ??? ??.
         adapter.addItem(ContextCompat.getDrawable(getActivity(), R.drawable.profle),
-                "HyunJung94","kingwangjjang", ) ;
+                "HyunJung94","kingwangjjang" ) ;
         // ? ?? ??? ??.
         adapter.addItem(ContextCompat.getDrawable(getActivity(), R.drawable.profle),
                 "kwangkwang", "chinjeolBoss") ;
@@ -71,13 +69,13 @@ public class ReviewFragment extends ListFragment {
         String titleStr = item.getTitle() ;
         String descStr = item.getDesc() ;
         Drawable iconDrawable = item.getIcon() ;
-        RatingBar starRat = item.getStar();
+        //RatingBar starRat = item.getStar();
 
         // TODO : use item data.
     }
 
     public void addItem(Drawable icon, String title, String desc , RatingBar star) {
-        adapter.addItem(icon, title, desc, star) ;
+        adapter.addItem(icon, title, desc) ;
     }
 
 
