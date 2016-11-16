@@ -1,4 +1,4 @@
-package kr.ac.jbnu.se.foodtruckowner;
+package kr.ac.jbnu.se.foodtruckowner.adapter;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
@@ -12,13 +12,16 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import kr.ac.jbnu.se.foodtruckowner.model.ReViewItem;
+import kr.ac.jbnu.se.foodtruckowner.R;
+
 /**
  * Created by hyunjung on 2016-11-01.
  */
 
 public class ListViewAdapter extends BaseAdapter{
     // Adapter에 추가된 데이터를 저장하기 위한 ArrayList
-    private ArrayList<ListViewItem> listViewItemList = new ArrayList<ListViewItem>() ;
+    private ArrayList<ReViewItem> listViewItemList = new ArrayList<ReViewItem>() ;
 
     // ListViewAdapter의 생성자
     public ListViewAdapter() {
@@ -50,7 +53,7 @@ public class ListViewAdapter extends BaseAdapter{
         RatingBar ratingBar = (RatingBar) convertView.findViewById(R.id.ratingBar1);
 
         // Data Set(listViewItemList)에서 position에 위치한 데이터 참조 획득
-        ListViewItem listViewItem = listViewItemList.get(position);
+        ReViewItem listViewItem = listViewItemList.get(position);
 
         // 아이템 내 각 위젯에 데이터 반영
         iconImageView.setImageDrawable(listViewItem.getIcon());
@@ -74,8 +77,8 @@ public class ListViewAdapter extends BaseAdapter{
     }
 
     // 아이템 데이터 추가를 위한 함수. 개발자가 원하는대로 작성 가능.
-    public void addItem(Drawable icon, String title, String desc, RatingBar star) {
-        ListViewItem item = new ListViewItem();
+    public void addItem(Drawable icon, String title, String desc) {
+        ReViewItem item = new ReViewItem();
 
         item.setIcon(icon);
         item.setTitle(title);

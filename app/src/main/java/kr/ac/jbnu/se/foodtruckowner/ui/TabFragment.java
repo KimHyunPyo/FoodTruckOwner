@@ -1,4 +1,4 @@
-package kr.ac.jbnu.se.foodtruckowner;
+package kr.ac.jbnu.se.foodtruckowner.ui;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -10,6 +10,8 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import kr.ac.jbnu.se.foodtruckowner.R;
 
 /**
  * Created by Ratan on 7/27/2015.
@@ -66,7 +68,7 @@ public class TabFragment extends Fragment {
         public Fragment getItem(int position)
         {
           switch (position){
-              case 0 : return new HomeFragment();
+              case 0 : return new FragemantMap();
               case 1 : return new ReviewFragment();
               case 2 : return new CustomViewFragment();
           }

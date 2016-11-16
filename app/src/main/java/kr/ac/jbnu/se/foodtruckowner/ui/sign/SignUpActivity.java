@@ -1,17 +1,13 @@
-package kr.ac.jbnu.se.foodtruckowner;
+package kr.ac.jbnu.se.foodtruckowner.ui.sign;
 
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.content.Intent;
 import android.graphics.Color;
-import android.os.Bundle;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -20,6 +16,7 @@ import com.dd.processbutton.iml.ActionProcessButton;
 
 import java.util.regex.Pattern;
 
+import kr.ac.jbnu.se.foodtruckowner.R;
 
 
 public class SignUpActivity extends AppCompatActivity implements ProgressGenerator.OnCompleteListener {
@@ -47,7 +44,7 @@ public class SignUpActivity extends AppCompatActivity implements ProgressGenerat
         actionBar.setDisplayHomeAsUpEnabled(true); // 뒤로가기 버튼, 디폴트로 true만 해도 백버튼이 생김
         //actionBar.setHomeAsUpIndicator(R.drawable.button_back); //뒤로가기 버튼을 본인이 만든 아이콘으로 하기 위해 필요
 
-        et_signup_id = ((EditText) findViewById(R.id.et_signup_id));
+        et_signup_id = ((EditText) findViewById(R.id.et_signup_email));
         et_signup_pw = ((EditText) findViewById(R.id.et_signup_pw));
         et_signup_nick = ((EditText) findViewById(R.id.et_signup_nick));
         final ActionProcessButton bt_singup_fragment_login = (ActionProcessButton) findViewById(R.id.bt_singup_login);

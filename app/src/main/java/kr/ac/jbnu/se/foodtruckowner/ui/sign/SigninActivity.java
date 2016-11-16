@@ -1,18 +1,18 @@
-package kr.ac.jbnu.se.foodtruckowner;
+package kr.ac.jbnu.se.foodtruckowner.ui.sign;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
 import kr.ac.jbnu.se.foodtruckowner.R;
+import kr.ac.jbnu.se.foodtruckowner.ui.MainActivity;
+
 public class SigninActivity extends AppCompatActivity {
 
     private Toolbar toolbar;
@@ -57,5 +57,10 @@ public class SigninActivity extends AppCompatActivity {
         finish();
     }
 
-
+    public void Onclick_Signup(View view) {
+        Toast.makeText(this, "환영합니다. 푸드트럭", Toast.LENGTH_LONG).show();
+        Intent singnupIntent = new Intent(SigninActivity.this, SignUpActivity.class);
+        startActivity(singnupIntent);
+        finish();
+    }
 }

@@ -1,4 +1,4 @@
-package kr.ac.jbnu.se.foodtruckowner;
+package kr.ac.jbnu.se.foodtruckowner.ui.sign;
 
 import com.dd.processbutton.ProcessButton;
 

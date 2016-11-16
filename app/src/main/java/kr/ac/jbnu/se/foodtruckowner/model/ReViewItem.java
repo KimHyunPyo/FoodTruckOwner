@@ -1,4 +1,4 @@
-package kr.ac.jbnu.se.foodtruckowner;
+package kr.ac.jbnu.se.foodtruckowner.model;
 
 import android.graphics.drawable.Drawable;
 import android.widget.RatingBar;
@@ -10,7 +10,7 @@ import java.util.Date;
  * Created by hyunjung on 2016-11-01.
  */
 
-public class ListViewItem {
+public class ReViewItem {
 
     private Drawable iconDrawable ;
     private String titleStr ;
