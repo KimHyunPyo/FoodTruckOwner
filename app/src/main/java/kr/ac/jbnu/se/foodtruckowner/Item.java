@@ -1,4 +1,5 @@
 package kr.ac.jbnu.se.foodtruckowner;
+
 import android.view.View;
 
 import java.util.ArrayList;

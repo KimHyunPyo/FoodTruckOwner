@@ -19,7 +19,7 @@ import java.util.List;
 public class FoldingCellListAdapter extends ArrayAdapter<Item> {
 
     private HashSet<Integer> unfoldedIndexes = new HashSet<>();
-    private View.OnClickListener defaultRequestBtnClickListener;
+   private View.OnClickListener defaultRequestBtnClickListener;
 
 
     public FoldingCellListAdapter(Context context, List<Item> objects) {

@@ -1,8 +1,5 @@
 package kr.ac.jbnu.se.foodtruckowner;
 
-import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -14,17 +11,21 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.ramotion.foldingcell.FoldingCell;
+
 import java.util.ArrayList;
 
-
+/**
+ * Created by Ratan on 7/29/2015.
+ */
 public class FestiveFragment extends Fragment {
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view =  inflater.inflate(R.layout.fragment_festive,null);
+        View view = inflater.inflate(R.layout.fragment_festive,null);
 
         // get our list view
-        ListView theListView = (ListView) view.findViewById(R.id.FestiveListView);
+        ListView theListView = (ListView)view.findViewById(R.id.mainListView);
 
         // prepare elements to display
         final ArrayList<Item> items = Item.getTestingList();
@@ -33,17 +34,18 @@ public class FestiveFragment extends Fragment {
         items.get(0).setRequestBtnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Toast.makeText(getContext(), "CUSTOM HANDLER FOR FIRST BUTTON", Toast.LENGTH_SHORT).show();
             }
+        });
 
-            // create custom adapter that holds elements and their state (we need hold a id's of unfolded elements for reusable elements)
+        // create custom adapter that holds elements and their state (we need hold a id's of unfolded elements for reusable elements)
+        final FoldingCellListAdapter adapter = new FoldingCellListAdapter(getContext(),items);
 
-
-            });
-        final FoldingCellListAdapter adapter = new FoldingCellListAdapter(getActivity(), items);
         // add default btn handler for each request btn on each item if custom handler not found
         adapter.setDefaultRequestBtnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Toast.makeText(getContext(), "DEFAULT HANDLER FOR ALL BUTTONS", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -62,5 +64,6 @@ public class FestiveFragment extends Fragment {
         });
 
         return view;
+
     }
 }
