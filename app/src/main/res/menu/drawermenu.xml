@@ -5,10 +5,6 @@
                 android:id="@+id/nav_item_home"
                 android:icon="@drawable/inbox"/>
 
-            <item android:title="notice"
-                android:id="@+id/nav_item_notice"
-                android:icon="@drawable/sent"/>
-
             <item android:title="festive"
                 android:id="@+id/nav_item_festive"
                 android:icon="@drawable/draft"/>

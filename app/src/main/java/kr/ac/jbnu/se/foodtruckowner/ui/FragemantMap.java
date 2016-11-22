@@ -68,6 +68,7 @@ public class FragemantMap extends Fragment implements GoogleApiClient.OnConnecti
         map = mapview.getMap();
         return view;
     }
+
     private void init(){
         AlertDialog.Builder alert = new AlertDialog.Builder(getContext());
         alert.setTitle("GPS설정정보");

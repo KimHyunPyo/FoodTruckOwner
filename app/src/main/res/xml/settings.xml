@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.preference.PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android">
+            android:
+    <android.support.v7.preference.PreferenceCategory >
+        <android.support.v7.preference.SwitchPreferenceCompat
+            android:key="review_push"
+            android:title="리뷰 작성 알림"
+            android:summary="새로운 리뷰가 작성되면 알림을 받습니다."
+            android:defaultValue="false" />
+
+    </android.support.v7.preference.PreferenceCategory>
+
+    <android.support.v7.preference.PreferenceCategory android:title="회원정보 관리">
+        <android.support.v7.preference.SwitchPreferenceCompat
+            android:key="auto_login"
+            android:title="자동로그인"
+            android:defaultValue="false" />
+
+        <android.support.v7.preference.Preference
+            android:key="passw_set"
+            android:title="비밀번호 설정"
+            android:summary="현재 비밀번호를 새로운 비밀번호로 변경합니다."
+            />
+    </android.support.v7.preference.PreferenceCategory>
+
+    <android.support.v7.preference.PreferenceCategory >
+        <android.support.v7.preference.Preference
+            android:key="logout"
+            android:title="로그아웃"
+
+            />
+
+    </android.support.v7.preference.PreferenceCategory>
+</android.support.v7.preference.PreferenceScreen>

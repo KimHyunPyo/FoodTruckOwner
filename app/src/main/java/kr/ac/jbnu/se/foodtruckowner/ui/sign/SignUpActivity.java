@@ -23,9 +23,10 @@ public class SignUpActivity extends AppCompatActivity implements ProgressGenerat
 
     private Toolbar toolbar;
     private EditText et_signup_id;
-    private EditText et_signup_nick;
     private EditText et_signup_pw;
+    private EditText et_signup_pwconfirm;
     private static final String EXTRAS_ENDLESS_MODE = "EXTRAS_ENDLESS_MODE";
+    private Boolean pwconfrim = false;
 
 
     @Override
@@ -46,7 +47,7 @@ public class SignUpActivity extends AppCompatActivity implements ProgressGenerat
 
         et_signup_id = ((EditText) findViewById(R.id.et_signup_email));
         et_signup_pw = ((EditText) findViewById(R.id.et_signup_pw));
-        et_signup_nick = ((EditText) findViewById(R.id.et_signup_nick));
+        et_signup_pwconfirm = ((EditText) findViewById(R.id.et_signup_pwconfirm));
         final ActionProcessButton bt_singup_fragment_login = (ActionProcessButton) findViewById(R.id.bt_singup_login);
         final ProgressGenerator progressGenerator = new ProgressGenerator(this);
 
@@ -59,20 +60,22 @@ public class SignUpActivity extends AppCompatActivity implements ProgressGenerat
         bt_singup_fragment_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (StartSingUp())
-                {
+                if (StartSingUp()) {
                     progressGenerator.start(bt_singup_fragment_login);
                     bt_singup_fragment_login.setEnabled(false);
                     et_signup_id.setEnabled(false);
                     et_signup_pw.setEnabled(false);
+
                 }
             }
         });
     }
+
     @Override
+
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
-            case android.R.id.home:{
+        switch (item.getItemId()) {
+            case android.R.id.home: {
                 //verridePendingTransition(R.anim.trans_left_in, R.anim.trans_left_out);
                 finish();
                 return true;
@@ -91,32 +94,24 @@ public class SignUpActivity extends AppCompatActivity implements ProgressGenerat
         return Pattern.compile("^[a-zA-Z0-9]").matcher(paramString).matches();
     }
 
-    private boolean check_name(String paramString) {
-        return Pattern.compile("(([ㄱ-힣0-9a-zA-Z]).{2,20})").matcher(paramString).matches();
-    }
-
     private boolean check_pw(String paramString) {
         return Pattern.compile("(([A-Za-z0-9]).{7,20})").matcher(paramString).matches();
     }
 
-    private Boolean StartSingUp()
-    {
-        if (check_id(this.et_signup_id.getText().toString()))
-        {
-            if (check_pw(this.et_signup_pw.getText().toString()))
-            {
-                if (check_name(this.et_signup_nick.getText().toString()))
-                {
+    private Boolean StartSingUp() {
+        if (pwconfrim) {
+            if (check_id(this.et_signup_id.getText().toString())) {
+                if (check_pw(this.et_signup_pw.getText().toString())) {
                     getSignUpRequest();
                     return true;
                 }
-                Toast.makeText(SignUpActivity.this, "이름을 2자 이상 20자 이내로 입력해 주세요", Toast.LENGTH_SHORT).show();
+                Toast.makeText(SignUpActivity.this, "비밀번호를 8자이상 입력해주세요", Toast.LENGTH_SHORT).show();
                 return false;
             }
-            Toast.makeText(SignUpActivity.this, "비밀번호를 8자이상 입력해주세요", Toast.LENGTH_SHORT).show();
+            Toast.makeText(SignUpActivity.this, "올바른 아이디 형식이 아닙니다", Toast.LENGTH_SHORT).show();
             return false;
         }
-        Toast.makeText(SignUpActivity.this, "올바른 아이디 형식이 아닙니다", Toast.LENGTH_SHORT).show();
+        Toast.makeText(SignUpActivity.this, "비밀번호를 확인해주세요", Toast.LENGTH_SHORT).show();
         return false;
     }
 
@@ -134,9 +129,17 @@ public class SignUpActivity extends AppCompatActivity implements ProgressGenerat
         SignUpActivity.this.startActivity(loginIntent);
         SignUpActivity.this.finish();
     }
+
+    public void Onclick_Confrim(View view) {
+        if ( et_signup_pw.getText().toString().equals(et_signup_pwconfirm.getText().toString())) {
+            pwconfrim = true;
+            Toast.makeText(this, "비밀번호 확인", Toast.LENGTH_LONG).show();
+        } else {
+            System.out.println(et_signup_pwconfirm.getText().toString());
+            System.out.println(et_signup_pw.getText().toString());
+            Toast.makeText(this, "비밀 번호가 다릅니다.", Toast.LENGTH_LONG).show();
+        }
+
+
+    }
 }
-
-
-
-
-

@@ -13,77 +13,228 @@
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
         app:layout_scrollFlags="scroll|enterAlways"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
-    <EditText
-        android:textSize="14.0sp"
-        android:textColor="#ff333333"
-        android:textColorHint="#ffaaaaaa"
-        android:id="@+id/et_signup_email"
-        android:background="#ffffffff"
-        android:paddingLeft="20.0dip"
-        android:layout_width="fill_parent"
-        android:layout_height="48.0dip"
-        android:layout_marginLeft="20.0dip"
-        android:layout_marginTop="72.0dip"
-        android:layout_marginRight="20.0dip"
-        android:layout_marginBottom="2.0dip"
-        android:hint="이메일 주소"
-        android:singleLine="true"
-        android:layout_centerHorizontal="true"
-        android:inputType="textEmailAddress"
-        android:imeOptions="actionNext">
-        <requestFocus />
-    </EditText>
-    <EditText android:textSize="14.0sp"
-        android:textColor="#ff333333" android:textColorHint="#ffaaaaaa"
-        android:id="@+id/et_signup_pw"
-        android:background="#ffffffff"
-        android:paddingLeft="20.0dip"
-        android:layout_width="fill_parent"
-        android:layout_height="48.0dip"
-        android:layout_marginLeft="20.0dip"
-        android:layout_marginRight="20.0dip"
-        android:layout_marginBottom="2.0dip"
-        android:hint="비밀번호(8자이상)" android:password="true"
-        android:singleLine="true"
-        android:layout_below="@id/et_signup_email"
-        android:layout_centerHorizontal="true"
-        android:inputType="textVisiblePassword"
-        android:imeOptions="actionNext" />
-    <EditText android:textSize="14.0sp"
-        android:textColor="#ff333333"
-        android:textColorHint="#ffaaaaaa"
-        android:id="@+id/et_signup_nick"
-        android:background="#ffffffff"
-        android:paddingLeft="20.0dip"
-        android:layout_width="fill_parent"
-        android:layout_height="48.0dip"
-        android:layout_marginLeft="20.0dip"
-        android:layout_marginRight="20.0dip"
-        android:layout_marginBottom="10.0dip"
-        android:hint="이름(별명)"
-        android:singleLine="true"
-        android:layout_below="@id/et_signup_pw"
-        android:layout_centerHorizontal="true"
-        android:imeOptions="actionDone" />
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        android:layout_weight="1" />
 
-    <com.dd.processbutton.iml.ActionProcessButton
-        android:id="@+id/bt_singup_login"
-        android:layout_width="fill_parent"
-        android:layout_height="40.0dip"
-        android:text="가입하기"
-        android:textColor="@android:color/white"
-        android:textSize="14.0sp"
-        android:layout_marginLeft="20.0dip"
-        android:layout_marginRight="20.0dip"
-        android:layout_marginBottom="10.0dip"
-        custom:pb_colorComplete="@color/green_complete"
-        custom:pb_colorNormal="@color/blue_normal"
-        custom:pb_colorPressed="@color/blue_pressed"
-        custom:pb_colorProgress="@color/purple_progress"
-        custom:pb_textComplete="Success"
-        custom:pb_textProgress="Loading"
-        android:layout_below="@id/et_signup_nick"
-        android:layout_centerHorizontal="true"
-        android:onClick="Onclick_Signup"/>
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:textSize="14.0sp"
+                android:textColor="#ff333333"
+                android:textColorHint="#ffaaaaaa"
+                android:id="@+id/et_signup_email"
+                android:background="#ffffffff"
+                android:paddingLeft="20.0dip"
+                android:layout_width="match_parent"
+                android:layout_height="48.0dip"
+                android:layout_marginLeft="20.0dip"
+                android:layout_marginTop="72.0dip"
+                android:layout_marginRight="20.0dip"
+                android:layout_marginBottom="10.0dip"
+                android:hint="이메일 주소"
+                android:singleLine="true"
+                android:layout_centerHorizontal="true"
+                android:inputType="textEmailAddress"
+                android:imeOptions="actionNext"
+                android:layout_weight="1">
+                <requestFocus />
+            </EditText>
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText android:textSize="14.0sp"
+                android:textColor="#ff333333" android:textColorHint="#ffaaaaaa"
+                android:id="@+id/et_signup_pw"
+                android:background="#ffffffff"
+                android:paddingLeft="20.0dip"
+                android:layout_width="fill_parent"
+                android:layout_height="48.0dip"
+                android:layout_marginLeft="20.0dip"
+                android:layout_marginRight="20.0dip"
+                android:layout_marginBottom="10.0dip"
+                android:hint="비밀번호(8자이상)" android:password="true"
+                android:singleLine="true"
+                android:layout_below="@id/et_signup_email"
+                android:layout_centerHorizontal="true"
+                android:inputType="textVisiblePassword"
+                android:imeOptions="actionNext"
+                android:layout_weight="1" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <EditText android:textSize="14.0sp"
+                android:textColor="#ff333333" android:textColorHint="#ffaaaaaa"
+                android:id="@+id/et_signup_pwconfirm"
+                android:background="#ffffffff"
+                android:paddingLeft="20.0dip"
+                android:layout_width="fill_parent"
+                android:layout_height="48.0dip"
+                android:layout_marginLeft="20.0dip"
+                android:layout_marginRight="20.0dip"
+                android:layout_marginBottom="10.0dip"
+                android:hint="비밀번호확인" android:password="true"
+                android:singleLine="true"
+                android:layout_below="@id/et_signup_pw"
+                android:layout_centerHorizontal="true"
+                android:inputType="textVisiblePassword"
+                android:imeOptions="actionNext"
+                android:layout_weight="1" />
+
+            <com.dd.processbutton.iml.ActionProcessButton
+                android:id="@+id/bt_pwconfirm"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="확인"
+                android:textColor="@android:color/white"
+                android:textSize="14.0sp"
+                android:layout_marginLeft="20.0dip"
+                android:layout_marginRight="20.0dip"
+                android:layout_marginBottom="10.0dip"
+                custom:pb_colorComplete="@color/green_complete"
+                custom:pb_colorNormal="@color/blue_normal"
+                custom:pb_colorPressed="@color/blue_pressed"
+                custom:pb_colorProgress="@color/purple_progress"
+                custom:pb_textComplete="Success"
+                custom:pb_textProgress="Loading"
+                android:layout_below="@id/et_signup_pw"
+                android:layout_centerHorizontal="true"
+                android:onClick="Onclick_Confrim"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <EditText android:textSize="14.0sp"
+                android:textColor="#ff333333"
+                android:textColorHint="#ffaaaaaa"
+                android:id="@+id/et_signup_business_num"
+                android:background="#ffffffff"
+                android:paddingLeft="20.0dip"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="20.0dip"
+                android:layout_marginRight="20.0dip"
+                android:layout_marginBottom="10.0dip"
+                android:hint="사업자 등록번호 '-'없이 입력"
+                android:singleLine="true"
+                android:layout_below="@id/bt_pwconfirm"
+                android:layout_centerHorizontal="true"
+                android:imeOptions="actionDone"
+                android:layout_weight="1" />
+
+            <com.dd.processbutton.iml.ActionProcessButton
+                android:id="@+id/bt_bnconfirm"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="인증하기"
+                android:textColor="@android:color/white"
+                android:textSize="14.0sp"
+                android:layout_marginLeft="20.0dip"
+                android:layout_marginRight="20.0dip"
+                android:layout_marginBottom="10.0dip"
+                custom:pb_colorComplete="@color/green_complete"
+                custom:pb_colorNormal="@color/blue_normal"
+                custom:pb_colorPressed="@color/blue_pressed"
+                custom:pb_colorProgress="@color/purple_progress"
+                custom:pb_textComplete="Success"
+                custom:pb_textProgress="Loading"
+                android:layout_below="@id/et_signup_business_num"
+                android:layout_centerHorizontal="true"
+                android:onClick="Onclick_Confrim"/>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <EditText android:textSize="14.0sp"
+                android:textColor="#ff333333"
+                android:textColorHint="#ffaaaaaa"
+                android:id="@+id/et_signup_Ph_num"
+                android:background="#ffffffff"
+                android:paddingLeft="20.0dip"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="20.0dip"
+                android:layout_marginRight="20.0dip"
+                android:layout_marginBottom="10.0dip"
+                android:hint="핸드폰 번호'-'없이 입력"
+                android:singleLine="true"
+                android:layout_below="@id/bt_bnconfirm"
+                android:layout_centerHorizontal="true"
+                android:imeOptions="actionDone"
+                android:layout_weight="1" />
+            <com.dd.processbutton.iml.ActionProcessButton
+                android:id="@+id/bt_Pnconfirm"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="인증하기"
+                android:textColor="@android:color/white"
+                android:textSize="14.0sp"
+                android:layout_marginLeft="20.0dip"
+                android:layout_marginRight="20.0dip"
+                android:layout_marginBottom="10.0dip"
+                custom:pb_colorComplete="@color/green_complete"
+                custom:pb_colorNormal="@color/blue_normal"
+                custom:pb_colorPressed="@color/blue_pressed"
+                custom:pb_colorProgress="@color/purple_progress"
+                custom:pb_textComplete="Success"
+                custom:pb_textProgress="Loading"
+                android:layout_below="@id/et_signup_Ph_num"
+                android:layout_centerHorizontal="true"
+                android:onClick="Onclick_Confrim"/>
+
+        </LinearLayout>
+
+
+
+        <com.dd.processbutton.iml.ActionProcessButton
+            android:id="@+id/bt_singup_login"
+            android:layout_width="match_parent"
+            android:layout_height="40.0dip"
+            android:text="가입하기"
+            android:textColor="@android:color/white"
+            android:textSize="14.0sp"
+            android:layout_marginLeft="20.0dip"
+            android:layout_marginRight="20.0dip"
+            android:layout_marginBottom="10.0dip"
+            custom:pb_colorComplete="@color/green_complete"
+            custom:pb_colorNormal="@color/blue_normal"
+            custom:pb_colorPressed="@color/blue_pressed"
+            custom:pb_colorProgress="@color/purple_progress"
+            custom:pb_textComplete="Success"
+            custom:pb_textProgress="Loading"
+            android:layout_below="@id/bt_Pnconfirm"
+            android:layout_centerHorizontal="true"
+            android:onClick="Onclick_Signup"/>
+    </LinearLayout>
+
 </RelativeLayout>
