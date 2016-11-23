@@ -59,6 +59,10 @@ public class BaseDrawerActivity extends BaseActivity {
                     FragmentTransaction xfragmentTransaction = mFragmentManager.beginTransaction();
                     xfragmentTransaction.replace(R.id.containerView,new SettingsFragment()).commit();
                 }
+                if (menuItem.getItemId() == R.id.nav_item_menu) {
+                    FragmentTransaction xfragmentTransaction = mFragmentManager.beginTransaction();
+                    xfragmentTransaction.replace(R.id.containerView,new FragmentMenu()).commit();
+                }
 
                 return false;
             }
