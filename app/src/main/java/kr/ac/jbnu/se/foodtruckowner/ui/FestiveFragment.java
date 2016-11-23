@@ -27,18 +27,10 @@ public class FestiveFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_festive,null);
+        View view = inflater.inflate(R.layout.fragment_festive, null);
 
 
-        view.findViewById(R.id.imageView1).setOnClickListener(
-                new Button.OnClickListener() {
-                    public void onClick(View v) {
-
-                    }
-                }
-        );
-        // get our list view
-        ListView theListView = (ListView)view.findViewById(R.id.mainListView);
+        ListView theListView = (ListView) view.findViewById(R.id.mainListView);
 
         // prepare elements to display
         final ArrayList<Item> items = Item.getTestingList();
@@ -52,7 +44,7 @@ public class FestiveFragment extends Fragment {
         });
 
         // create custom adapter that holds elements and their state (we need hold a id's of unfolded elements for reusable elements)
-        final FoldingCellListAdapter adapter = new FoldingCellListAdapter(getContext(),items);
+        final FoldingCellListAdapter adapter = new FoldingCellListAdapter(getContext(), items);
 
         // add default btn handler for each request btn on each item if custom handler not found
         adapter.setDefaultRequestBtnClickListener(new View.OnClickListener() {
@@ -61,7 +53,6 @@ public class FestiveFragment extends Fragment {
                 Toast.makeText(getContext(), "DEFAULT HANDLER FOR ALL BUTTONS", Toast.LENGTH_SHORT).show();
             }
         });
-
 
 
         // set elements to adapter
