@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -28,6 +29,14 @@ public class FestiveFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_festive,null);
 
+
+        view.findViewById(R.id.imageView1).setOnClickListener(
+                new Button.OnClickListener() {
+                    public void onClick(View v) {
+
+                    }
+                }
+        );
         // get our list view
         ListView theListView = (ListView)view.findViewById(R.id.mainListView);
 
@@ -53,6 +62,8 @@ public class FestiveFragment extends Fragment {
             }
         });
 
+
+
         // set elements to adapter
         theListView.setAdapter(adapter);
 
@@ -60,6 +71,8 @@ public class FestiveFragment extends Fragment {
         theListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int pos, long l) {
+
+
                 // toggle clicked cell state
                 ((FoldingCell) view).toggle(false);
                 // register in adapter that state for selected cell is toggled

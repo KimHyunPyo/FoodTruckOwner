@@ -8,6 +8,7 @@
 
     <!-- LEFT TITLE PART -->
     <RelativeLayout
+
         android:layout_width="match_parent"
         android:layout_height="155dp"
         android:layout_weight="3"
@@ -25,7 +26,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:textColor="@android:color/white"
-            android:textSize="26sp" />
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/title_time_label"
@@ -45,7 +46,6 @@
             android:textColor="@android:color/white"
             android:textSize="12sp" />
 
-
     </RelativeLayout>
     <!-- RIGHT TITLE PART -->
     <RelativeLayout
@@ -58,21 +58,12 @@
         android:paddingStart="15dp"
         android:paddingTop="20dp">
 
-        <ImageView
-            android:id="@+id/title_from_to_dots"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_marginEnd="10dp"
-            android:src="@drawable/from_to_purple" />
 
         <TextView
             android:id="@+id/title_from_address"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/title_from_to_dots"
             android:layout_marginTop="-5dp"
-            android:layout_toEndOf="@+id/title_from_to_dots"
             android:ellipsize="marquee"
             android:fadingEdge="horizontal"
             android:singleLine="true"
@@ -86,7 +77,6 @@
             android:layout_below="@id/title_from_address"
             android:layout_marginBottom="5dp"
             android:layout_marginTop="5dp"
-            android:layout_toEndOf="@+id/title_from_to_dots"
             android:src="@color/contentDividerLine" />
 
         <TextView
@@ -94,13 +84,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/title_from_to_dots_divider"
-            android:layout_toEndOf="@id/title_from_to_dots"
             android:ellipsize="marquee"
             android:fadingEdge="horizontal"
             android:singleLine="true"
             android:textColor="@android:color/black"
-            android:textSize="16sp" />
-
+            android:textSize="12sp" />
 
         <TextView
             android:id="@+id/title_requests_count"
@@ -118,22 +106,6 @@
             android:layout_alignStart="@id/title_requests_count"
             android:text="@string/requests_count_badge" />
 
-        <TextView
-            android:id="@+id/title_weight"
-            style="@style/TitleBadgeText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="true"
-            android:text="@string/weight_mock" />
-
-        <TextView
-            style="@style/TitleBadgeTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_above="@id/title_weight"
-            android:layout_alignStart="@id/title_weight"
-            android:text="@string/weight_badge" />
 
         <TextView
             android:id="@+id/title_pledge"
@@ -144,12 +116,17 @@
             android:layout_centerHorizontal="true" />
 
         <TextView
-            style="@style/TitleBadgeTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_above="@id/title_pledge"
-            android:layout_alignStart="@id/title_pledge"
-            android:text="@string/pledge_badge" />
+            android:id="@+id/title_weight"
+            style="@style/TitleBadgeText"
+            android:text="@string/weight_badge"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:textColor="#22FFC7"
+            android:textSize="16sp"
+            android:textStyle="bold"/>
+
 
     </RelativeLayout>
 </LinearLayout>
