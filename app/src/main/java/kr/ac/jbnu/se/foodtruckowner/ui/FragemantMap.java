@@ -14,6 +14,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
+import android.widget.Switch;
+import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
@@ -49,6 +52,9 @@ public class FragemantMap extends Fragment implements GoogleApiClient.OnConnecti
     private double USER_Y;
     private GoogleMap map;
     private GpsService gpsService;
+    private Switch loc_agreee;
+    private Switch turn_buss;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -66,6 +72,36 @@ public class FragemantMap extends Fragment implements GoogleApiClient.OnConnecti
         gpsService = new GpsService(getActivity());
         GooglePlayServicesUtil.isGooglePlayServicesAvailable(getActivity());
         map = mapview.getMap();
+        turn_buss = (Switch)view.findViewById(R.id.sw_turn_buss);
+        loc_agreee = (Switch)view.findViewById(R.id.sw_loc_agree);
+        turn_buss.setOnCheckedChangeListener(new Switch.OnCheckedChangeListener(){
+            public void onCheckedChanged(CompoundButton cb, boolean isChecking){
+                String str = String.valueOf(isChecking);
+                if(isChecking)
+                {
+                    Toast.makeText(getActivity(), "영업시작한다", Toast.LENGTH_LONG).show();
+                }
+                else{
+                    Toast.makeText(getActivity(), "영업종료한다", Toast.LENGTH_LONG).show();
+                }
+            }
+
+
+        });
+        loc_agreee.setOnCheckedChangeListener(new Switch.OnCheckedChangeListener(){
+            public void onCheckedChanged(CompoundButton cb, boolean isChecking){
+                String str = String.valueOf(isChecking);
+                if(isChecking)
+                {
+                    Toast.makeText(getActivity(), "위치공개해라", Toast.LENGTH_LONG).show();
+                }
+                else{
+                    Toast.makeText(getActivity(), "공개하지마라", Toast.LENGTH_LONG).show();
+                }
+            }
+
+
+        });
         return view;
     }
 
