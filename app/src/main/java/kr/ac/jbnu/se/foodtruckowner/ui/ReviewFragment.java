@@ -9,16 +9,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.support.v7.app.AppCompatActivity;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.RatingBar;
 
-import kr.ac.jbnu.se.foodtruckowner.adapter.ListViewAdapter;
+import kr.ac.jbnu.se.foodtruckowner.adapter.ReviewAdapter;
 import kr.ac.jbnu.se.foodtruckowner.model.ReViewItem;
 import kr.ac.jbnu.se.foodtruckowner.R;
 
@@ -27,7 +21,7 @@ import kr.ac.jbnu.se.foodtruckowner.R;
  */
 public class ReviewFragment extends ListFragment {
 
-    ListViewAdapter adapter ;
+    ReviewAdapter adapter ;
 
 
     @Nullable
@@ -36,7 +30,7 @@ public class ReviewFragment extends ListFragment {
 
         View view =inflater.inflate(R.layout.review_layout,null);
 
-        adapter = new ListViewAdapter() ;
+        adapter = new ReviewAdapter() ;
         setListAdapter(adapter) ;
 
         // ? ?? ??? ??.

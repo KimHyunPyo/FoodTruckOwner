@@ -4,10 +4,21 @@
     android:layout_height="fill_parent"
     android:background="#ffffff"
     android:gravity="center|center"
-    android:orientation="vertical" >
+    android:orientation="vertical">
     <!--  Recycler View  -->
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/menu_view"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content" >
+
+    </android.support.v7.widget.RecyclerView>
+
+    <Button
+        android:id="@+id/bt_menu_add"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Button" />
+
+
 </LinearLayout>
