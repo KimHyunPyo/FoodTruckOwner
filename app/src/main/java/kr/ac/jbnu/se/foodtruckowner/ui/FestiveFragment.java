@@ -28,8 +28,6 @@ public class FestiveFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_festive, null);
-
-
         ListView theListView = (ListView) view.findViewById(R.id.mainListView);
 
         // prepare elements to display
@@ -53,24 +51,18 @@ public class FestiveFragment extends Fragment {
                 Toast.makeText(getContext(), "DEFAULT HANDLER FOR ALL BUTTONS", Toast.LENGTH_SHORT).show();
             }
         });
-
-
         // set elements to adapter
         theListView.setAdapter(adapter);
-
         // set on click event listener to list view
         theListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int pos, long l) {
-
-
                 // toggle clicked cell state
                 ((FoldingCell) view).toggle(false);
                 // register in adapter that state for selected cell is toggled
                 adapter.registerToggle(pos);
             }
         });
-
         return view;
 
     }

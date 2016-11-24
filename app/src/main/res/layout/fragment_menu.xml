@@ -6,19 +6,26 @@
     android:gravity="center|center"
     android:orientation="vertical">
     <!--  Recycler View  -->
-
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
     <android.support.v7.widget.RecyclerView
         android:id="@+id/menu_view"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content" >
-
     </android.support.v7.widget.RecyclerView>
 
     <Button
         android:id="@+id/bt_menu_add"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Button" />
-
-
+        android:background="@color/colorPrimary"
+        android:textColor="@color/white"
+        android:text="메뉴추가" />
+    </LinearLayout>
+    </ScrollView>
 </LinearLayout>
