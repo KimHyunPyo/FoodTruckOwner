@@ -91,7 +91,7 @@ public class SignUpActivity extends AppCompatActivity implements ProgressGenerat
     }
 
     private boolean check_id(String paramString) {
-        return Pattern.compile("^[a-zA-Z0-9]").matcher(paramString).matches();
+        return Pattern.compile("([A-Za-z0-9].{2,10})").matcher(paramString).matches();
     }
 
     private boolean check_pw(String paramString) {
@@ -125,8 +125,8 @@ public class SignUpActivity extends AppCompatActivity implements ProgressGenerat
     @Override
     public void onComplete() {
         Toast.makeText(this, "Loading Complete, button is disabled", Toast.LENGTH_LONG).show();
-        Intent loginIntent = new Intent(SignUpActivity.this, SigninActivity.class);
-        SignUpActivity.this.startActivity(loginIntent);
+        Intent truckIntent = new Intent(SignUpActivity.this, TruckInfoActivity.class);
+        SignUpActivity.this.startActivity(truckIntent);
         SignUpActivity.this.finish();
     }
 

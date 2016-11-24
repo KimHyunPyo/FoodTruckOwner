@@ -120,7 +120,6 @@ public class SigninActivity extends AppCompatActivity {
     }
 
     public void Onclick_Signup(View view) {
-        Toast.makeText(this, "환영합니다. 푸드트럭", Toast.LENGTH_LONG).show();
         Intent singnupIntent = new Intent(SigninActivity.this, SignUpActivity.class);
         startActivity(singnupIntent);
         finish();
