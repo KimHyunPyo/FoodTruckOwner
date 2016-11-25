@@ -1,19 +1,27 @@
 package kr.ac.jbnu.se.foodtruckowner.adapter;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
+ import android.widget.AdapterView;
+ import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.ramotion.foldingcell.FoldingCell;
+ import com.ramotion.foldingcell.FoldingCell;
 
+import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
+ import java.util.List;
 
-import kr.ac.jbnu.se.foodtruckowner.R;
-import kr.ac.jbnu.se.foodtruckowner.model.Item;
+ import kr.ac.jbnu.se.foodtruckowner.R;
+ import kr.ac.jbnu.se.foodtruckowner.model.Item;
+
+import static kr.ac.jbnu.se.foodtruckowner.R.id.folding;
+import static kr.ac.jbnu.se.foodtruckowner.R.id.head_image;
+import static kr.ac.jbnu.se.foodtruckowner.R.id.imageView;
 
 /**
  * Simple example of ListAdapter for using with Folding Cell
@@ -24,13 +32,12 @@ public class FoldingCellListAdapter extends ArrayAdapter<Item> {
     private HashSet<Integer> unfoldedIndexes = new HashSet<>();
    private View.OnClickListener defaultRequestBtnClickListener;
 
-
     public FoldingCellListAdapter(Context context, List<Item> objects) {
         super(context, 0, objects);
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         // get item for selected view
         Item item = getItem(position);
         // if cell is exists - reuse it, if not - create the new one from resource
@@ -49,6 +56,8 @@ public class FoldingCellListAdapter extends ArrayAdapter<Item> {
             viewHolder.requestsCount = (TextView) cell.findViewById(R.id.title_requests_count);
             viewHolder.pledgePrice = (TextView) cell.findViewById(R.id.title_pledge);
             viewHolder.contentRequestBtn = (TextView) cell.findViewById(R.id.content_request_btn);
+            viewHolder.folding = (TextView) cell.findViewById(R.id.folding);
+            viewHolder.headImage = (ImageView) cell.findViewById(R.id.head_image);
             cell.setTag(viewHolder);
         } else {
             // for existing cell set valid valid state(without animation)
@@ -69,7 +78,35 @@ public class FoldingCellListAdapter extends ArrayAdapter<Item> {
         viewHolder.requestsCount.setText(String.valueOf(item.getRequestsCount()));
         viewHolder.pledgePrice.setText(item.getPledgePrice());
 
-        // set custom btn handler for list item from that item
+/*
+        viewHolder.folding.setOnClickListener(new View.OnClickListener() {
+            @Override
+                public void onClick( View view) {
+                // toggle clicked cell state
+                ((FoldingCell) view).toggle(false);
+                // register in adapter that state for selected cell is toggled
+                registerToggle(position);
+
+                                              }
+                                          });*/
+
+       /* viewHolder.headImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Dialog dialog = new Dialog(getContext());
+                dialog.setContentView(R.layout.image_dialog);
+                dialog.setTitle("행사 이미지");
+
+                ImageView image = (ImageView) dialog.findViewById(R.id.image);
+                image.setImageResource(R.drawable.head_image);
+
+                dialog.show();
+
+            }
+        });
+*/
+                // set custom btn handler for list item from that item
         if (item.getRequestBtnClickListener() != null) {
             viewHolder.contentRequestBtn.setOnClickListener(item.getRequestBtnClickListener());
         } else {
@@ -103,7 +140,9 @@ public class FoldingCellListAdapter extends ArrayAdapter<Item> {
 
     public void setDefaultRequestBtnClickListener(View.OnClickListener defaultRequestBtnClickListener) {
         this.defaultRequestBtnClickListener = defaultRequestBtnClickListener;
+
     }
+
 
     // View lookup cache
     private static class ViewHolder {
@@ -115,5 +154,7 @@ public class FoldingCellListAdapter extends ArrayAdapter<Item> {
         TextView requestsCount;
         TextView date;
         TextView time;
+        TextView folding;
+        ImageView headImage;
     }
-}
+ }

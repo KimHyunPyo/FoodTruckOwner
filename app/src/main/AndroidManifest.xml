@@ -35,8 +35,9 @@
         <activity android:name=".ui.sign.TruckInfoActivity" />
         <activity
             android:name=".ui.PasswdChangeActivity"
-            android:label="@string/title_activity_main2"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:label="@string/title_activity_passwd_change"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".ui.sign.TruckInfoActivity"></activity>
     </application>
 
 </manifest>
