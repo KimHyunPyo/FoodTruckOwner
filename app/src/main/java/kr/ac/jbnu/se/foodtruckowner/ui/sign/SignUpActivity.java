@@ -1,32 +1,41 @@
 package kr.ac.jbnu.se.foodtruckowner.ui.sign;
 
+import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.content.Intent;
-import android.graphics.Color;
 import android.widget.EditText;
 import android.widget.Toast;
 
-
 import com.dd.processbutton.iml.ActionProcessButton;
 
+import java.io.IOException;
 import java.util.regex.Pattern;
 
 import kr.ac.jbnu.se.foodtruckowner.R;
+import kr.ac.jbnu.se.foodtruckowner.service.ApiService;
+import retrofit.Call;
+import retrofit.Callback;
+import retrofit.GsonConverterFactory;
+import retrofit.Response;
+import retrofit.Retrofit;
 
 
 public class SignUpActivity extends AppCompatActivity implements ProgressGenerator.OnCompleteListener {
 
     private Toolbar toolbar;
-    private EditText et_signup_id;
+    private EditText et_signup_email;
     private EditText et_signup_pw;
     private EditText et_signup_pwconfirm;
+    private EditText et_signup_business_num;
+    private EditText et_signup_Ph_num;
     private static final String EXTRAS_ENDLESS_MODE = "EXTRAS_ENDLESS_MODE";
-    private Boolean pwconfrim = false;
+    private int signupStatus = 2; //1은 성공, 2는 실패, 3은 중복
 
 
     @Override
@@ -45,9 +54,13 @@ public class SignUpActivity extends AppCompatActivity implements ProgressGenerat
         actionBar.setDisplayHomeAsUpEnabled(true); // 뒤로가기 버튼, 디폴트로 true만 해도 백버튼이 생김
         //actionBar.setHomeAsUpIndicator(R.drawable.button_back); //뒤로가기 버튼을 본인이 만든 아이콘으로 하기 위해 필요
 
-        et_signup_id = ((EditText) findViewById(R.id.et_signup_email));
+        et_signup_email = ((EditText) findViewById(R.id.et_signup_email));
         et_signup_pw = ((EditText) findViewById(R.id.et_signup_pw));
         et_signup_pwconfirm = ((EditText) findViewById(R.id.et_signup_pwconfirm));
+        et_signup_business_num = (EditText) findViewById(R.id.et_signup_business_num);
+        et_signup_Ph_num = (EditText) findViewById(R.id.et_signup_Ph_num);
+
+
         final ActionProcessButton bt_singup_fragment_login = (ActionProcessButton) findViewById(R.id.bt_singup_login);
         final ProgressGenerator progressGenerator = new ProgressGenerator(this);
 
@@ -62,17 +75,15 @@ public class SignUpActivity extends AppCompatActivity implements ProgressGenerat
             public void onClick(View v) {
                 if (StartSingUp()) {
                     progressGenerator.start(bt_singup_fragment_login);
-                    bt_singup_fragment_login.setEnabled(false);
-                    et_signup_id.setEnabled(false);
+                    //bt_singup_fragment_login.setEnabled(false);
+                    et_signup_email.setEnabled(false);
                     et_signup_pw.setEnabled(false);
-
                 }
             }
         });
     }
 
     @Override
-
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home: {
@@ -90,56 +101,115 @@ public class SignUpActivity extends AppCompatActivity implements ProgressGenerat
         overridePendingTransition(R.anim.trans_left_in, R.anim.trans_left_out);
     }
 
-    private boolean check_id(String paramString) {
-        return Pattern.compile("([A-Za-z0-9].{2,10})").matcher(paramString).matches();
+    private boolean check_email(String paramString) {
+        return Pattern.compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$").matcher(paramString).matches();
     }
+
+//    private boolean check_id(String paramString) {
+//        return Pattern.compile("([A-Za-z0-9].{2,10})").matcher(paramString).matches();
+//    }
 
     private boolean check_pw(String paramString) {
         return Pattern.compile("(([A-Za-z0-9]).{7,20})").matcher(paramString).matches();
     }
 
+    private boolean check_pw_confirm() {
+        if (et_signup_pw.getText().toString().equals(et_signup_pwconfirm.getText().toString())) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     private Boolean StartSingUp() {
-        if (pwconfrim) {
-            if (check_id(this.et_signup_id.getText().toString())) {
-                if (check_pw(this.et_signup_pw.getText().toString())) {
+//        if (pwconfrim) {
+//            if (check_id(this.et_signup_email.getText().toString())) {
+//                if (check_pw(this.et_signup_pw.getText().toString())) {
+//                    getSignUpRequest();
+//                    return true;
+//                }
+//                Toast.makeText(SignUpActivity.this, "비밀번호를 8자이상 입력해주세요", Toast.LENGTH_SHORT).show();
+//                return false;
+//            }
+//            Toast.makeText(SignUpActivity.this, "올바른 아이디 형식이 아닙니다", Toast.LENGTH_SHORT).show();
+//            return false;
+//        }
+//        Toast.makeText(SignUpActivity.this, "비밀번호를 확인해주세요", Toast.LENGTH_SHORT).show();
+//        return false;
+
+        if (check_email(this.et_signup_email.getText().toString())) {
+            if (check_pw(this.et_signup_pw.getText().toString())) {
+                if (check_pw_confirm()) {
                     getSignUpRequest();
                     return true;
                 }
-                Toast.makeText(SignUpActivity.this, "비밀번호를 8자이상 입력해주세요", Toast.LENGTH_SHORT).show();
-                return false;
+                Toast.makeText(this, "비밀번호와 비밀번호 확인이 서로 다릅니다.", Toast.LENGTH_LONG).show();
             }
-            Toast.makeText(SignUpActivity.this, "올바른 아이디 형식이 아닙니다", Toast.LENGTH_SHORT).show();
+            Toast.makeText(SignUpActivity.this, "비밀번호를 8자이상 입력해주세요", Toast.LENGTH_SHORT).show();
             return false;
         }
-        Toast.makeText(SignUpActivity.this, "비밀번호를 확인해주세요", Toast.LENGTH_SHORT).show();
+        Toast.makeText(SignUpActivity.this, "올바른 이메일 형식이 아닙니다", Toast.LENGTH_SHORT).show();
         return false;
     }
 
 
     private void getSignUpRequest() {
-        //User.getInstance().setUserId(this.et_signup_email.getText().toString());
-        //User.getInstance().setUserPassword(this.et_signup_pw.getText().toString());
-        //User.getInstance().setUserName(this.et_signup_nick.getText().toString());
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://server-blackdog11.c9users.io")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        ApiService service = retrofit.create(ApiService.class);
+
+        Call<Integer> convertedContent = service.owner_join(et_signup_email.getText().toString(), et_signup_pw.getText().toString(),
+                et_signup_Ph_num.getText().toString(), et_signup_business_num.getText().toString());
+
+        convertedContent.enqueue(new Callback<Integer>() {
+            @Override
+            public void onResponse(Response<Integer> response, Retrofit retrofit) {
+                //Log.d("회원가입", "회원가입 : " + response.body().toString());
+
+                if (response.body().toString() == "1") {
+                    signupStatus = 1;
+                } else if (response.body().toString() == "2") {
+                    signupStatus = 2;
+                } else {
+                    signupStatus = 3;
+                }
+
+                // isSuccess is true if response code => 200 and <= 300
+                if (!response.isSuccess()) {
+                    // print response body if unsuccessful
+                    try {
+                        Log.d("response unsuccessful: ", response.errorBody().string());
+                    } catch (IOException e) {
+                        // do nothing
+                    }
+                    return;
+                }
+                // if parsing the JSON body failed, `response.body()` returns null
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                Log.d("실패", t.getMessage().toString());
+            }
+        });
     }
+
 
     @Override
     public void onComplete() {
-        Toast.makeText(this, "Loading Complete, button is disabled", Toast.LENGTH_LONG).show();
-        Intent truckIntent = new Intent(SignUpActivity.this, TruckInfoActivity.class);
-        SignUpActivity.this.startActivity(truckIntent);
-        SignUpActivity.this.finish();
-    }
-
-    public void Onclick_Confrim(View view) {
-        if ( et_signup_pw.getText().toString().equals(et_signup_pwconfirm.getText().toString())) {
-            pwconfrim = true;
-            Toast.makeText(this, "비밀번호 확인", Toast.LENGTH_LONG).show();
+        if (signupStatus == 1) {
+            Toast.makeText(this, "회원가입이 완료되었습니다.", Toast.LENGTH_LONG).show();
+            Intent loginIntent = new Intent(SignUpActivity.this, SigninActivity.class);
+            SignUpActivity.this.startActivity(loginIntent);
+            SignUpActivity.this.finish();
+        } else if (signupStatus == 2) {
+            Toast.makeText(this, "회원가입에 실패하였습니다.\n잠시 후 다시 시도해주세요.", Toast.LENGTH_LONG).show();
+            return;
         } else {
-            System.out.println(et_signup_pwconfirm.getText().toString());
-            System.out.println(et_signup_pw.getText().toString());
-            Toast.makeText(this, "비밀 번호가 다릅니다.", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "중복된 이메일이 있습니다.", Toast.LENGTH_LONG).show();
         }
-
-
     }
 }
