@@ -1,5 +1,6 @@
 package kr.ac.jbnu.se.foodtruckowner.adapter;
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -16,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import java.util.ArrayList;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import kr.ac.jbnu.se.foodtruckowner.R;
 import kr.ac.jbnu.se.foodtruckowner.model.MenuModel;
 
@@ -51,11 +53,91 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MenuViewHolder
         Bitmap image = BitmapFactory.decodeResource(context.getResources(), model.getImage());
         setBitmapImage(image);
         holder.title.setText(model.getTitle());
-        holder.imageview.setOnClickListener(new View.OnClickListener() {
+            holder.imageview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("TAG", "해당 아이템 번호 = "+position);
 
+                Log.d("TAG", "해당 아이템 번호 = "+position);
+                //dialog 띄우기
+                new SweetAlertDialog(context, SweetAlertDialog.WARNING_TYPE)
+
+                        .setTitleText("Are you sure?")
+
+                        .setContentText("Won't be able to recover this file!")
+
+                        .setCancelText("No,cancel plx!")
+
+                        .setConfirmText("Yes,delete it!")
+
+                        .showCancelButton(true)
+
+                        .setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
+
+                            @Override
+
+                            public void onClick(SweetAlertDialog sDialog) {
+
+                                // reuse previous dialog instance, keep widget user state, reset them if you need
+
+                                sDialog.setTitleText("Cancelled!")
+
+                                        .setContentText("Your imaginary file is safe :)")
+
+                                        .setConfirmText("OK")
+
+                                        .showCancelButton(false)
+
+                                        .setCancelClickListener(null)
+
+                                        .setConfirmClickListener(null)
+
+                                        .changeAlertType(SweetAlertDialog.ERROR_TYPE);
+
+
+
+                                // or you can new a SweetAlertDialog to show
+
+                               /* sDialog.dismiss();
+
+                                new SweetAlertDialog(SampleActivity.this, SweetAlertDialog.ERROR_TYPE)
+
+                                        .setTitleText("Cancelled!")
+
+                                        .setContentText("Your imaginary file is safe :)")
+
+                                        .setConfirmText("OK")
+
+                                        .show();*/
+
+                            }
+
+                        })
+
+                        .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+
+                            @Override
+
+                            public void onClick(SweetAlertDialog sDialog) {
+
+                                sDialog.setTitleText("Deleted!")
+
+                                        .setContentText("Your imaginary file has been deleted!")
+
+                                        .setConfirmText("OK")
+
+                                        .showCancelButton(false)
+
+                                        .setCancelClickListener(null)
+
+                                        .setConfirmClickListener(null)
+
+                                        .changeAlertType(SweetAlertDialog.SUCCESS_TYPE);
+
+                            }
+
+                        })
+
+                        .show();
             }
         });
 
@@ -73,14 +155,15 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MenuViewHolder
         System.out.println(imageWidth);
         if(image != null){
             float i = ((float) imageWidth) / ((float) image.getWidth());
-                imageHeight = i * (image.getHeight());
-
+            imageHeight = i * (image.getHeight());
              holder.imageview.setImageBitmap(Bitmap.createScaledBitmap(image, (int)imageWidth, (int)imageHeight,false));
         }
         else{
             holder.imageview.setImageBitmap(image);
         }
     }
+
+
     private float convertDpToPixel(float dp, Context context){
         Resources resources = context.getResources();
         DisplayMetrics metrics = resources.getDisplayMetrics();

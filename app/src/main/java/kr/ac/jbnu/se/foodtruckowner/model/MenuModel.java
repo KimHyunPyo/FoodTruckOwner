@@ -18,8 +18,6 @@ public class MenuModel {
         return title;
     }
 
-
-
     public int getImage() {
         return image;
     }

@@ -19,12 +19,12 @@ import kr.ac.jbnu.se.foodtruckowner.R;
  * Created by hyunjung on 2016-11-01.
  */
 
-public class ListViewAdapter extends BaseAdapter{
+public class ReviewAdapter extends BaseAdapter{
     // Adapter에 추가된 데이터를 저장하기 위한 ArrayList
     private ArrayList<ReViewItem> listViewItemList = new ArrayList<ReViewItem>() ;
 
     // ListViewAdapter의 생성자
-    public ListViewAdapter() {
+    public ReviewAdapter() {
 
     }
 
