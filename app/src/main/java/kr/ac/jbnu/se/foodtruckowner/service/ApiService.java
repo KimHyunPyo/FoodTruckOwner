@@ -2,14 +2,23 @@ package kr.ac.jbnu.se.foodtruckowner.service;
 
 import kr.ac.jbnu.se.foodtruckowner.model.Owner;
 import retrofit.Call;
+import retrofit.http.Field;
+import retrofit.http.FormUrlEncoded;
 import retrofit.http.GET;
+import retrofit.http.POST;
 import retrofit.http.Query;
 
 public interface ApiService {
     //public static final String API_URL = "https://server-blackdog11.c9users.io/";
     //로그인 요청
-    @GET("/owner/login_request")
-    Call<Owner> request_login(@Query("email") String email, @Query("password") String password);
+    @FormUrlEncoded
+    @POST("/owner/login_request")
+    Call<Owner> request_login(@Field("email") String email, @Field("password") String password);
+
+    @FormUrlEncoded
+    @POST("/owner/owner_join")
+    Call<Integer> owner_join(@Field("email") String email, @Field("password") String password,
+                             @Field("phone_number") String phone_number , @Field("business_number") String business_number);
 
 
 //    //로그인 요청
