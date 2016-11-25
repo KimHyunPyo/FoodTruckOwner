@@ -30,12 +30,13 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MenuViewHolder
     private float imageHeight;
     private MenuViewHolder holder;
     private String call;
-    private FragmentActivity myContext;
+    private FragmentManager fm;
 
-    public MenuAdapter(Context context, ArrayList<MenuModel> listitems, String Call) {
+    public MenuAdapter(Context context, ArrayList<MenuModel> listitems, String Call,FragmentManager fm) {
         this.context = context;
         this.listitems = listitems;
         this.call = Call;
+        this.fm = fm;
     }
 
     @Override
@@ -145,17 +146,16 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MenuViewHolder
     //메뉴수정
     public void modifyMenu(int pos) {
         MenuModel tempModel = listitems.get(pos);
-        //show_modi_dialog_Fragment();
+        show_modi_dialog_Fragment();
         notifyDataSetChanged();
     }
     //수정 다이얼로그 띄우기
-   /* private void show_modi_dialog_Fragment() {
-
-        modi_dialog_Fragment modiDialog = new modi_dialog_Fragment();
-        modiDialog.setCancelable(false);
-        modiDialog.setDialogTitle("메뉴수정");
-        //modiDialog.show(fragmentManager, "Input Dialog");
-    }*/
+    private void show_modi_dialog_Fragment() {
+        modi_dialog_Fragment inputDialog = new modi_dialog_Fragment();
+        inputDialog.setCancelable(false);
+        inputDialog.setDialogTitle("Enter Name");
+        inputDialog.show(fm, "Input Dialog");
+    }
     private void setBitmapImage(Bitmap image) {
         float width = ((Activity) context).getWindowManager().getDefaultDisplay().getWidth();
         float margin = (int) convertDpToPixel(10f, (Activity) context);

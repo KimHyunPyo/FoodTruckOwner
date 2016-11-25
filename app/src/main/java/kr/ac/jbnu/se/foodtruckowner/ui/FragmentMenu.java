@@ -44,8 +44,7 @@ public class FragmentMenu extends Fragment {
         MyLayoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_MOVE_ITEMS_BETWEEN_SPANS);
         myRecyclerView.setHasFixedSize(true);
         myRecyclerView.setLayoutManager(MyLayoutManager);
-        menuAdapter = new MenuAdapter(getContext(), listitems, "");
-        System.out.println(menuAdapter.getItemCount() + "1111111111");
+        menuAdapter = new MenuAdapter(getContext(), listitems, "",getActivity().getSupportFragmentManager());
         myRecyclerView.setAdapter(menuAdapter);// set adapter on recyclerview
         showViewList();
         initMenu();
@@ -72,10 +71,10 @@ public class FragmentMenu extends Fragment {
     }
     private void showInputNameDialog() {
         FragmentManager fragmentManager = getFragmentManager();
-        modi_dialog_Fragment inputNameDialog = new modi_dialog_Fragment();
-        inputNameDialog.setCancelable(false);
-        inputNameDialog.setDialogTitle("Enter Name");
-        inputNameDialog.show(fragmentManager, "Input Dialog");
+        modi_dialog_Fragment inputDialog = new modi_dialog_Fragment();
+        inputDialog.setCancelable(false);
+        inputDialog.setDialogTitle("Enter Name");
+        inputDialog.show(fragmentManager, "Input Dialog");
     }
 
 }

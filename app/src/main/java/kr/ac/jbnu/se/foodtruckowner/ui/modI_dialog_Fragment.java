@@ -9,6 +9,7 @@ import android.view.WindowManager.LayoutParams;
 import android.widget.Button;
 import android.widget.EditText;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import kr.ac.jbnu.se.foodtruckowner.R;
 
 public class modi_dialog_Fragment extends DialogFragment {
@@ -45,7 +46,14 @@ public class modi_dialog_Fragment extends DialogFragment {
         //---event handler for the button
         bt_done.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
+
                 System.out.println("추가됨");
+                SweetAlertDialog sd = new SweetAlertDialog(getActivity());
+                sd.setCancelable(true);
+                sd.setCanceledOnTouchOutside(true);
+                sd.show();
+
+
                 //---gets the calling activity
                 //InputNameDialogListener activity = (InputNameDialogListener) getActivity();
                 //activity.onFinishInputDialog(et_menu_name.getText().toString());
