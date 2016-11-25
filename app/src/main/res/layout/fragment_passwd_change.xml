@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="@color/colorPrimary"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="kr.ac.jbnu.se.foodtruckowner.ui.PasswdChangeActivity"
+    tools:context="kr.ac.jbnu.se.foodtruckowner.ui.passwdch.PasswdChangeActivity"
     tools:showIn="@layout/activity_passwd_change">
 
     <LinearLayout

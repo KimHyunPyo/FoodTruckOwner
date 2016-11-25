@@ -1,4 +1,4 @@
-package kr.ac.jbnu.se.foodtruckowner.ui;
+package kr.ac.jbnu.se.foodtruckowner.ui.navimenu;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -8,6 +8,7 @@ import android.preference.PreferenceManager;
 import android.support.v7.preference.PreferenceFragmentCompat;
 
 import kr.ac.jbnu.se.foodtruckowner.R;
+import kr.ac.jbnu.se.foodtruckowner.ui.passwdch.PasswdChangeActivity;
 import kr.ac.jbnu.se.foodtruckowner.ui.sign.SigninActivity;
 
 public class SettingsFragment extends PreferenceFragmentCompat implements SharedPreferences.OnSharedPreferenceChangeListener {

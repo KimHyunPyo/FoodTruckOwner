@@ -1,4 +1,4 @@
-package kr.ac.jbnu.se.foodtruckowner.ui;
+package kr.ac.jbnu.se.foodtruckowner.ui.passwdch;
 
 import android.support.v4.app.Fragment;
 import android.os.Bundle;

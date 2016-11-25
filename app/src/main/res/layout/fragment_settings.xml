@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="kr.ac.jbnu.se.foodtruckowner.ui.SettingsFragment">
+    tools:context="kr.ac.jbnu.se.foodtruckowner.ui.navimenu.SettingsFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView

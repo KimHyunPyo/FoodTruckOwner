@@ -27,7 +27,7 @@
         </activity>
         <!-- 구�? 메�? ?�이?�들 -->
         <activity
-            android:name=".ui.MainActivity"
+            android:name=".ui.main.MainActivity"
             android:theme="@style/AppTheme.NoActionBar" />
 
         <meta-data
@@ -41,7 +41,7 @@
             android:name=".ui.sign.TruckInfoActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".ui.PasswdChangeActivity"
+            android:name=".ui.passwdch.PasswdChangeActivity"
             android:label="@string/title_activity_passwd_change"
             android:theme="@style/AppTheme.NoActionBar" />
 

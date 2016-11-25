@@ -1,4 +1,4 @@
-package kr.ac.jbnu.se.foodtruckowner.ui;
+package kr.ac.jbnu.se.foodtruckowner.ui.base;
 
 import android.content.Context;
 import android.support.design.widget.NavigationView;
@@ -15,6 +15,10 @@ import android.widget.ImageView;
 
 import butterknife.BindView;
 import kr.ac.jbnu.se.foodtruckowner.R;
+import kr.ac.jbnu.se.foodtruckowner.ui.navimenu.FestiveFragment;
+import kr.ac.jbnu.se.foodtruckowner.ui.navimenu.FragmentMenu;
+import kr.ac.jbnu.se.foodtruckowner.ui.navimenu.SettingsFragment;
+import kr.ac.jbnu.se.foodtruckowner.ui.main.TabFragment;
 
 /**
  * Created by Miroslaw Stanek on 15.07.15.
