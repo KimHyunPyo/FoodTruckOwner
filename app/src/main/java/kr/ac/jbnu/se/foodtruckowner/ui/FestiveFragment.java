@@ -1,6 +1,5 @@
 package kr.ac.jbnu.se.foodtruckowner.ui;
 
-import android.app.Dialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -9,15 +8,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ramotion.foldingcell.FoldingCell;
 
 import java.util.ArrayList;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import kr.ac.jbnu.se.foodtruckowner.R;
 import kr.ac.jbnu.se.foodtruckowner.adapter.FoldingCellListAdapter;
 import kr.ac.jbnu.se.foodtruckowner.model.Item;
@@ -32,18 +30,50 @@ public class FestiveFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_festive, null);
 
-        TextView folding = (TextView) view.findViewById(R.id.folding);
         ListView theListView = (ListView) view.findViewById(R.id.mainListView);
+
         // prepare elements to display
         final ArrayList<Item> items = Item.getTestingList();
 
         // add custom btn handler to first list item
+        //입점신청하기버튼 리스너
         items.get(0).setRequestBtnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Toast.makeText(getContext(), "CUSTOM HANDLER FOR FIRST BUTTON", Toast.LENGTH_SHORT).show();
+                new SweetAlertDialog(getContext(), SweetAlertDialog.WARNING_TYPE)
+
+                        .setTitleText("정말 신청하시겠습니까?")
+
+                        .setContentText("확인 버튼을 누르면 취소할 수 없습니다.")
+                        //취소버튼 text
+                        .setCancelText("취소")
+                        //확인버튼 text
+                        .setConfirmText("확인")
+                        .showCancelButton(true)
+                        //취소버튼 리스너
+                        .setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
+
+                            @Override
+
+                            public void onClick(SweetAlertDialog sDialog) {
+
+                            }
+
+                        })
+                        // 확인버튼 리스너
+                        .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+
+                            @Override
+
+                            public void onClick(SweetAlertDialog sDialog) {
 
 
+                            }
+
+                        })
+
+                        .show();
             }
         });
 
@@ -59,16 +89,11 @@ public class FestiveFragment extends Fragment {
         });
 
 
-
-
-
         // set elements to adapter
         theListView.setAdapter(adapter);
 
-
-
-      // set on click event listener to list view
-       theListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        // set on click event listener to list view
+        theListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int pos, long l) {
 

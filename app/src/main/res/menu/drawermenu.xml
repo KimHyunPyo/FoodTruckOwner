@@ -1,22 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-            <item android:title="Home"
-                android:id="@+id/nav_item_home"
-                android:icon="@drawable/inbox"/>
+    <item
+        android:id="@+id/nav_item_home"
+        android:icon="@drawable/inbox"
+        android:title="Home" />
 
-            <item android:title="festive"
-                android:id="@+id/nav_item_festive"
-                android:icon="@drawable/draft"/>
+    <item
+        android:id="@+id/nav_item_festive"
+        android:icon="@drawable/draft"
+        android:title="festive" />
 
-            <item android:title="settings"
-                android:id="@+id/nav_item_settings"
-                android:icon="@drawable/settings"/>
-
-    <item android:title="menu"
+    <item
         android:id="@+id/nav_item_menu"
-        android:icon="@drawable/settings"/>
-
+        android:icon="@drawable/settings"
+        android:title="menu" />
+    <item
+        android:id="@+id/nav_item_settings"
+        android:icon="@drawable/settings"
+        android:title="settings" />
 
 
 </menu>

@@ -18,8 +18,6 @@ public class BaseActivity extends AppCompatActivity {
     @Nullable
     @BindView(R.id.toolbar)
     Toolbar toolbar;
-
-
     private MenuItem inboxMenuItem;
 
     @Override

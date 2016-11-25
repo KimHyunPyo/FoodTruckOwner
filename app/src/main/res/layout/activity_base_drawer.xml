@@ -29,7 +29,7 @@
             android:layout_height="match_parent"
             android:layout_gravity="start"
             android:background="#ffffff"
-            app:headerLayout="@layout/view_global_menu_header"
+            app:headerLayout="@layout/nav_header_main"
             app:itemIconTint="#8b8b8b"
             app:itemTextColor="#666666"
             app:menu="@menu/drawermenu" />

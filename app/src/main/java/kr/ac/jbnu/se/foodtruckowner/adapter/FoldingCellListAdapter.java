@@ -140,6 +140,7 @@ public class FoldingCellListAdapter extends ArrayAdapter<Item> {
 
     public void setDefaultRequestBtnClickListener(View.OnClickListener defaultRequestBtnClickListener) {
         this.defaultRequestBtnClickListener = defaultRequestBtnClickListener;
+
     }
 
 
