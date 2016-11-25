@@ -25,7 +25,7 @@ import retrofit.GsonConverterFactory;
 import retrofit.Response;
 import retrofit.Retrofit;
 
-
+// TODO: 2016-11-26 핸드폰인증, 사업자 등록번호 인증 추가필요
 public class SignUpActivity extends AppCompatActivity implements ProgressGenerator.OnCompleteListener {
 
     private Toolbar toolbar;
