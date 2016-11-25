@@ -1,5 +1,6 @@
 package kr.ac.jbnu.se.foodtruckowner.ui;
 
+import android.app.Dialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -8,7 +9,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ramotion.foldingcell.FoldingCell;
@@ -29,9 +32,8 @@ public class FestiveFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_festive, null);
 
-
+        TextView folding = (TextView) view.findViewById(R.id.folding);
         ListView theListView = (ListView) view.findViewById(R.id.mainListView);
-
         // prepare elements to display
         final ArrayList<Item> items = Item.getTestingList();
 
@@ -40,6 +42,8 @@ public class FestiveFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Toast.makeText(getContext(), "CUSTOM HANDLER FOR FIRST BUTTON", Toast.LENGTH_SHORT).show();
+
+
             }
         });
 
@@ -55,11 +59,16 @@ public class FestiveFragment extends Fragment {
         });
 
 
+
+
+
         // set elements to adapter
         theListView.setAdapter(adapter);
 
-        // set on click event listener to list view
-        theListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+
+      // set on click event listener to list view
+       theListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int pos, long l) {
 

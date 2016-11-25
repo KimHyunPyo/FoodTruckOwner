@@ -33,6 +33,8 @@
 
         <activity android:name=".ui.sign.SignUpActivity" />
 
+
+
         <activity
             android:name=".ui.PasswdChangeActivity"
             android:label="@string/title_activity_passwd_change"
