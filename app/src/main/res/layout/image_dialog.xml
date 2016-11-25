@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dip" >
+
+    <ImageView
+        android:id="@+id/festive_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/head_image"
+        android:layout_margin="10dp"
+
+         />
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:text="신청자 아이디"
+            android:layout_width="match_parent"
+            android:id="@+id/text_owner_id"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/head_image"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:text="Name"
+            android:layout_below="@+id/text_owner_id"
+            android:ems="10"
+            android:id="@+id/owner_id" />
+    </LinearLayout>
+
+
+</RelativeLayout>
