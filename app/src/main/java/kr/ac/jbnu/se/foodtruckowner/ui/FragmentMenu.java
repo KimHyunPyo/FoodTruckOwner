@@ -52,7 +52,6 @@ public class FragmentMenu extends Fragment {
             @Override
                 public void onClick(View v) {
                 showInputNameDialog();
-                    menuAdapter.addMenu();
                 }
         });
         return view;

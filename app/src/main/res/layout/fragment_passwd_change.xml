@@ -79,7 +79,7 @@
 
             <Button android:textSize="14.0sp"
                 android:textColor="@color/colorPrimary"
-                android:id="@+id/bt_regist"
+                android:id="@+id/bt_pw_ch"
                 android:background="@color/white"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -87,8 +87,7 @@
                 android:layout_marginRight="20.0dip"
                 android:layout_marginBottom="10.0dip"
                 android:text="비밀번호 변경"
-                android:layout_centerHorizontal="true"
-                android:onClick="Onclick_pw_ch"/>
+                android:layout_centerHorizontal="true" />
         </LinearLayout>
 
 

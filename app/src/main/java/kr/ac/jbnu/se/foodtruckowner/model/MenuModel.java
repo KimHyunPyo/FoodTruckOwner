@@ -8,14 +8,17 @@ public class MenuModel {
     private int image;
     private int price;
 
-    public MenuModel(String title,int price, int image) {
+    public MenuModel(String title, int price, int image) {
 
         this.title = title;
         this.price = price;
         this.image = image;
     }
 
-    public int getPrice(){return price;}
+    public int getPrice() {
+        return price;
+    }
+
     public String getTitle() {
         return title;
     }

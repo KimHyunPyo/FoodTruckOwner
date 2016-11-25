@@ -11,28 +11,30 @@ import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+
 import kr.ac.jbnu.se.foodtruckowner.ui.modi_dialog_Fragment;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import kr.ac.jbnu.se.foodtruckowner.R;
 import kr.ac.jbnu.se.foodtruckowner.model.MenuModel;
 
-public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MenuViewHolder> {
+    public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MenuViewHolder> {
 
-    private ArrayList<MenuModel> listitems;
-    private Context context;
-    private float imageWidth;
-    private float imageHeight;
-    private MenuViewHolder holder;
-    private String call;
-    private FragmentManager fm;
+        private ArrayList<MenuModel> listitems;
+        private Context context;
+        private float imageWidth;
+        private float imageHeight;
+        private MenuViewHolder holder;
+        private String call;
+        private FragmentManager fm;
 
-    public MenuAdapter(Context context, ArrayList<MenuModel> listitems, String Call,FragmentManager fm) {
+    public MenuAdapter(Context context, ArrayList<MenuModel> listitems, String Call, FragmentManager fm) {
         this.context = context;
         this.listitems = listitems;
         this.call = Call;
@@ -47,7 +49,6 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MenuViewHolder
         ViewGroup v = (ViewGroup) mInflater.inflate(R.layout.menu_item, parent, false);
         return new MenuViewHolder(v);
     }
-
 
     @Override
     public void onBindViewHolder(final MenuViewHolder holder, final int position) {
@@ -78,7 +79,9 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MenuViewHolder
                             @Override
 
                             public void onClick(SweetAlertDialog sDialog) {
+                                sDialog.dismiss();
                                 modifyMenu(position);
+
                             }
 
                         })
@@ -124,8 +127,8 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MenuViewHolder
     }
 
     //메뉴 추가
-    public void addMenu() {
-        listitems.add(new MenuModel("신메뉴", 3000, R.drawable.menuitem5));
+    public void addMenu(MenuModel menu) {
+        listitems.add(menu);
         notifyDataSetChanged();
     }
 
@@ -135,6 +138,7 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MenuViewHolder
         show_modi_dialog_Fragment();
         notifyDataSetChanged();
     }
+
     //수정 다이얼로그 띄우기
     private void show_modi_dialog_Fragment() {
         modi_dialog_Fragment inputDialog = new modi_dialog_Fragment();
@@ -142,6 +146,7 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MenuViewHolder
         inputDialog.setDialogTitle("Enter Name");
         inputDialog.show(fm, "Input Dialog");
     }
+
     private void setBitmapImage(Bitmap image) {
         float width = ((Activity) context).getWindowManager().getDefaultDisplay().getWidth();
         float margin = (int) convertDpToPixel(10f, (Activity) context);
@@ -164,8 +169,6 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MenuViewHolder
         float px = dp * (metrics.densityDpi / 160f);
         return px;
     }
-
-
 
 
     public class MenuViewHolder extends RecyclerView.ViewHolder {

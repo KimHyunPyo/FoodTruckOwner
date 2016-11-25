@@ -32,12 +32,11 @@
             android:value="@string/google_maps_key" />
 
         <activity android:name=".ui.sign.SignUpActivity" />
-
+        <activity android:name=".ui.sign.TruckInfoActivity" />
         <activity
             android:name=".ui.PasswdChangeActivity"
-            android:label="@string/title_activity_passwd_change"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".ui.sign.TruckInfoActivity"></activity>
+            android:label="@string/title_activity_main2"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

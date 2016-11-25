@@ -3,17 +3,11 @@ package kr.ac.jbnu.se.foodtruckowner.ui;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.EditTextPreference;
-import android.preference.ListPreference;
-import android.preference.PreferenceFragment;
 import android.support.v7.preference.Preference;
 import android.preference.PreferenceManager;
-import android.preference.SwitchPreference;
 import android.support.v7.preference.PreferenceFragmentCompat;
-import android.widget.Toast;
 
 import kr.ac.jbnu.se.foodtruckowner.R;
-import kr.ac.jbnu.se.foodtruckowner.ui.sign.SignUpActivity;
 import kr.ac.jbnu.se.foodtruckowner.ui.sign.SigninActivity;
 
 public class SettingsFragment extends PreferenceFragmentCompat implements SharedPreferences.OnSharedPreferenceChangeListener {

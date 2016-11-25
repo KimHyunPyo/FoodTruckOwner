@@ -34,7 +34,6 @@ public class BaseDrawerActivity extends BaseActivity {
     public void setContentView(int layoutResID) {
         super.setContentViewWithoutInject(R.layout.activity_base_drawer);
         ViewGroup viewGroup = (ViewGroup) findViewById(R.id.flContentRoot);
-
         LayoutInflater.from(this).inflate(layoutResID, viewGroup, true);
         bindViews();
         mContext = this;
