@@ -79,20 +79,6 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MenuViewHolder
 
                             public void onClick(SweetAlertDialog sDialog) {
                                 modifyMenu(position);
-                                sDialog.setTitleText("Deleted!")
-
-                                        .setContentText("Your imaginary file has been deleted!")
-
-                                        .setConfirmText("OK")
-
-                                        .showCancelButton(false)
-
-                                        .setCancelClickListener(null)
-
-                                        .setConfirmClickListener(null)
-
-                                        .changeAlertType(SweetAlertDialog.SUCCESS_TYPE);
-
                             }
 
                         })
