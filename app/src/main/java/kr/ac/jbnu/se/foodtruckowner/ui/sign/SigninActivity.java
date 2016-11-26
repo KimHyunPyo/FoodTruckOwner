@@ -23,7 +23,7 @@ import java.io.Serializable;
 import kr.ac.jbnu.se.foodtruckowner.R;
 import kr.ac.jbnu.se.foodtruckowner.model.Owner;
 import kr.ac.jbnu.se.foodtruckowner.service.ApiService;
-import kr.ac.jbnu.se.foodtruckowner.ui.MainActivity;
+import kr.ac.jbnu.se.foodtruckowner.ui.main.MainActivity;
 import retrofit.Call;
 import retrofit.Callback;
 import retrofit.GsonConverterFactory;

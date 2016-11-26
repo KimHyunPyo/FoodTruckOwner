@@ -140,4 +140,11 @@
         <item>경상북도</item>
         <item>제주특별자치도</item>
     </string-array>
+
+    <plurals name="likes_count">
+        <item quantity="one">%d like</item>
+        <item quantity="other">%d likes</item>
+    </plurals>
+
+
 </resources>

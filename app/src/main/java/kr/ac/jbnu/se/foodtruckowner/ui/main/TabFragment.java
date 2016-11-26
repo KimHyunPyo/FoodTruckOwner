@@ -1,4 +1,4 @@
-package kr.ac.jbnu.se.foodtruckowner.ui;
+package kr.ac.jbnu.se.foodtruckowner.ui.main;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -70,7 +70,7 @@ public class TabFragment extends Fragment {
                 case 0:
                     return new FragemantMap();
                 case 1:
-                    return new ReviewFragment();
+                    return new AcitivityTruckReview();
             }
             return null;
         }
