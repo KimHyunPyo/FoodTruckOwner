@@ -140,7 +140,7 @@ public class SigninActivity extends AppCompatActivity {
                 // if parsing the JSON body failed, `response.body()` returns null
                 Owner decodedResponse = response.body();
                 owner_info = response.body();
-                CachePot.getInstance().push(owner_info); //메뉴프레그먼트에서 쓸 수 있게 객체 정보 push
+                CachePot.getInstance().push(owner_info); //메뉴프레그먼트에서 쓸 수 있게 객체 정보 push Signin => MainActivity
                 Log.d("로그인", "업주아이디 : "+ String.valueOf(decodedResponse.getId()));
 
                 if (decodedResponse == null) {

@@ -47,9 +47,6 @@ public class FragmentMenu extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        //유저 정보 담은 객체 다른 액티비티에서 담아오는거
-        owner_info = CachePot.getInstance().pop(Owner.class);
-
         View view = inflater.inflate(R.layout.fragment_menu, container, false);
         Button btadd = (Button) view.findViewById(R.id.bt_menu_add);
         //리사이클뷰(카드뷰)
@@ -69,6 +66,12 @@ public class FragmentMenu extends Fragment {
     public void initMenu() {
         listitems.clear();
 
+        Log.d("TAG", "됌?");
+        //유저 정보 담은 객체 다른 액티비티에서 담아오는거
+        owner_info = CachePot.getInstance().pop(Owner.class); //MainActivity => FragmentMenu
+        Log.d("TAG", "오너 아이디 : " + owner_info.getId());
+
+        //오너 아이디를 줘서 그 트럭의 메뉴 받아옴
         requestTruckMenu(owner_info.getId());
     }
 
