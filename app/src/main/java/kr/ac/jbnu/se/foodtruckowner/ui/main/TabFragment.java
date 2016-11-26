@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import kr.ac.jbnu.se.foodtruckowner.R;
+import kr.ac.jbnu.se.foodtruckowner.ui.AcitivityTruckReview;
 
 /**
  * Created by Ratan on 7/27/2015.

@@ -6,6 +6,7 @@ android {
     defaultConfig {
         multiDexEnabled true
         applicationId "kr.ac.jbnu.se.foodtruckowner"
+        //min버전 19->21로 올림. cache라이브러리때문에. 나중에 문제되면 19로 내리겠음
         minSdkVersion 21
         targetSdkVersion 24
         versionCode 1
