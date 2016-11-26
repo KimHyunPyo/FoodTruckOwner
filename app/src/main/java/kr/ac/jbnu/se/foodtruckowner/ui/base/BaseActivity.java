@@ -1,4 +1,4 @@
-package kr.ac.jbnu.se.foodtruckowner.ui;
+package kr.ac.jbnu.se.foodtruckowner.ui.base;
 
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;

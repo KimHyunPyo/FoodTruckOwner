@@ -1,16 +1,14 @@
-package kr.ac.jbnu.se.foodtruckowner.ui;
+package kr.ac.jbnu.se.foodtruckowner.ui.main;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.preference.PreferenceFragment;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
-import android.view.MenuItem;
 import android.view.Window;
 import kr.ac.jbnu.se.foodtruckowner.R;
-public class MainActivity extends BaseDrawerActivity{
+import kr.ac.jbnu.se.foodtruckowner.ui.base.BaseDrawerActivity;
+
+public class MainActivity extends BaseDrawerActivity {
     DrawerLayout mDrawerLayout;
     NavigationView mNavigationView;
     FragmentManager mFragmentManager;

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="kr.ac.jbnu.se.foodtruckowner.ui.BaseActivity">
+    tools:context="kr.ac.jbnu.se.foodtruckowner.ui.base.BaseActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -20,6 +20,7 @@
             app:popupTheme="@style/AppTheme.NoActionBar.PopupOverlay" />
 
     </android.support.design.widget.AppBarLayout>
+
     <android.support.v4.widget.DrawerLayout
         android:layout_height="match_parent"
         android:layout_width="match_parent"

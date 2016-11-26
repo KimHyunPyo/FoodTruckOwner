@@ -1,4 +1,4 @@
-package kr.ac.jbnu.se.foodtruckowner.ui;
+package kr.ac.jbnu.se.foodtruckowner.ui.navimenu;
 
 
 import android.os.Bundle;
@@ -17,6 +17,7 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
 import kr.ac.jbnu.se.foodtruckowner.R;
 import kr.ac.jbnu.se.foodtruckowner.adapter.MenuAdapter;
 import kr.ac.jbnu.se.foodtruckowner.model.MenuModel;
+import kr.ac.jbnu.se.foodtruckowner.ui.modi_dialog_Fragment;
 
 public class FragmentMenu extends Fragment {
 
@@ -52,7 +53,6 @@ public class FragmentMenu extends Fragment {
             @Override
                 public void onClick(View v) {
                 showInputNameDialog();
-                    menuAdapter.addMenu();
                 }
         });
         return view;
