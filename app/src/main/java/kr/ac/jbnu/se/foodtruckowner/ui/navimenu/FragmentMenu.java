@@ -46,10 +46,9 @@ public class FragmentMenu extends Fragment {
     public static final Integer[] PRICES = {5000, 3000, 0, 1000, 2000};
 
     @Override
-
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        //유저 정보 담은 객체 다른 액티비티에서 담아오는거
         owner_info = CachePot.getInstance().pop(Owner.class);
-        Log.d("잘넘어왔나?", String.valueOf(owner_info.getId()));
 
         View view = inflater.inflate(R.layout.fragment_menu, container, false);
         Button btadd = (Button) view.findViewById(R.id.bt_menu_add);
@@ -71,10 +70,6 @@ public class FragmentMenu extends Fragment {
         listitems.clear();
 
         requestTruckMenu(owner_info.getId());
-
-//        for (int i = 0; i < TITLES.length; i++) {
-//            //listitems.add(new MenuModel(TITLES[i], PRICES[i], IMAGES[i]));
-//        }
     }
 
     public void requestTruckMenu(int owner_id) {
@@ -117,7 +112,6 @@ public class FragmentMenu extends Fragment {
     }
     // populate the list view by adding data to arraylist
     private void showViewList(ArrayList<MenuModel> listitems) {
-        //리스트에 아이템 넣기. 수정요망
         StaggeredGridLayoutManager MyLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         MyLayoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_MOVE_ITEMS_BETWEEN_SPANS);
         myRecyclerView.setHasFixedSize(true);
