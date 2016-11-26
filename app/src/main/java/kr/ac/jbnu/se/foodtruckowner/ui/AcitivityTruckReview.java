@@ -53,11 +53,11 @@ public class AcitivityTruckReview extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_truck_review, null);
-
-        setupToolbar();
-        initFT();
         clContent = (LinearLayout) view.findViewById(R.id.content);
+
+        initFT();
         review_view = (RecyclerView) view.findViewById(R.id.review_view);
+
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext()) {
             @Override
             protected int getExtraLayoutSpace(RecyclerView.State state) {
@@ -82,13 +82,6 @@ public class AcitivityTruckReview extends Fragment {
                 return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    private void setupToolbar() {
-        toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
-        ((ActionBarActivity) getActivity()).setSupportActionBar(toolbar);
-        ((ActionBarActivity) getActivity()).setTitle("맛깔나는 리뷰");
-        getActivity().getActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     public void initFT() {

@@ -3,7 +3,6 @@ package kr.ac.jbnu.se.foodtruckowner.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,16 +12,13 @@ import android.widget.ImageView;
 import android.widget.TextSwitcher;
 import android.widget.TextView;
 
-import com.google.android.gms.vision.text.Text;
 import com.sackcentury.shinebuttonlib.ShineButton;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 import kr.ac.jbnu.se.foodtruckowner.R;
 import kr.ac.jbnu.se.foodtruckowner.model.ReViewItem;
-import kr.ac.jbnu.se.foodtruckowner.ui.AcitivityTruckDetail;
-import kr.ac.jbnu.se.foodtruckowner.ui.AcitivityTruckReview;
 import kr.ac.jbnu.se.foodtruckowner.ui.CommentsActivity;
 
 /**
