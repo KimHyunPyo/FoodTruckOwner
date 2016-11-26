@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.RatingBar;
 
-import kr.ac.jbnu.se.foodtruckowner.adapter.ReviewAdapter;
+import kr.ac.jbnu.se.foodtruckowner.adapter.ReviewItemAdapter;
 import kr.ac.jbnu.se.foodtruckowner.model.ReViewItem;
 import kr.ac.jbnu.se.foodtruckowner.R;
 
@@ -21,56 +21,7 @@ import kr.ac.jbnu.se.foodtruckowner.R;
  */
 public class ReviewFragment extends ListFragment {
 
-    ReviewAdapter adapter ;
 
-
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
-        View view =inflater.inflate(R.layout.review_layout,null);
-
-        adapter = new ReviewAdapter() ;
-        setListAdapter(adapter) ;
-
-        // ? ?? ??? ??.
-        adapter.addItem(ContextCompat.getDrawable(getActivity(), R.drawable.profle),
-                "HyunJung94","kingwangjjang" ) ;
-        // ? ?? ??? ??.
-        adapter.addItem(ContextCompat.getDrawable(getActivity(), R.drawable.profle),
-                "kwangkwang", "chinjeolBoss") ;
-        // ? ?? ??? ??.
-        adapter.addItem(ContextCompat.getDrawable(getActivity(), R.drawable.profle),
-                "Hyunjung's Mom", "My son very like this steak~^^") ;
-
-        return super.onCreateView(inflater, container, savedInstanceState);
-
-    }
-
-
-    public void onActivityCreated(Bundle savedInstanceState) {
-
-        super.onActivityCreated(savedInstanceState);
-
-
-    }
-
-    @Override
-    public void onListItemClick (ListView l, View v, int position, long id) {
-        // get TextView's Text.
-        ReViewItem item = (ReViewItem) l.getItemAtPosition(position) ;
-
-        String titleStr = item.getTitle() ;
-        String descStr = item.getDesc() ;
-        Drawable iconDrawable = item.getIcon() ;
-        //RatingBar starRat = item.getStar();
-
-        // TODO : use item data.
-    }
-
-    public void addItem(Drawable icon, String title, String desc , RatingBar star) {
-        adapter.addItem(icon, title, desc) ;
-    }
 
 
 }

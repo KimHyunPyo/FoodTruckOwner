@@ -70,7 +70,7 @@ public class TabFragment extends Fragment {
                 case 0:
                     return new FragemantMap();
                 case 1:
-                    return new ReviewFragment();
+                    return new AcitivityTruckReview();
             }
             return null;
         }

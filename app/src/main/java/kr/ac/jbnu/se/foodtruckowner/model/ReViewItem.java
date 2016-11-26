@@ -12,33 +12,70 @@ import java.util.Date;
 
 public class ReViewItem {
 
-    private Drawable iconDrawable ;
-    private String titleStr ;
-    private String descStr ;
-    //private RatingBar Ratstar;
-   // String currentDateTimeString = DateFormat.getDateTimeInstance().format(new Date());
-
-    public void setIcon(Drawable icon) {
-        iconDrawable = icon ;
-    }
-    public void setTitle(String title) {
-        titleStr = title ;
-    }
-    public void setDesc(String desc) {
-        descStr = desc ;
-    }
-    //public void setStar(RatingBar star){ Ratstar = star ;}
-
-    public Drawable getIcon() {
-        return this.iconDrawable ;
-    }
-    public String getTitle() {
-        return this.titleStr ;
-    }
-    public String getDesc() {
-        return this.descStr ;
-    }
-    //public RatingBar getStar() { return Ratstar; }
+    // Getter and Setter model for recycler view items
+    private int centerimage;
+    private int bottomimage;
+    private int userImage;
+    private String userText;
+    private int likesCount=0 ;
+    private boolean isLiked=false;
+    private String reviewText;
 
 
-}
+    public int getCenterimage() {
+        return centerimage;
+    }
+
+    public void setCenterimage(int centerimage) {
+        this.centerimage = centerimage;
+    }
+
+    public int getBottomimage() {
+        return bottomimage;
+    }
+
+    public void setBottomimage(int bottomimage) {
+        this.bottomimage = bottomimage;
+    }
+
+    public int getUserImage() {
+        return userImage;
+    }
+
+    public void setUserImage(int userImage) {
+        this.userImage = userImage;
+    }
+
+    public String getUserText() {
+        return userText;
+    }
+
+    public void setUserText(String userText) {
+        this.userText = userText;
+    }
+
+    public int getLikesCount() {
+        return likesCount;
+    }
+
+    public void setLikesCount(int likesCount) {
+        this.likesCount = likesCount;
+    }
+
+    public boolean isLiked() {
+        return isLiked;
+    }
+
+    public void setLiked(boolean liked) {
+        isLiked = liked;
+    }
+
+    public String getReviewText() {
+        return reviewText;
+    }
+
+    public void setReviewText(String reviewText) {
+        this.reviewText = reviewText;
+    }
+
+    }
