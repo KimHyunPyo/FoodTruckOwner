@@ -15,7 +15,10 @@ import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.Toast;
 
+import com.github.kimkevin.cachepot.CachePot;
+
 import java.io.IOException;
+import java.io.Serializable;
 
 import kr.ac.jbnu.se.foodtruckowner.R;
 import kr.ac.jbnu.se.foodtruckowner.model.Owner;
@@ -41,6 +44,8 @@ public class SigninActivity extends AppCompatActivity {
     private Switch sw_auto_login;
     private EditText et_email;
     private EditText et_password;
+
+    private Owner owner_info;
 
 
     @Override
@@ -134,6 +139,9 @@ public class SigninActivity extends AppCompatActivity {
                 }
                 // if parsing the JSON body failed, `response.body()` returns null
                 Owner decodedResponse = response.body();
+                owner_info = response.body();
+                CachePot.getInstance().push(owner_info); //메뉴프레그먼트에서 쓸 수 있게 객체 정보 push
+                Log.d("로그인", "업주아이디 : "+ String.valueOf(decodedResponse.getId()));
 
                 if (decodedResponse == null) {
                     Log.d("TAG", "아이디비번오류");
@@ -145,6 +153,7 @@ public class SigninActivity extends AppCompatActivity {
                     Log.d("TAGG", "로그인성공!");
                     Toast.makeText(getApplicationContext(), "환영합니다. 푸드트럭", Toast.LENGTH_LONG).show();
                     Intent loginIntent = new Intent(SigninActivity.this, MainActivity.class);
+//                    loginIntent.putExtra("owner_info", owner_info);
                     startActivity(loginIntent);
                     finish();
                 }
@@ -184,8 +193,8 @@ public class SigninActivity extends AppCompatActivity {
     }
 
     public void Onclick_Signup(View view) {
-        Intent singnupIntent = new Intent(SigninActivity.this, SignUpActivity.class);
-        startActivity(singnupIntent);
+        Intent signupIntent = new Intent(SigninActivity.this, SignUpActivity.class);
+        startActivity(signupIntent);
         finish();
     }
 }

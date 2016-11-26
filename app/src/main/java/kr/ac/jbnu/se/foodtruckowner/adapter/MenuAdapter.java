@@ -16,6 +16,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
 import kr.ac.jbnu.se.foodtruckowner.ui.modi_dialog_Fragment;
 import cn.pedant.SweetAlert.SweetAlertDialog;
@@ -31,6 +33,9 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MenuViewHolder
     private MenuViewHolder holder;
     private String call;
     private FragmentManager fm;
+
+    String Url="https://server-blackdog11.c9users.io/";
+
 
     public MenuAdapter(Context context, ArrayList<MenuModel> listitems, String Call,FragmentManager fm) {
         this.context = context;
@@ -53,10 +58,14 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MenuViewHolder
     public void onBindViewHolder(final MenuViewHolder holder, final int position) {
         final MenuModel model = listitems.get(position);
         this.holder = holder;
-        Bitmap image = BitmapFactory.decodeResource(context.getResources(), model.getImage());
-        setBitmapImage(image);
+
+
+//        Bitmap image = BitmapFactory.decodeResource(context.getResources(), model.getImage());
+//        setBitmapImage(image);
         holder.title.setText(model.getTitle());
         holder.price.setText(model.getPrice() + "원");
+        Picasso.with(context).load(Url + listitems.get(position).getImage().getUrl()).into(holder.imageview);
+
         holder.imageview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -125,7 +134,7 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MenuViewHolder
 
     //메뉴 추가
     public void addMenu() {
-        listitems.add(new MenuModel("신메뉴", 3000, R.drawable.menuitem5));
+        //listitems.add(new MenuModel("신메뉴", 3000, R.drawable.menuitem5));
         notifyDataSetChanged();
     }
 

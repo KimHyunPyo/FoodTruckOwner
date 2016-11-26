@@ -1,5 +1,8 @@
 package kr.ac.jbnu.se.foodtruckowner.service;
 
+import java.util.ArrayList;
+
+import kr.ac.jbnu.se.foodtruckowner.model.MenuModel;
 import kr.ac.jbnu.se.foodtruckowner.model.Owner;
 import retrofit.Call;
 import retrofit.http.Field;
@@ -20,6 +23,8 @@ public interface ApiService {
     Call<Integer> owner_join(@Field("email") String email, @Field("password") String password,
                              @Field("phone_number") String phone_number , @Field("business_number") String business_number);
 
+    @GET("/common/truck_menus_owner")
+    Call<ArrayList<MenuModel>> truck_menus_owner(@Query("id") int onwer_id);
 
 //    //로그인 요청
 //    @FormUrlEncoded

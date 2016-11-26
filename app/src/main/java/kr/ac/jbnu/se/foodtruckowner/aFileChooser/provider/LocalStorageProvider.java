@@ -1,4 +1,4 @@
-package kr.ac.jbnu.se.foodtruckowner.afilechooser.provider;
+package kr.ac.jbnu.se.foodtruckowner.aFileChooser.provider;
 
 import android.content.res.AssetFileDescriptor;
 import android.database.Cursor;
