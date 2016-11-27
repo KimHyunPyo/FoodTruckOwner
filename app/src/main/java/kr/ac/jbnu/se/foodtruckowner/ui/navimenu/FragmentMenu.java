@@ -39,7 +39,7 @@ public class FragmentMenu extends Fragment {
     private MenuAdapter menuAdapter;
 
     ArrayList<MenuModel> listitems = new ArrayList<>();
-    private static Owner owner_info;
+    private Owner owner_info;
 
     //String and Integer array for Recycler View Items
     public static final String[] TITLES = {"디저트 ", "피자 3000원", "박도현 0원", "1000원"
@@ -58,10 +58,10 @@ public class FragmentMenu extends Fragment {
         initMenu();
         btadd.setOnClickListener(new View.OnClickListener() {
             @Override
-                public void onClick(View v) {
+            public void onClick(View v) {
                 showInputNameDialog();
-                    //menuAdapter.addMenu();
-                }
+                //menuAdapter.addMenu();
+            }
         });
         return view;
     }

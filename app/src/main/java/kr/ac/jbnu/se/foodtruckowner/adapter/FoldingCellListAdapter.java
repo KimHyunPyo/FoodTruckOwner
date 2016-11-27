@@ -48,7 +48,7 @@ public class FoldingCellListAdapter extends ArrayAdapter<Item> {
             LayoutInflater vi = LayoutInflater.from(getContext());
             cell = (FoldingCell) vi.inflate(R.layout.cell, parent, false);
             // binding view parts to view holder
-            viewHolder.price = (TextView) cell.findViewById(R.id.title_date_year);
+            viewHolder.year = (TextView) cell.findViewById(R.id.title_date_year);
             viewHolder.time = (TextView) cell.findViewById(R.id.title_time_label);
             viewHolder.date = (TextView) cell.findViewById(R.id.title_date_label);
             viewHolder.fromAddress = (TextView) cell.findViewById(R.id.title_from_address);
@@ -69,7 +69,7 @@ public class FoldingCellListAdapter extends ArrayAdapter<Item> {
         }
 
         // bind data from selected element to view through view holder
-        viewHolder.price.setText(item.getYear());
+        viewHolder.year.setText(item.getPrice());
         viewHolder.time.setText(item.getTime());
         viewHolder.date.setText(item.getDate());
         viewHolder.fromAddress.setText(item.getFromAddress());
@@ -144,14 +144,14 @@ public class FoldingCellListAdapter extends ArrayAdapter<Item> {
 
     // View lookup cache
     private static class ViewHolder {
-        TextView price;
-        TextView contentRequestBtn;
-        TextView fromAddress;
-        TextView toAddress;
-        TextView requestsCount;
-        TextView date;
-        TextView time;
-        TextView folding;
-        ImageView headImage;
-    }
- }
+    TextView year;
+    TextView contentRequestBtn;
+    TextView fromAddress;
+    TextView toAddress;
+    TextView requestsCount;
+    TextView date;
+    TextView time;
+    TextView folding;
+    ImageView headImage;
+}
+}

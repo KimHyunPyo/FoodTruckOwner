@@ -41,10 +41,7 @@ public class modi_dialog_Fragment extends DialogFragment {
     static String DialogboxTitle;
     MenuAdapter menuAdapter;
 
-
     private DialogInterface.OnDismissListener onDismissListener;
-
-
 
     private FoodTruckModel truckInfo;
     private Boolean menuAddSuccess;
@@ -85,7 +82,6 @@ public class modi_dialog_Fragment extends DialogFragment {
         //---event handler for the button
         bt_done.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-
                 if (!et_menu_name.getText().toString().matches("")) {
                     if (!et_menu_price.getText().toString().matches("")) {
                         JsonObject addMenuInfo = new JsonObject();
@@ -101,7 +97,6 @@ public class modi_dialog_Fragment extends DialogFragment {
                 } else {
                     Toast.makeText(getActivity(), "메뉴 이름을 입력하세요.", Toast.LENGTH_LONG).show();
                 }
-
                 Log.d("TAG", "텍스트?: " + et_menu_name.getText());
 
             }

@@ -11,7 +11,7 @@
         android:background="@color/orange"
         android:id="@+id/toolbar"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        app:title="Drawer With Swipe Tabs" />
+        app:title="푸드트럭 업주용" />
 
     <android.support.v4.widget.DrawerLayout
         android:id="@+id/drawerLayout"
