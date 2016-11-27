@@ -158,38 +158,37 @@
         </LinearLayout>
 
         <LinearLayout
-            android:orientation="horizontal"
+            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:weightSum="1">
 
 
-            <EditText
+            <imageView
                 android:background="#ffffffff"
-                android:textColor="#ff333333"
-                android:textColorHint="#ffaaaaaa"
                 android:id="@+id/imageUpload"
                 android:paddingLeft="20.0dip"
-                android:layout_width="wrap_content"
-                android:layout_height="40dip"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
                 android:layout_marginLeft="20.0dip"
                 android:layout_marginRight="20.0dip"
                 android:hint="트럭 대표 이미지 등록"
                 android:layout_below="@+id/radioPayment"
                 android:layout_centerHorizontal="true"
-                android:layout_weight="0.79" />
+                 />
 
 
             <com.dd.processbutton.iml.ActionProcessButton
                 android:id="@+id/bt_upload"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="확인"
+                android:layout_width="match_parent"
+                android:layout_height="40dip"
+                android:text="사진 등록"
                 android:textColor="@android:color/white"
                 android:textSize="14.0sp"
                 android:layout_marginLeft="20.0dip"
                 android:layout_marginRight="20.0dip"
                 android:layout_marginBottom="10.0dip"
+
                 custom:pb_colorComplete="@color/green_complete"
                 custom:pb_colorNormal="@color/blue_normal"
                 custom:pb_colorPressed="@color/blue_pressed"
@@ -198,7 +197,8 @@
                 custom:pb_textProgress="Loading"
                 android:layout_centerHorizontal="true"
                 android:layout_below="@+id/radioPayment"
-                android:onClick="Onclick_Confrim"/>
+                android:onClick="Onclick_Confrim"
+                android:layout_alignParentRight="false" />
 
 
         </LinearLayout>
