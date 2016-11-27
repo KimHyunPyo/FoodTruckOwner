@@ -20,7 +20,6 @@ import com.github.kimkevin.cachepot.CachePot;
 import java.util.ArrayList;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
-import kr.ac.jbnu.se.foodtruckowner.CustomCachePot;
 import kr.ac.jbnu.se.foodtruckowner.R;
 import kr.ac.jbnu.se.foodtruckowner.adapter.MenuAdapter;
 import kr.ac.jbnu.se.foodtruckowner.model.MenuModel;
@@ -75,12 +74,14 @@ public class FragmentMenu extends Fragment {
         owner_info = CachePot.getInstance().pop(Owner.class); //MainActivity => FragmentMenu
         Log.d("TAG", "오너 아이디 : " + owner_info.getId());
 
+        CachePot.getInstance().push(owner_info); //다시 메뉴버튼 눌렀을 때 오류 안나게하려고
+
         //오너 아이디를 줘서 그 트럭의 메뉴 받아옴
         requestTruckMenu(owner_info.getId());
     }
 
+    // TODO: 2016-11-27 번호가 중간에 비면 안나옴. 중간 삭제시 id재정렬 해줘야함
     public void requestTruckMenu(int owner_id) {
-        listitems.clear();
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://server-blackdog11.c9users.io/")
@@ -100,8 +101,7 @@ public class FragmentMenu extends Fragment {
 
                 Log.d("TAG", "바디: " + response.body().toString());
 
-                for (MenuModel menu : menuList
-                        ) {
+                for (MenuModel menu : menuList) {
                     listitems.add(menu);
 
                     Log.d("TAG", "메뉴이름" + menu.getTitle());
@@ -117,14 +117,13 @@ public class FragmentMenu extends Fragment {
 
         });
     }
-
     // populate the list view by adding data to arraylist
     private void showViewList(ArrayList<MenuModel> listitems) {
         StaggeredGridLayoutManager MyLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         MyLayoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_MOVE_ITEMS_BETWEEN_SPANS);
         myRecyclerView.setHasFixedSize(true);
         myRecyclerView.setLayoutManager(MyLayoutManager);
-        menuAdapter = new MenuAdapter(getContext(), listitems, "", getActivity().getSupportFragmentManager());
+        menuAdapter = new MenuAdapter(getContext(), listitems, "",getActivity().getSupportFragmentManager());
         myRecyclerView.setAdapter(menuAdapter);// set adapter on recyclerview
 
         menuAdapter.notifyDataSetChanged();// Notify the adapter
@@ -133,8 +132,14 @@ public class FragmentMenu extends Fragment {
     private void showInputNameDialog() {
         FragmentManager fragmentManager = getFragmentManager();
         modi_dialog_Fragment inputDialog = new modi_dialog_Fragment();
-        inputDialog.setCancelable(false);
-        inputDialog.setDialogTitle("Enter Name");
+        //inputDialog.setDialogTitle("메뉴 추가");
+        inputDialog.setOnDismissListener(new DialogInterface.OnDismissListener() { //다이얼로그에서 메뉴 추가시 새로고침
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+                initMenu();
+            }
+        });
         inputDialog.show(fragmentManager, "Input Dialog");
     }
+
 }

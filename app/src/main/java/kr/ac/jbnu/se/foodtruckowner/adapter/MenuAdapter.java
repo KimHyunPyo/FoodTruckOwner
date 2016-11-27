@@ -74,7 +74,6 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MenuViewHolder
                 Log.d("TAG", "해당 아이템 번호 = " + position);
                 //dialog 띄우기
                 new SweetAlertDialog(context, SweetAlertDialog.WARNING_TYPE)
-
                         .setTitleText("Are you sure?")
 
                         .setContentText("Won't be able to recover this file!")
