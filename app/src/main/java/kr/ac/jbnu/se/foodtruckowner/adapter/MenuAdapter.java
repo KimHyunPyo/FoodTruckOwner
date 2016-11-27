@@ -26,20 +26,20 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
 import kr.ac.jbnu.se.foodtruckowner.R;
 import kr.ac.jbnu.se.foodtruckowner.model.MenuModel;
 
-    public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MenuViewHolder> {
+public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MenuViewHolder> {
 
-        private ArrayList<MenuModel> listitems;
-        private Context context;
-        private float imageWidth;
-        private float imageHeight;
-        private MenuViewHolder holder;
-        private String call;
-        private FragmentManager fm;
+    private ArrayList<MenuModel> listitems;
+    private Context context;
+    private float imageWidth;
+    private float imageHeight;
+    private MenuViewHolder holder;
+    private String call;
+    private FragmentManager fm;
 
-    String Url="https://server-blackdog11.c9users.io/";
+    String Url = "https://server-blackdog11.c9users.io/";
 
 
-    public MenuAdapter(Context context, ArrayList<MenuModel> listitems, String Call,FragmentManager fm) {
+    public MenuAdapter(Context context, ArrayList<MenuModel> listitems, String Call, FragmentManager fm) {
         this.context = context;
         this.listitems = listitems;
         this.call = Call;
@@ -52,13 +52,6 @@ import kr.ac.jbnu.se.foodtruckowner.model.MenuModel;
         LayoutInflater mInflater = LayoutInflater.from(parent.getContext());
 
         ViewGroup v = (ViewGroup) mInflater.inflate(R.layout.menu_item, parent, false);
-        v.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                System.out.println("클릭");
-
-            }
-        });
         return new MenuViewHolder(v);
     }
 
@@ -74,8 +67,7 @@ import kr.ac.jbnu.se.foodtruckowner.model.MenuModel;
         Log.d("TAG", "메뉴이름넘어오니? :" + model.getTitle());
         holder.price.setText(model.getPrice() + "원");
         Picasso.with(context).load(Url + listitems.get(position).getImage().getUrl()).into(holder.imageview);
-
-        holder.imageview.setOnClickListener(new View.OnClickListener() {
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.d("TAG", "해당 아이템 번호 = " + position);
@@ -196,7 +188,7 @@ import kr.ac.jbnu.se.foodtruckowner.model.MenuModel;
 
         public MenuViewHolder(View view) {
             super(view);
-            title = (TextView) view.findViewById(R.id.title);
+            title = (TextView) view.findViewById(R.id.menu_title);
             imageview = (ImageView) view.findViewById(R.id.image);
             price = (TextView) view.findViewById(R.id.price);
         }
