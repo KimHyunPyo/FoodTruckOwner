@@ -68,7 +68,7 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MenuViewHolder
         holder.price.setText(model.getPrice() + "원");
         Picasso.with(context).load(Url + listitems.get(position).getImage().getUrl()).into(holder.imageview);
 
-        holder.title.setOnClickListener(new View.OnClickListener() {
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.d("TAG", "해당 아이템 번호 = " + position);
