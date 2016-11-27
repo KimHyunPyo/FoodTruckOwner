@@ -31,12 +31,16 @@
             <com.hedgehog.ratingbar.RatingBar
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:id="@+id/Ratingbar"
                 hedgehog:clickable="false"
-                hedgehog:starEmpty="@drawable/ic_star_empty"
+                hedgehog:halfstart="true"
+                hedgehog:starCount="5"
                 hedgehog:starFill="@drawable/ic_star_fill"
+                hedgehog:starEmpty="@drawable/ic_star_empty"
+                hedgehog:starHalf="@drawable/ic_star_half"
+                hedgehog:starImageHeight="50dp"
+                hedgehog:starImageWidth="50dp"
                 style="?android:ratingBarStyle"
-                android:max="5"
-                android:rating="3"
                 android:isIndicator="true"/>
 
             <LinearLayout

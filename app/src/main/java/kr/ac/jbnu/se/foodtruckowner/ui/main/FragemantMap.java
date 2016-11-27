@@ -35,6 +35,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.hedgehog.ratingbar.RatingBar;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import kr.ac.jbnu.se.foodtruckowner.R;
@@ -60,6 +61,7 @@ public class FragemantMap extends Fragment implements GoogleApiClient.OnConnecti
     private GpsService gpsService;
     private Switch loc_agreee;
     private Switch turn_buss;
+    private RatingBar mRatingBar;
 
 
     @Override
@@ -74,6 +76,11 @@ public class FragemantMap extends Fragment implements GoogleApiClient.OnConnecti
         mapview.onCreate(savedInstanceState);
         mapview.onResume();
         mapview.getMapAsync(this);
+
+        mRatingBar = (RatingBar)view.findViewById(R.id.Ratingbar);
+        initRatingBar();
+
+
 
         gpsService = new GpsService(getActivity());
         GooglePlayServicesUtil.isGooglePlayServicesAvailable(getActivity());
@@ -111,6 +118,13 @@ public class FragemantMap extends Fragment implements GoogleApiClient.OnConnecti
 
         });
         return view;
+    }
+
+    private void initRatingBar(){
+        mRatingBar.setStarEmptyDrawable(getResources().getDrawable(R.drawable.ic_star_empty));
+        mRatingBar.setStarFillDrawable(getResources().getDrawable(R.drawable.ic_star_fill));
+        mRatingBar.setStarHalfDrawable(getResources().getDrawable(R.drawable.ic_star_half));
+        mRatingBar.setStar(2.5f);
     }
 
     private void init(){
