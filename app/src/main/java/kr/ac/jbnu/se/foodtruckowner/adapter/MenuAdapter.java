@@ -63,17 +63,17 @@ import kr.ac.jbnu.se.foodtruckowner.model.MenuModel;
 
 //        Bitmap image = BitmapFactory.decodeResource(context.getResources(), model.getImage());
 //        setBitmapImage(image);
-        holder.title.setText(model.getTitle());
+        holder.title.setText(model.getTitle()+"");
+        Log.d("TAG", "메뉴이름넘어오니? :" + model.getTitle());
         holder.price.setText(model.getPrice() + "원");
         Picasso.with(context).load(Url + listitems.get(position).getImage().getUrl()).into(holder.imageview);
 
-        holder.imageview.setOnClickListener(new View.OnClickListener() {
+        holder.title.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.d("TAG", "해당 아이템 번호 = " + position);
                 //dialog 띄우기
                 new SweetAlertDialog(context, SweetAlertDialog.WARNING_TYPE)
-
                         .setTitleText("Are you sure?")
 
                         .setContentText("Won't be able to recover this file!")
@@ -116,8 +116,8 @@ import kr.ac.jbnu.se.foodtruckowner.model.MenuModel;
                             }
 
                         })
-
                         .show();
+
             }
         });
 
@@ -151,7 +151,6 @@ import kr.ac.jbnu.se.foodtruckowner.model.MenuModel;
     //수정 다이얼로그 띄우기
     private void show_modi_dialog_Fragment() {
         modi_dialog_Fragment inputDialog = new modi_dialog_Fragment();
-        inputDialog.setCancelable(false);
         inputDialog.setDialogTitle("Enter Name");
         inputDialog.show(fm, "Input Dialog");
     }
@@ -188,7 +187,7 @@ import kr.ac.jbnu.se.foodtruckowner.model.MenuModel;
 
         public MenuViewHolder(View view) {
             super(view);
-            title = (TextView) view.findViewById(R.id.title);
+            title = (TextView) view.findViewById(R.id.menu_title);
             imageview = (ImageView) view.findViewById(R.id.image);
             price = (TextView) view.findViewById(R.id.price);
         }
