@@ -54,7 +54,6 @@ public class FoldingCellListAdapter extends ArrayAdapter<Item> {
             viewHolder.fromAddress = (TextView) cell.findViewById(R.id.title_from_address);
             viewHolder.toAddress = (TextView) cell.findViewById(R.id.title_to_address);
             viewHolder.requestsCount = (TextView) cell.findViewById(R.id.title_requests_count);
-            viewHolder.pledgePrice = (TextView) cell.findViewById(R.id.title_pledge);
             viewHolder.contentRequestBtn = (TextView) cell.findViewById(R.id.content_request_btn);
             viewHolder.folding = (TextView) cell.findViewById(R.id.folding);
             viewHolder.headImage = (ImageView) cell.findViewById(R.id.head_image);
@@ -76,7 +75,6 @@ public class FoldingCellListAdapter extends ArrayAdapter<Item> {
         viewHolder.fromAddress.setText(item.getFromAddress());
         viewHolder.toAddress.setText(item.getToAddress());
         viewHolder.requestsCount.setText(String.valueOf(item.getRequestsCount()));
-        viewHolder.pledgePrice.setText(item.getPledgePrice());
 
 /*
         viewHolder.folding.setOnClickListener(new View.OnClickListener() {
@@ -148,7 +146,6 @@ public class FoldingCellListAdapter extends ArrayAdapter<Item> {
     private static class ViewHolder {
     TextView year;
     TextView contentRequestBtn;
-    TextView pledgePrice;
     TextView fromAddress;
     TextView toAddress;
     TextView requestsCount;

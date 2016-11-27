@@ -154,7 +154,7 @@ public static class ReviewViewHolder extends RecyclerView.ViewHolder {
         ivLike = (ImageView)v.findViewById(R.id.ivLike);
         tsLikesCounter = (TextSwitcher)v.findViewById(R.id.tsLikesCounter);
         vImageRoot = (FrameLayout)v.findViewById(R.id.vImageRoot);
-        likebutton = (ShineButton)v.findViewById(R.id.po_image);
+        likebutton = (ShineButton)v.findViewById(R.id.po_image2);
 
     }
 }

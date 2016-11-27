@@ -20,15 +20,13 @@
         android:paddingRight="10dp"
         android:paddingTop="20dp">
 
-
         <TextView
             android:id="@+id/title_date_year"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
             android:layout_alignParentStart="true"
             android:textColor="@android:color/white"
-            android:textSize="14sp" />
+            android:textSize="12sp" />
 
         <TextView
             android:id="@+id/title_time_label"
@@ -46,7 +44,7 @@
             android:layout_above="@id/title_time_label"
             android:layout_alignParentStart="true"
             android:textColor="@android:color/white"
-            android:textSize="12sp" />
+            android:textSize="14sp" />
 
     </RelativeLayout>
     <!-- RIGHT TITLE PART -->
@@ -108,13 +106,6 @@
             android:text="@string/requests_count_badge" />
 
 
-        <TextView
-            android:id="@+id/title_pledge"
-            style="@style/TitleBadgeText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true" />
 
         <TextView
             android:id="@+id/title_weight"

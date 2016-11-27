@@ -10,7 +10,7 @@ import java.util.StringTokenizer;
  */
 public class Item {
 
-    private String price;
+    private String year;
     private String pledgePrice;
     private String fromAddress;
     private String toAddress;
@@ -23,8 +23,8 @@ public class Item {
     public Item() {
     }
 
-    public Item(String price, String pledgePrice, String fromAddress, String toAddress, int requestsCount, String date, String time) {
-        this.price = price;
+    public Item(String year, String pledgePrice, String fromAddress, String toAddress, int requestsCount, String date, String time) {
+        this.year = year;
         this.pledgePrice = pledgePrice;
         this.fromAddress = fromAddress;
         this.toAddress = toAddress;
@@ -34,12 +34,12 @@ public class Item {
 
     }
 
-    public String getPrice() {
-        return price;
+    public String getYear() {
+        return year;
     }
 
-    public void setPrice(String price) {
-        this.price = price;
+    public void setYear(String price) {
+        this.year = year;
     }
 
     public String getPledgePrice() {
@@ -105,7 +105,7 @@ public class Item {
         Item item = (Item) o;
 
         if (requestsCount != item.requestsCount) return false;
-        if (price != null ? !price.equals(item.price) : item.price != null) return false;
+        if (year != null ? !year.equals(item.year) : item.year != null) return false;
         if (pledgePrice != null ? !pledgePrice.equals(item.pledgePrice) : item.pledgePrice != null)
             return false;
         if (fromAddress != null ? !fromAddress.equals(item.fromAddress) : item.fromAddress != null)
@@ -119,7 +119,7 @@ public class Item {
 
     @Override
     public int hashCode() {
-        int result = price != null ? price.hashCode() : 0;
+        int result = year != null ? year.hashCode() : 0;
         result = 31 * result + (pledgePrice != null ? pledgePrice.hashCode() : 0);
         result = 31 * result + (fromAddress != null ? fromAddress.hashCode() : 0);
         result = 31 * result + (toAddress != null ? toAddress.hashCode() : 0);
@@ -134,11 +134,11 @@ public class Item {
      */
     public static ArrayList<Item> getTestingList() {
         ArrayList<Item> items = new ArrayList<>();
-        items.add(new Item("$14", "", "서울 밤도깨비 야시장", "서울특별시 한강공원 일대", 3, "TODAY", "05:10 PM"));
-        items.add(new Item("$23", "", "W 36th St, NY, 10015", "W 114th St, NY, 10037", 10, "TODAY", "11:10 AM"));
-        items.add(new Item("$63", "", "W 36th St, NY, 10029", "56th Ave, NY, 10041", 0, "TODAY", "07:11 PM"));
-        items.add(new Item("$19", "", "12th Ave, NY, 10012", "W 57th St, NY, 10048", 8, "TODAY", "4:15 AM"));
-        items.add(new Item("$5", "", "56th Ave, NY, 10041", "W 36th St, NY, 10029", 0, "TODAY", "06:15 PM"));
+        items.add(new Item("2016", "", "서울 밤도깨비 야시장", "서울특별시 한강공원 일대", 7, "12월24일 \n~\n ", "12월26일"));
+        items.add(new Item("2016", "", "서울 밤도깨비 야시장", "서울특별시 한강공원 일대", 7, "12월24일 \n~\n ", "12월26일"));
+        items.add(new Item("2016", "", "서울 밤도깨비 야시장", "서울특별시 한강공원 일대", 7, "12월24일 \n~\n ", "12월26일"));
+        items.add(new Item("2016", "", "서울 밤도깨비 야시장", "서울특별시 한강공원 일대", 7, "12월24일 \n~\n ", "12월26일"));
+        items.add(new Item("2016", "", "서울 밤도깨비 야시장", "서울특별시 한강공원 일대", 7, "12월24일 \n~\n ", "12월26일"));
         return items;
 
     }
