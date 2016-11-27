@@ -44,8 +44,8 @@ public class MainActivity extends BaseDrawerActivity {
 
         requestMyTruckInfo(ownerInfo.getId());
 
-        //CachePot.getInstance().push(ownerInfo); //MainActivity => FragmentMenu
-        //Log.d("TAG", "MainActivity: 보낸 유저정보" + ownerInfo.getEmail()); -> 이거는 Pop해서 안되는줄 알고 써놨던거 잠시만 남겨두삼
+        CachePot.getInstance().push(ownerInfo); //MainActivity => FragmentMenu
+        Log.d("TAG", "MainActivity: 보낸 유저정보" + ownerInfo.getEmail()); //-> 스택처럼 Pop하면 사라지므로 다시 넣어서 써야함
 
 
 //        ReviewFragment reviewFragment = (ReviewFragment) getSupportFragmentManager().findFragmentById(R.id.reviewListFragment);

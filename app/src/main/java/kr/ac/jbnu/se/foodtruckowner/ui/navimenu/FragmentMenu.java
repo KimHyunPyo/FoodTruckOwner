@@ -1,7 +1,10 @@
 package kr.ac.jbnu.se.foodtruckowner.ui.navimenu;
 
 
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.RecyclerView;
@@ -37,7 +40,7 @@ public class FragmentMenu extends Fragment {
     private MenuAdapter menuAdapter;
 
     ArrayList<MenuModel> listitems = new ArrayList<>();
-    private Owner owner_info;
+    private static Owner owner_info;
 
     //String and Integer array for Recycler View Items
     public static final String[] TITLES = {"디저트 ", "피자 3000원", "박도현 0원", "1000원"
@@ -56,10 +59,10 @@ public class FragmentMenu extends Fragment {
         initMenu();
         btadd.setOnClickListener(new View.OnClickListener() {
             @Override
-                public void onClick(View v) {
+            public void onClick(View v) {
                 showInputNameDialog();
-                    //menuAdapter.addMenu();
-                }
+                //menuAdapter.addMenu();
+            }
         });
         return view;
     }
@@ -69,7 +72,7 @@ public class FragmentMenu extends Fragment {
 
         Log.d("TAG", "됌?");
         //유저 정보 담은 객체 다른 액티비티에서 담아오는거
-        owner_info = CustomCachePot.getInstance().pop(Owner.class); //MainActivity => FragmentMenu
+        owner_info = CachePot.getInstance().pop(Owner.class); //MainActivity => FragmentMenu
         Log.d("TAG", "오너 아이디 : " + owner_info.getId());
 
         //오너 아이디를 줘서 그 트럭의 메뉴 받아옴
@@ -78,10 +81,12 @@ public class FragmentMenu extends Fragment {
 
     public void requestTruckMenu(int owner_id) {
         listitems.clear();
+
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://server-blackdog11.c9users.io/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
+
         ApiService service = retrofit.create(ApiService.class);
 
         //onwer_info에서 업주 아이디 가져와서 그 업주 아이디를 가진 푸드트럭의 메뉴를 받아온다.
@@ -103,6 +108,7 @@ public class FragmentMenu extends Fragment {
                 }
                 showViewList(listitems); //서버에서 받아오면 카드뷰 그려주게하기
             }
+
             @Override
             public void onFailure(Throwable t) {
                 Log.d("실패", "onFailure: ");
@@ -118,7 +124,7 @@ public class FragmentMenu extends Fragment {
         MyLayoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_MOVE_ITEMS_BETWEEN_SPANS);
         myRecyclerView.setHasFixedSize(true);
         myRecyclerView.setLayoutManager(MyLayoutManager);
-        menuAdapter = new MenuAdapter(getContext(), listitems, "",getActivity().getSupportFragmentManager());
+        menuAdapter = new MenuAdapter(getContext(), listitems, "", getActivity().getSupportFragmentManager());
         myRecyclerView.setAdapter(menuAdapter);// set adapter on recyclerview
 
         menuAdapter.notifyDataSetChanged();// Notify the adapter
@@ -131,5 +137,4 @@ public class FragmentMenu extends Fragment {
         inputDialog.setDialogTitle("Enter Name");
         inputDialog.show(fragmentManager, "Input Dialog");
     }
-
 }

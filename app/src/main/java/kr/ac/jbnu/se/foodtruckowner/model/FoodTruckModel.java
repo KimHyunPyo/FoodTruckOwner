@@ -6,6 +6,8 @@ import com.google.gson.annotations.SerializedName;
  * Created by son on 11/1/16.
  */
 public class FoodTruckModel {
+    @SerializedName("id")
+    private String FT_ID;
     @SerializedName("owner_id")
     private String FT_OWNER_ID;
     @SerializedName("name")
@@ -32,6 +34,9 @@ public class FoodTruckModel {
     private String FT_LOCATIONNAME;
     private int FT_IMAGE;
 
+    public String getFT_ID() {return FT_ID;}
+
+    public void setFT_ID(String FT_ID) {this.FT_ID = FT_ID;}
 
     public String getFtOwnerId() {
         return FT_OWNER_ID;

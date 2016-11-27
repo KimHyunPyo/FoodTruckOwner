@@ -26,20 +26,20 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
 import kr.ac.jbnu.se.foodtruckowner.R;
 import kr.ac.jbnu.se.foodtruckowner.model.MenuModel;
 
-    public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MenuViewHolder> {
+public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MenuViewHolder> {
 
-        private ArrayList<MenuModel> listitems;
-        private Context context;
-        private float imageWidth;
-        private float imageHeight;
-        private MenuViewHolder holder;
-        private String call;
-        private FragmentManager fm;
+    private ArrayList<MenuModel> listitems;
+    private Context context;
+    private float imageWidth;
+    private float imageHeight;
+    private MenuViewHolder holder;
+    private String call;
+    private FragmentManager fm;
 
-    String Url="https://server-blackdog11.c9users.io/";
+    String Url = "https://server-blackdog11.c9users.io/";
 
 
-    public MenuAdapter(Context context, ArrayList<MenuModel> listitems, String Call,FragmentManager fm) {
+    public MenuAdapter(Context context, ArrayList<MenuModel> listitems, String Call, FragmentManager fm) {
         this.context = context;
         this.listitems = listitems;
         this.call = Call;
@@ -52,6 +52,13 @@ import kr.ac.jbnu.se.foodtruckowner.model.MenuModel;
         LayoutInflater mInflater = LayoutInflater.from(parent.getContext());
 
         ViewGroup v = (ViewGroup) mInflater.inflate(R.layout.menu_item, parent, false);
+        v.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                System.out.println("클릭");
+
+            }
+        });
         return new MenuViewHolder(v);
     }
 
@@ -60,13 +67,11 @@ import kr.ac.jbnu.se.foodtruckowner.model.MenuModel;
         final MenuModel model = listitems.get(position);
         this.holder = holder;
 
-
 //        Bitmap image = BitmapFactory.decodeResource(context.getResources(), model.getImage());
 //        setBitmapImage(image);
         holder.title.setText(model.getTitle());
         holder.price.setText(model.getPrice() + "원");
         Picasso.with(context).load(Url + listitems.get(position).getImage().getUrl()).into(holder.imageview);
-
         holder.imageview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
