@@ -41,8 +41,17 @@ public class modi_dialog_Fragment extends DialogFragment {
     static String DialogboxTitle;
     MenuAdapter menuAdapter;
 
+
+    private DialogInterface.OnDismissListener onDismissListener;
+
+
+
     private FoodTruckModel truckInfo;
     private Boolean menuAddSuccess;
+
+    public void setOnDismissListener(DialogInterface.OnDismissListener onDismissListener) {
+        this.onDismissListener = onDismissListener;
+    }
 
     public interface InputNameDialogListener {
         void onFinishInputDialog(String inputText);
@@ -111,7 +120,7 @@ public class modi_dialog_Fragment extends DialogFragment {
                 LayoutParams.SOFT_INPUT_STATE_VISIBLE);
 
         //---set the title for the dialog
-        getDialog().setTitle("씨벌");
+        //getDialog().setTitle("");
 
         return view;
     }
@@ -162,7 +171,9 @@ public class modi_dialog_Fragment extends DialogFragment {
     @Override
     public void onDismiss(DialogInterface dialog) {
         super.onDismiss(dialog);
-        Log.d("TAG", "onDismiss: 다이얼로그");
+        if(onDismissListener != null) {
+            onDismissListener.onDismiss(dialog);
+        }
         
     }
 }

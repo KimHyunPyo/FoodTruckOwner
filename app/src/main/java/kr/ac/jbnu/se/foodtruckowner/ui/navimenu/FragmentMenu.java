@@ -1,7 +1,10 @@
 package kr.ac.jbnu.se.foodtruckowner.ui.navimenu;
 
 
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.RecyclerView;
@@ -130,6 +133,12 @@ public class FragmentMenu extends Fragment {
         FragmentManager fragmentManager = getFragmentManager();
         modi_dialog_Fragment inputDialog = new modi_dialog_Fragment();
         //inputDialog.setDialogTitle("메뉴 추가");
+        inputDialog.setOnDismissListener(new DialogInterface.OnDismissListener() { //다이얼로그에서 메뉴 추가시 새로고침
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+                initMenu();
+            }
+        });
         inputDialog.show(fragmentManager, "Input Dialog");
     }
 
