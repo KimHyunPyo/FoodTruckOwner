@@ -41,10 +41,7 @@ public class modi_dialog_Fragment extends DialogFragment {
     static String DialogboxTitle;
     MenuAdapter menuAdapter;
 
-
     private DialogInterface.OnDismissListener onDismissListener;
-
-
 
     private FoodTruckModel truckInfo;
     private Boolean menuAddSuccess;
