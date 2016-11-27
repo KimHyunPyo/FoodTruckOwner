@@ -84,7 +84,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:background="#FFFFBB33"
-        android:text="Submit"
+        android:text="메뉴 추가"
         android:textColor="#fff"
         android:textStyle="bold" />
 

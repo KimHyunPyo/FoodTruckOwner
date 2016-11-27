@@ -35,8 +35,9 @@ public interface ApiService {
     Call<ArrayList<MenuModel>> truck_menus_owner(@Field("id") int owner_id);
 
     //업주 메뉴 추가 요청
-    @GET("/owner/add_menu")
-    Call<Boolean> add_menu(@Query("menu_info") JsonObject menu_info);
+    @FormUrlEncoded
+    @POST("/owner/add_menu")
+    Call<Boolean> add_menu(@Field("menu_info") JsonObject menu_info);
 
 
 }
