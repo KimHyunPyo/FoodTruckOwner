@@ -8,6 +8,7 @@ import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
@@ -98,9 +99,11 @@ public class FragemantMap extends Fragment implements GoogleApiClient.OnConnecti
                 String str = String.valueOf(isChecking);
                 if(isChecking)
                 {
+
                     Toast.makeText(getActivity(), "위치공개해라", Toast.LENGTH_LONG).show();
                 }
                 else{
+                    gpsService.stopUsingGPS();
                     Toast.makeText(getActivity(), "공개하지마라", Toast.LENGTH_LONG).show();
                 }
             }
@@ -202,6 +205,17 @@ public class FragemantMap extends Fragment implements GoogleApiClient.OnConnecti
     }
     @Override
     public void onMapReady(GoogleMap googleMap) {
+        //안드 6.0 달라진 퍼미션
+        int permissionCheck = ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION);
+
+        if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION)) {
+
+            } else {
+                ActivityCompat.requestPermissions(getActivity(),
+                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+            }
+        }
         Log.d("구글맵", "온맵레디");
         if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {

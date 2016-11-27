@@ -17,6 +17,7 @@ import com.github.kimkevin.cachepot.CachePot;
 import java.util.ArrayList;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
+import kr.ac.jbnu.se.foodtruckowner.CustomCachePot;
 import kr.ac.jbnu.se.foodtruckowner.R;
 import kr.ac.jbnu.se.foodtruckowner.adapter.MenuAdapter;
 import kr.ac.jbnu.se.foodtruckowner.model.MenuModel;
@@ -68,7 +69,7 @@ public class FragmentMenu extends Fragment {
 
         Log.d("TAG", "됌?");
         //유저 정보 담은 객체 다른 액티비티에서 담아오는거
-        owner_info = CachePot.getInstance().pop(Owner.class); //MainActivity => FragmentMenu
+        owner_info = CustomCachePot.getInstance().pop(Owner.class); //MainActivity => FragmentMenu
         Log.d("TAG", "오너 아이디 : " + owner_info.getId());
 
         //오너 아이디를 줘서 그 트럭의 메뉴 받아옴
@@ -77,12 +78,10 @@ public class FragmentMenu extends Fragment {
 
     public void requestTruckMenu(int owner_id) {
         listitems.clear();
-
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://server-blackdog11.c9users.io/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
-
         ApiService service = retrofit.create(ApiService.class);
 
         //onwer_info에서 업주 아이디 가져와서 그 업주 아이디를 가진 푸드트럭의 메뉴를 받아온다.
@@ -104,7 +103,6 @@ public class FragmentMenu extends Fragment {
                 }
                 showViewList(listitems); //서버에서 받아오면 카드뷰 그려주게하기
             }
-
             @Override
             public void onFailure(Throwable t) {
                 Log.d("실패", "onFailure: ");
@@ -113,6 +111,7 @@ public class FragmentMenu extends Fragment {
 
         });
     }
+
     // populate the list view by adding data to arraylist
     private void showViewList(ArrayList<MenuModel> listitems) {
         StaggeredGridLayoutManager MyLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);

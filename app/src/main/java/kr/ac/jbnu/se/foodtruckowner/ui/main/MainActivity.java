@@ -11,6 +11,7 @@ import com.github.kimkevin.cachepot.CachePot;
 
 import java.util.ArrayList;
 
+import kr.ac.jbnu.se.foodtruckowner.CustomCachePot;
 import kr.ac.jbnu.se.foodtruckowner.R;
 import kr.ac.jbnu.se.foodtruckowner.model.FoodTruckModel;
 import kr.ac.jbnu.se.foodtruckowner.model.MenuModel;
@@ -38,7 +39,7 @@ public class MainActivity extends BaseDrawerActivity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main);
 
-        ownerInfo = CachePot.getInstance().pop(Owner.class); //SignIn => MainActivity
+        ownerInfo = CustomCachePot.getInstance().pop(Owner.class); //SignIn => MainActivity
         Log.d("TAG", "MainActivity: 유저정보 " +  ownerInfo.getEmail());
 
         requestMyTruckInfo(ownerInfo.getId());

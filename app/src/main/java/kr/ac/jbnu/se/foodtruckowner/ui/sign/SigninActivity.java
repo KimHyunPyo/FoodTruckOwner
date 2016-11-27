@@ -20,6 +20,7 @@ import com.github.kimkevin.cachepot.CachePot;
 import java.io.IOException;
 import java.io.Serializable;
 
+import kr.ac.jbnu.se.foodtruckowner.CustomCachePot;
 import kr.ac.jbnu.se.foodtruckowner.R;
 import kr.ac.jbnu.se.foodtruckowner.model.Owner;
 import kr.ac.jbnu.se.foodtruckowner.service.ApiService;
@@ -140,7 +141,7 @@ public class SigninActivity extends AppCompatActivity {
                 // if parsing the JSON body failed, `response.body()` returns null
                 Owner decodedResponse = response.body();
                 owner_info = response.body();
-                CachePot.getInstance().push(owner_info); //메뉴프레그먼트에서 쓸 수 있게 객체 정보 push Signin => MainActivity
+                CustomCachePot.getInstance().push(owner_info); //메뉴프레그먼트에서 쓸 수 있게 객체 정보 push Signin => MainActivity
                 Log.d("로그인", "업주아이디 : "+ String.valueOf(decodedResponse.getId()));
 
                 if (decodedResponse == null) {
