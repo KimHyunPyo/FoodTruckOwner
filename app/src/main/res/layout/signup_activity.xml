@@ -217,6 +217,32 @@
             android:layout_below="@id/bt_Pnconfirm"
             android:layout_centerHorizontal="true"
             android:onClick="Onclick_Signup"/>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <ImageView
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_gravity="center"
+                android:scaleType="fitCenter"
+                android:id="@+id/upload2"
+
+               />
+
+            <com.dd.processbutton.iml.ActionProcessButton
+                android:text="사진등록"
+                android:layout_width="match_parent"
+                android:layout_height="40.0dip"
+                android:layout_marginLeft="20.0dip"
+                android:layout_marginRight="20.0dip"
+                android:layout_below ="@+id/upload2"
+                android:textColor="@android:color/white"
+                android:id="@+id/img_up" />
+        </LinearLayout>
     </LinearLayout>
 
 </RelativeLayout>

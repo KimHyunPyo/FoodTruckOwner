@@ -1,19 +1,30 @@
 package kr.ac.jbnu.se.foodtruckowner.ui.sign;
 
+import android.app.Activity;
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.dd.processbutton.iml.ActionProcessButton;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.regex.Pattern;
 
@@ -37,6 +48,11 @@ public class SignUpActivity extends AppCompatActivity implements ProgressGenerat
     private static final String EXTRAS_ENDLESS_MODE = "EXTRAS_ENDLESS_MODE";
     private int signupStatus = 2; //1은 성공, 2는 실패, 3은 중복
 
+    //사진사진
+
+    private static final int PICK_FROM_CAMERA = 1;
+    private static final int PICK_FROM_GALLERY = 2;
+    ImageView upload2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +75,9 @@ public class SignUpActivity extends AppCompatActivity implements ProgressGenerat
         et_signup_pwconfirm = ((EditText) findViewById(R.id.et_signup_pwconfirm));
         et_signup_business_num = (EditText) findViewById(R.id.et_signup_business_num);
         et_signup_Ph_num = (EditText) findViewById(R.id.et_signup_Ph_num);
+        upload2 = (ImageView) findViewById(R.id.upload2);
+
+        Button iu = (Button) findViewById(R.id.img_up);
 
 
         final ActionProcessButton bt_singup_fragment_login = (ActionProcessButton) findViewById(R.id.bt_singup_login);
@@ -81,6 +100,48 @@ public class SignUpActivity extends AppCompatActivity implements ProgressGenerat
                 }
             }
         });
+
+        iu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                //버튼 클릭시 처리로직
+                Intent intent = new Intent();
+                //갤러리호출
+                //intent.setType(android.provider.MediaStore.Images.Media.CONTENT_TYPE);
+               // intent.setData(android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                intent.setType("image/*");
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+
+                intent.putExtra("crop", "true");
+                intent.putExtra("aspectX", 0);
+                intent.putExtra("aspectY", 0);
+                intent.putExtra("outputX", 200);
+                intent.putExtra("outputY", 150);
+
+                try {
+                    intent.putExtra("return-data", true);
+                    startActivityForResult(Intent.createChooser(intent,
+                            "Complete action using"), PICK_FROM_GALLERY);
+                    Log.d("카메라", "1");
+                } catch (ActivityNotFoundException e) {
+                    Log.d("카메라", "실패");
+                }
+            }
+        });
+    }
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        Log.d("카메라", "2");
+        if (requestCode == PICK_FROM_GALLERY) {
+            Log.d("카메라", "3");
+            Bundle extras2 = data.getExtras();
+            if (extras2 != null) {
+                Log.d("카메라", "4");
+                Bitmap photo = extras2.getParcelable("data");
+                upload2.setImageBitmap(photo);
+            }
+        }
     }
 
     @Override
