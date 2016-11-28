@@ -27,11 +27,11 @@ import kr.ac.jbnu.se.foodtruckowner.ui.modi_dialog_Fragment;
 import kr.ac.jbnu.se.foodtruckowner.model.Owner;
 import kr.ac.jbnu.se.foodtruckowner.service.ApiService;
 import kr.ac.jbnu.se.foodtruckowner.ui.sign.SigninActivity;
-import retrofit.Call;
-import retrofit.Callback;
-import retrofit.GsonConverterFactory;
-import retrofit.Response;
-import retrofit.Retrofit;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class FragmentMenu extends Fragment {
 
@@ -95,8 +95,7 @@ public class FragmentMenu extends Fragment {
 
         convertedContent.enqueue(new Callback<ArrayList<MenuModel>>() {
             @Override
-            public void onResponse(Response<ArrayList<MenuModel>> response, Retrofit retrofit) {
-
+            public void onResponse(Call<ArrayList<MenuModel>> call, Response<ArrayList<MenuModel>> response) {
                 ArrayList<MenuModel> menuList = response.body();
 
                 Log.d("TAG", "바디: " + response.body().toString());
@@ -110,11 +109,10 @@ public class FragmentMenu extends Fragment {
             }
 
             @Override
-            public void onFailure(Throwable t) {
+            public void onFailure(Call<ArrayList<MenuModel>> call, Throwable t) {
                 Log.d("실패", "onFailure: ");
                 Log.d("TAG", t.getMessage());
             }
-
         });
     }
     // populate the list view by adding data to arraylist

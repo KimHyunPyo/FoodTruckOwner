@@ -3,7 +3,6 @@ package kr.ac.jbnu.se.foodtruckowner.model;
 import android.view.View;
 
 import java.util.ArrayList;
-import java.util.StringTokenizer;
 
 /**
  * Simple POJO model for example

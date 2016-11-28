@@ -1,27 +1,20 @@
 package kr.ac.jbnu.se.foodtruckowner.adapter;
 
-import android.app.Dialog;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
- import android.widget.AdapterView;
- import android.widget.ArrayAdapter;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
  import com.ramotion.foldingcell.FoldingCell;
 
-import java.util.ArrayList;
 import java.util.HashSet;
  import java.util.List;
 
  import kr.ac.jbnu.se.foodtruckowner.R;
  import kr.ac.jbnu.se.foodtruckowner.model.Item;
-
-import static kr.ac.jbnu.se.foodtruckowner.R.id.folding;
-import static kr.ac.jbnu.se.foodtruckowner.R.id.head_image;
-import static kr.ac.jbnu.se.foodtruckowner.R.id.imageView;
 
 /**
  * Simple example of ListAdapter for using with Folding Cell
@@ -69,7 +62,7 @@ public class FoldingCellListAdapter extends ArrayAdapter<Item> {
         }
 
         // bind data from selected element to view through view holder
-        viewHolder.year.setText(item.getPrice());
+        viewHolder.year.setText(item.getYear());
         viewHolder.time.setText(item.getTime());
         viewHolder.date.setText(item.getDate());
         viewHolder.fromAddress.setText(item.getFromAddress());

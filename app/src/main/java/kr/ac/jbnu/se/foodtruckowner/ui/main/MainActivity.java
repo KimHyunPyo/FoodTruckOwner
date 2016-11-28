@@ -18,11 +18,11 @@ import kr.ac.jbnu.se.foodtruckowner.model.MenuModel;
 import kr.ac.jbnu.se.foodtruckowner.model.Owner;
 import kr.ac.jbnu.se.foodtruckowner.service.ApiService;
 import kr.ac.jbnu.se.foodtruckowner.ui.base.BaseDrawerActivity;
-import retrofit.Call;
-import retrofit.Callback;
-import retrofit.GsonConverterFactory;
-import retrofit.Response;
-import retrofit.Retrofit;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends BaseDrawerActivity {
     DrawerLayout mDrawerLayout;
@@ -79,6 +79,7 @@ public class MainActivity extends BaseDrawerActivity {
     }
 
     public void requestMyTruckInfo(int ownerId) {
+
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://server-blackdog11.c9users.io/")
                 .addConverterFactory(GsonConverterFactory.create())
@@ -88,24 +89,20 @@ public class MainActivity extends BaseDrawerActivity {
 
         //onwer_info에서 업주 아이디 가져와서 그 업주 아이디를 가진 푸드트럭의 메뉴를 받아온다.
         Call<FoodTruckModel> convertedContent = service.requestMyTruckInfo(ownerId);
-
         convertedContent.enqueue(new Callback<FoodTruckModel>() {
             @Override
-            public void onResponse(Response<FoodTruckModel> response, Retrofit retrofit) {
-
-                 myTruckInfo = response.body();
+            public void onResponse(Call<FoodTruckModel> call, Response<FoodTruckModel> response) {
+                myTruckInfo = response.body();
                 CachePot.getInstance().push(myTruckInfo);// MainActivity => modi_dialog_Fragment
 
                 Log.d("TAG", "트럭이름 : " + myTruckInfo.getFtName());
-
             }
 
             @Override
-            public void onFailure(Throwable t) {
+            public void onFailure(Call<FoodTruckModel> call, Throwable t) {
                 Log.d("실패", "onFailure: ");
                 Log.d("TAG", t.getMessage());
             }
-
         });
     }
 }

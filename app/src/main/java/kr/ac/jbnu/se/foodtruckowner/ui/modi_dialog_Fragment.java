@@ -25,11 +25,11 @@ import kr.ac.jbnu.se.foodtruckowner.model.MenuModel;
 import kr.ac.jbnu.se.foodtruckowner.model.Owner;
 import kr.ac.jbnu.se.foodtruckowner.service.ApiService;
 import kr.ac.jbnu.se.foodtruckowner.ui.navimenu.FragmentMenu;
-import retrofit.Call;
-import retrofit.Callback;
-import retrofit.GsonConverterFactory;
-import retrofit.Response;
-import retrofit.Retrofit;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 import static java.lang.Integer.parseInt;
 // TODO: 2016-11-27 메뉴 추가시 중복 처리 해야함
@@ -134,7 +134,7 @@ public class modi_dialog_Fragment extends DialogFragment {
 
         convertedContent.enqueue(new Callback<Boolean>() {
             @Override
-            public void onResponse(Response<Boolean> response, Retrofit retrofit) {
+            public void onResponse(Call<Boolean> call, Response<Boolean> response) {
                 Log.d("TAG", "메뉴추가 성공?" + response.body().toString());
 
                 menuAddSuccess = response.body();
@@ -156,7 +156,7 @@ public class modi_dialog_Fragment extends DialogFragment {
             }
 
             @Override
-            public void onFailure(Throwable t) {
+            public void onFailure(Call<Boolean> call, Throwable t) {
                 Log.d("실패", "onFailure: ");
                 Log.d("TAG", t.getMessage());
             }

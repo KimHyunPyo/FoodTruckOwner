@@ -30,11 +30,11 @@ import java.util.regex.Pattern;
 
 import kr.ac.jbnu.se.foodtruckowner.R;
 import kr.ac.jbnu.se.foodtruckowner.service.ApiService;
-import retrofit.Call;
-import retrofit.Callback;
-import retrofit.GsonConverterFactory;
-import retrofit.Response;
-import retrofit.Retrofit;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 // TODO: 2016-11-26 핸드폰인증, 사업자 등록번호 인증 추가필요
 public class SignUpActivity extends AppCompatActivity implements ProgressGenerator.OnCompleteListener {
@@ -227,9 +227,7 @@ public class SignUpActivity extends AppCompatActivity implements ProgressGenerat
 
         convertedContent.enqueue(new Callback<Integer>() {
             @Override
-            public void onResponse(Response<Integer> response, Retrofit retrofit) {
-                //Log.d("회원가입", "회원가입 : " + response.body().toString());
-
+            public void onResponse(Call<Integer> call, Response<Integer> response) {
                 if (response.body().toString() == "1") {
                     signupStatus = 1;
                 } else if (response.body().toString() == "2") {
@@ -237,22 +235,10 @@ public class SignUpActivity extends AppCompatActivity implements ProgressGenerat
                 } else {
                     signupStatus = 3;
                 }
-
-                // isSuccess is true if response code => 200 and <= 300
-                if (!response.isSuccess()) {
-                    // print response body if unsuccessful
-                    try {
-                        Log.d("response unsuccessful: ", response.errorBody().string());
-                    } catch (IOException e) {
-                        // do nothing
-                    }
-                    return;
-                }
-                // if parsing the JSON body failed, `response.body()` returns null
             }
 
             @Override
-            public void onFailure(Throwable t) {
+            public void onFailure(Call<Integer> call, Throwable t) {
                 Log.d("실패", t.getMessage().toString());
             }
         });

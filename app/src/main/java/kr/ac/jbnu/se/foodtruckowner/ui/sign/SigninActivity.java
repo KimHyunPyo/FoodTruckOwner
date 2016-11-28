@@ -25,11 +25,11 @@ import kr.ac.jbnu.se.foodtruckowner.R;
 import kr.ac.jbnu.se.foodtruckowner.model.Owner;
 import kr.ac.jbnu.se.foodtruckowner.service.ApiService;
 import kr.ac.jbnu.se.foodtruckowner.ui.main.MainActivity;
-import retrofit.Call;
-import retrofit.Callback;
-import retrofit.GsonConverterFactory;
-import retrofit.Response;
-import retrofit.Retrofit;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 import static java.sql.Types.NULL;
 
@@ -125,19 +125,7 @@ public class SigninActivity extends AppCompatActivity {
 
         convertedContent.enqueue(new Callback<Owner>() {
             @Override
-            public void onResponse(Response<Owner> response, Retrofit retrofit) {
-                Log.d("Response status code: ", String.valueOf(response.code()));
-
-                // isSuccess is true if response code => 200 and <= 300
-                if (!response.isSuccess()) {
-                    // print response body if unsuccessful
-                    try {
-                        Log.d("response unsuccessful: ", response.errorBody().string());
-                    } catch (IOException e) {
-                        // do nothing
-                    }
-                    return;
-                }
+            public void onResponse(Call<Owner> call, Response<Owner> response) {
                 // if parsing the JSON body failed, `response.body()` returns null
                 Owner decodedResponse = response.body();
                 owner_info = response.body();
@@ -161,7 +149,7 @@ public class SigninActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Throwable t) {
+            public void onFailure(Call<Owner> call, Throwable t) {
                 Log.d("실패", t.getMessage().toString());
             }
         });
