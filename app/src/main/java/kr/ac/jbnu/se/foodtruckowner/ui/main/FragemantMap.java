@@ -35,7 +35,6 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.hedgehog.ratingbar.RatingBar;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import kr.ac.jbnu.se.foodtruckowner.R;
@@ -104,12 +103,13 @@ public class FragemantMap extends Fragment implements GoogleApiClient.OnConnecti
         loc_agreee.setOnCheckedChangeListener(new Switch.OnCheckedChangeListener(){
             public void onCheckedChanged(CompoundButton cb, boolean isChecking){
                 String str = String.valueOf(isChecking);
-                if(isChecking)
-                {
-
+                if (isChecking) {
+                    if (mapview.isActivated()== false) {
+                        mapview.onResume();
+                    }
                     Toast.makeText(getActivity(), "위치공개해라", Toast.LENGTH_LONG).show();
-                }
-                else{
+                } else {
+                    mapview.onPause();
                     gpsService.stopUsingGPS();
                     Toast.makeText(getActivity(), "공개하지마라", Toast.LENGTH_LONG).show();
                 }

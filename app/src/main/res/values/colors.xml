@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorAccent">#f4f0ff</color>
+    <color name="colorAccent">#FF7623</color>
     <color name="black">#000</color>
-    <color name="orange">#FA0</color>
+    <color name="orange">#ff5722</color>
     <color name="white">#FFF</color>
-    <color name="colorPrimary">#FF7623</color>
+    <color name="colorPrimary">#ff5722</color>
     <color name="colorPrimaryDark">#E83F13</color>
     <color name="bgBackSideColor">#f4f0ff</color>
     <color name="bgTitleLeft">#ff5722</color>

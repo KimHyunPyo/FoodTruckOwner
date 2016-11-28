@@ -92,9 +92,9 @@ public class TabFragment extends Fragment {
 
             switch (position) {
                 case 0:
-                    return "Home";
+                    return "홈";
                 case 1:
-                    return "Review";
+                    return "리뷰";
             }
             return null;
         }

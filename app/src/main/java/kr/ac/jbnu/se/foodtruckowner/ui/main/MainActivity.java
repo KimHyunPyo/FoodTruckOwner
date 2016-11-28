@@ -79,7 +79,6 @@ public class MainActivity extends BaseDrawerActivity {
     }
 
     public void requestMyTruckInfo(int ownerId) {
-
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://server-blackdog11.c9users.io/")
                 .addConverterFactory(GsonConverterFactory.create())
@@ -89,6 +88,7 @@ public class MainActivity extends BaseDrawerActivity {
 
         //onwer_info에서 업주 아이디 가져와서 그 업주 아이디를 가진 푸드트럭의 메뉴를 받아온다.
         Call<FoodTruckModel> convertedContent = service.requestMyTruckInfo(ownerId);
+
         convertedContent.enqueue(new Callback<FoodTruckModel>() {
             @Override
             public void onResponse(Call<FoodTruckModel> call, Response<FoodTruckModel> response) {
@@ -96,6 +96,7 @@ public class MainActivity extends BaseDrawerActivity {
                 CachePot.getInstance().push(myTruckInfo);// MainActivity => modi_dialog_Fragment
 
                 Log.d("TAG", "트럭이름 : " + myTruckInfo.getFtName());
+
             }
 
             @Override
@@ -103,6 +104,7 @@ public class MainActivity extends BaseDrawerActivity {
                 Log.d("실패", "onFailure: ");
                 Log.d("TAG", t.getMessage());
             }
+
         });
     }
 }
