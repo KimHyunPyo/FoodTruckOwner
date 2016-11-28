@@ -1,5 +1,7 @@
 package kr.ac.jbnu.se.foodtruckowner.ui.main;
+
 import android.os.Bundle;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -29,25 +31,18 @@ public class MainActivity extends BaseDrawerActivity {
     NavigationView mNavigationView;
     FragmentManager mFragmentManager;
     FragmentTransaction mFragmentTransaction;
-
     private FoodTruckModel myTruckInfo;
     private Owner ownerInfo;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main);
-
         ownerInfo = CustomCachePot.getInstance().pop(Owner.class); //SignIn => MainActivity
-        Log.d("TAG", "MainActivity: 유저정보 " +  ownerInfo.getEmail());
-
+        Log.d("TAG", "MainActivity: 유저정보 " + ownerInfo.getEmail());
         requestMyTruckInfo(ownerInfo.getId());
-
         CachePot.getInstance().push(ownerInfo); //MainActivity => FragmentMenu
         Log.d("TAG", "MainActivity: 보낸 유저정보" + ownerInfo.getEmail()); //-> 스택처럼 Pop하면 사라지므로 다시 넣어서 써야함
-
-
 //        ReviewFragment reviewFragment = (ReviewFragment) getSupportFragmentManager().findFragmentById(R.id.reviewListFragment);
 //        reviewFragment.addItem(ContextCompat.getDrawable(this, R.drawable.profle),
 //                "New Box", "New Account Box Black 36dp");
@@ -69,7 +64,7 @@ public class MainActivity extends BaseDrawerActivity {
          */
         mFragmentManager = getSupportFragmentManager();
         mFragmentTransaction = mFragmentManager.beginTransaction();
-        mFragmentTransaction.replace(R.id.containerView,new TabFragment()).commit();
+        mFragmentTransaction.replace(R.id.containerView, new TabFragment()).commit();
         /**
          * Setup click events on the Navigation View Items.
          */
@@ -77,7 +72,6 @@ public class MainActivity extends BaseDrawerActivity {
          * Setup Drawer Toggle of the Toolbar
          */
     }
-
     public void requestMyTruckInfo(int ownerId) {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://server-blackdog11.c9users.io/")
@@ -93,7 +87,7 @@ public class MainActivity extends BaseDrawerActivity {
             @Override
             public void onResponse(Response<FoodTruckModel> response, Retrofit retrofit) {
 
-                 myTruckInfo = response.body();
+                myTruckInfo = response.body();
                 CachePot.getInstance().push(myTruckInfo);// MainActivity => modi_dialog_Fragment
 
                 Log.d("TAG", "트럭이름 : " + myTruckInfo.getFtName());

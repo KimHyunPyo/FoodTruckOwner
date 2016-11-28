@@ -24,6 +24,8 @@ import kr.ac.jbnu.se.foodtruckowner.CustomCachePot;
 import kr.ac.jbnu.se.foodtruckowner.R;
 import kr.ac.jbnu.se.foodtruckowner.model.Owner;
 import kr.ac.jbnu.se.foodtruckowner.service.ApiService;
+import kr.ac.jbnu.se.foodtruckowner.ui.base.BaseActivity;
+import kr.ac.jbnu.se.foodtruckowner.ui.base.BaseDrawerActivity;
 import kr.ac.jbnu.se.foodtruckowner.ui.main.MainActivity;
 import retrofit.Call;
 import retrofit.Callback;
@@ -33,7 +35,7 @@ import retrofit.Retrofit;
 
 import static java.sql.Types.NULL;
 
-public class SigninActivity extends AppCompatActivity {
+public class SigninActivity extends BaseActivity {
     private SharedPreferences mPref;
     private SharedPreferences pref_id_store;
     private SharedPreferences pref_store_id;
@@ -52,9 +54,10 @@ public class SigninActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.signin_activity);
         overridePendingTransition(R.anim.trans_left_in, R.anim.trans_left_out);
-
+        android.support.v7.widget.Toolbar toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.toolbar);
         mPref = PreferenceManager.getDefaultSharedPreferences(this);
         at_login = mPref.getBoolean("auto_login", false);
         pref_id_store = getSharedPreferences("id_store", NULL);
@@ -62,19 +65,9 @@ public class SigninActivity extends AppCompatActivity {
         et_email = (EditText) findViewById(R.id.et_signin_email);
         et_password = (EditText) findViewById(R.id.et_signin_pw);
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("로그인");
-        toolbar.setTitleTextColor(Color.WHITE);
-
         sw_auto_login = (Switch) findViewById(R.id.sw_auto_log);
         sw_id_store = (Switch) findViewById(R.id.sw_stroe_id);
         setSupportActionBar(toolbar);
-
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayShowCustomEnabled(true); //커스터마이징 하기 위해 필요
-        actionBar.setDisplayShowTitleEnabled(false);
-        actionBar.setDisplayHomeAsUpEnabled(true); // 뒤로가기 버튼, 디폴트로 true만 해도 백버튼이 생김
-        //actionBar.setHomeAsUpIndicator(R.drawable.button_back); //뒤로가기 버튼을 본인이 만든 아이콘으로 하기 위해 필요
 
         sw_auto_login.setChecked(at_login);
         sw_id_store.setChecked(pref_id_store.getBoolean("id_store", false));
@@ -142,7 +135,7 @@ public class SigninActivity extends AppCompatActivity {
                 Owner decodedResponse = response.body();
                 owner_info = response.body();
                 CustomCachePot.getInstance().push(owner_info); //메뉴프레그먼트에서 쓸 수 있게 객체 정보 push Signin => MainActivity
-                Log.d("로그인", "업주아이디 : "+ String.valueOf(decodedResponse.getId()));
+                Log.d("로그인", "업주아이디 : " + String.valueOf(decodedResponse.getId()));
 
                 if (decodedResponse == null) {
                     Log.d("TAG", "아이디비번오류");

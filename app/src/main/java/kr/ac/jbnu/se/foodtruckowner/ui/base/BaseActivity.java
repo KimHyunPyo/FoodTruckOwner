@@ -45,7 +45,6 @@ public class BaseActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         inboxMenuItem = menu.findItem(R.id.action_inbox);
-        inboxMenuItem.setActionView(R.layout.menu_item_view);
         return true;
     }
 
@@ -53,7 +52,4 @@ public class BaseActivity extends AppCompatActivity {
         return toolbar;
     }
 
-    public MenuItem getInboxMenuItem() {
-        return inboxMenuItem;
-    }
 }

@@ -40,8 +40,8 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
 import kr.ac.jbnu.se.foodtruckowner.R;
 import kr.ac.jbnu.se.foodtruckowner.service.GpsService;
 
-public class FragemantMap extends Fragment implements GoogleApiClient.OnConnectionFailedListener,GoogleApiClient.ConnectionCallbacks,
-        OnMapReadyCallback, LocationListener{
+public class FragemantMap extends Fragment implements GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks,
+        OnMapReadyCallback, LocationListener {
 
     private GoogleApiClient mGoogleApiClient;
     private static final String STATE_RESOLVING_ERROR = "resolving_error";
@@ -65,7 +65,7 @@ public class FragemantMap extends Fragment implements GoogleApiClient.OnConnecti
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_map, container, false);
-        mapview=(MapView)view.findViewById(R.id.map);
+        mapview = (MapView) view.findViewById(R.id.map);
         mGoogleApiClient = new GoogleApiClient.Builder(getContext())
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
@@ -78,31 +78,30 @@ public class FragemantMap extends Fragment implements GoogleApiClient.OnConnecti
         gpsService = new GpsService(getActivity());
         GooglePlayServicesUtil.isGooglePlayServicesAvailable(getActivity());
         map = mapview.getMap();
-        turn_buss = (Switch)view.findViewById(R.id.sw_turn_buss);
-        loc_agreee = (Switch)view.findViewById(R.id.sw_loc_agree);
-        turn_buss.setOnCheckedChangeListener(new Switch.OnCheckedChangeListener(){
-            public void onCheckedChanged(CompoundButton cb, boolean isChecking){
+        turn_buss = (Switch) view.findViewById(R.id.sw_turn_buss);
+        loc_agreee = (Switch) view.findViewById(R.id.sw_loc_agree);
+        turn_buss.setOnCheckedChangeListener(new Switch.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton cb, boolean isChecking) {
                 String str = String.valueOf(isChecking);
-                if(isChecking)
-                {
+                if (isChecking) {
                     Toast.makeText(getActivity(), "영업시작한다", Toast.LENGTH_LONG).show();
-                }
-                else{
+                } else {
                     Toast.makeText(getActivity(), "영업종료한다", Toast.LENGTH_LONG).show();
                 }
             }
 
 
         });
-        loc_agreee.setOnCheckedChangeListener(new Switch.OnCheckedChangeListener(){
-            public void onCheckedChanged(CompoundButton cb, boolean isChecking){
+        loc_agreee.setOnCheckedChangeListener(new Switch.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton cb, boolean isChecking) {
                 String str = String.valueOf(isChecking);
-                if(isChecking)
-                {
-
+                if (isChecking) {
+                    if (mapview.isActivated()== false) {
+                        mapview.onResume();
+                    }
                     Toast.makeText(getActivity(), "위치공개해라", Toast.LENGTH_LONG).show();
-                }
-                else{
+                } else {
+                    mapview.onPause();
                     gpsService.stopUsingGPS();
                     Toast.makeText(getActivity(), "공개하지마라", Toast.LENGTH_LONG).show();
                 }
@@ -113,7 +112,7 @@ public class FragemantMap extends Fragment implements GoogleApiClient.OnConnecti
         return view;
     }
 
-    private void init(){
+    private void init() {
         AlertDialog.Builder alert = new AlertDialog.Builder(getContext());
         alert.setTitle("GPS설정정보");
         alert.setMessage("현재위치를 사용하시려면 아니오를\n위치를 새로 설정하시려면 예를\n눌러주세요.");
@@ -157,7 +156,8 @@ public class FragemantMap extends Fragment implements GoogleApiClient.OnConnecti
         });
         alert.show();
     }
-    private void setCuttrntLocation(){
+
+    private void setCuttrntLocation() {
         if (gpsService.isGetLocation()) {
             USER_X = gpsService.getLatitude();
             USER_Y = gpsService.getLongitude();
@@ -183,6 +183,7 @@ public class FragemantMap extends Fragment implements GoogleApiClient.OnConnecti
             gpsService.showSettingsAlert();
         }
     }
+
     @Override
     public void onStart() {
         super.onStart();
@@ -191,11 +192,13 @@ public class FragemantMap extends Fragment implements GoogleApiClient.OnConnecti
             mGoogleApiClient.connect();
         }
     }
+
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putBoolean(STATE_RESOLVING_ERROR, mResolvingError);
     }
+
     @Override
     public void onStop() {
         Log.d("구글맵", "온스탑 ");
@@ -203,6 +206,7 @@ public class FragemantMap extends Fragment implements GoogleApiClient.OnConnecti
         stopGps();
         super.onStop();
     }
+
     @Override
     public void onMapReady(GoogleMap googleMap) {
         //안드 6.0 달라진 퍼미션
@@ -224,13 +228,14 @@ public class FragemantMap extends Fragment implements GoogleApiClient.OnConnecti
             // Show rationale and request permission.
         }
     }
+
     //최초 한번만 현위치 잡음
     @Override
     public void onConnected(@Nullable Bundle bundle) {
         Log.d("구글맵", "온커넥티드");
         Location mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
         if (mLastLocation != null) {
-            CuttrntLocation = new LatLng(mLastLocation.getLatitude(),mLastLocation.getLongitude());
+            CuttrntLocation = new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude());
             Log.d("구글맵", "현재위치 저장했음" + mLastLocation.getLatitude() + "/" + mLastLocation.getLongitude());
             map.moveCamera(CameraUpdateFactory.newLatLng(CuttrntLocation));
             // Map 을 zoom 합니다.
@@ -256,6 +261,7 @@ public class FragemantMap extends Fragment implements GoogleApiClient.OnConnecti
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
         Log.d("구글맵", "온커넥션페일드");
     }
+
     //위치정보 바뀔때마다 위치 갱신함
     @Override
     public void onLocationChanged(Location location) {
@@ -265,16 +271,15 @@ public class FragemantMap extends Fragment implements GoogleApiClient.OnConnecti
     }
 
     @Override
-    public void onDestroy()
-    {
+    public void onDestroy() {
         Log.d("구글맵", "온디스트로이");
         gpsService.stopUsingGPS();
         stopGps();
         super.onDestroy();
 
     }
-    public void stopGps()
-    {
+
+    public void stopGps() {
         gpsService.stopUsingGPS();
         Log.d("구글맵", "스탑지피에스");
         if (this.mGoogleApiClient.isConnected()) {
@@ -285,69 +290,69 @@ public class FragemantMap extends Fragment implements GoogleApiClient.OnConnecti
 
 
     public static class modi_dialog_Fragment extends DialogFragment {
-       EditText et_menu_name;
-       EditText et_menu_price;
-       Button bt_done;
-       Button bt_select_im;
-       static String DialogboxTitle;
+        EditText et_menu_name;
+        EditText et_menu_price;
+        Button bt_done;
+        Button bt_select_im;
+        static String DialogboxTitle;
 
-       public interface InputNameDialogListener {
-           void onFinishInputDialog(String inputText);
-       }
+        public interface InputNameDialogListener {
+            void onFinishInputDialog(String inputText);
+        }
 
-       //---empty constructor required
-       public modi_dialog_Fragment() {
+        //---empty constructor required
+        public modi_dialog_Fragment() {
 
-       }
+        }
 
-       //---set the title of the dialog window
-       public void setDialogTitle(String title) {
-           DialogboxTitle = title;
-       }
+        //---set the title of the dialog window
+        public void setDialogTitle(String title) {
+            DialogboxTitle = title;
+        }
 
-       public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle saveInstanceState) {
+        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle saveInstanceState) {
 
-           View view = inflater.inflate(
-                   R.layout.fragment_modi_dialog_, container);
+            View view = inflater.inflate(
+                    R.layout.fragment_modi_dialog_, container);
 
-           //---get the EditText and Button views
-           et_menu_name = (EditText) view.findViewById(R.id.et_menu_Name);
-           et_menu_name = (EditText) view.findViewById(R.id.et_menu_price);
-           bt_done = (Button) view.findViewById(R.id.bt_done);
-           bt_select_im = (Button) view.findViewById(R.id.bt_select_im);
-           //---event handler for the button
-           bt_done.setOnClickListener(new View.OnClickListener() {
-               public void onClick(View view) {
+            //---get the EditText and Button views
+            et_menu_name = (EditText) view.findViewById(R.id.et_menu_Name);
+            et_menu_name = (EditText) view.findViewById(R.id.et_menu_price);
+            bt_done = (Button) view.findViewById(R.id.bt_done);
+            bt_select_im = (Button) view.findViewById(R.id.bt_select_im);
+            //---event handler for the button
+            bt_done.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View view) {
 
-                   System.out.println("추가됨");
-                   SweetAlertDialog sd = new SweetAlertDialog(getActivity());
-                   sd.setCancelable(true);
-                   sd.setCanceledOnTouchOutside(true);
-                   sd.show();
+                    System.out.println("추가됨");
+                    SweetAlertDialog sd = new SweetAlertDialog(getActivity());
+                    sd.setCancelable(true);
+                    sd.setCanceledOnTouchOutside(true);
+                    sd.show();
 
 
-                   //---gets the calling activity
-                   //InputNameDialogListener activity = (InputNameDialogListener) getActivity();
-                   //activity.onFinishInputDialog(et_menu_name.getText().toString());
-                   //---dismiss the alert
-                   dismiss();
-               }
-           });
+                    //---gets the calling activity
+                    //InputNameDialogListener activity = (InputNameDialogListener) getActivity();
+                    //activity.onFinishInputDialog(et_menu_name.getText().toString());
+                    //---dismiss the alert
+                    dismiss();
+                }
+            });
 
-           bt_select_im.setOnClickListener(new View.OnClickListener() {
-               public void onClick(View view) {
-               }
-           });
+            bt_select_im.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View view) {
+                }
+            });
 
-           //---show the keyboard automatically
-           et_menu_name.requestFocus();
-           getDialog().getWindow().setSoftInputMode(
-                   WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+            //---show the keyboard automatically
+            et_menu_name.requestFocus();
+            getDialog().getWindow().setSoftInputMode(
+                    WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
 
-           //---set the title for the dialog
-           getDialog().setTitle(DialogboxTitle);
+            //---set the title for the dialog
+            getDialog().setTitle(DialogboxTitle);
 
-           return view;
-       }
-   }
+            return view;
+        }
+    }
 }

@@ -21,7 +21,7 @@ import java.util.HashSet;
 
 import static kr.ac.jbnu.se.foodtruckowner.R.id.folding;
 import static kr.ac.jbnu.se.foodtruckowner.R.id.head_image;
-import static kr.ac.jbnu.se.foodtruckowner.R.id.imageView;
+//import static kr.ac.jbnu.se.foodtruckowner.R.id.imageView;
 
 /**
  * Simple example of ListAdapter for using with Folding Cell

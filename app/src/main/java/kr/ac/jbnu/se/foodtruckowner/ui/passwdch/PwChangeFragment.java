@@ -28,7 +28,7 @@ public class PwChangeFragment extends Fragment {
         bt_pw_ch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getActivity(),"비번바꿔라",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "비번바꿔라", Toast.LENGTH_SHORT).show();
             }
         });
 
