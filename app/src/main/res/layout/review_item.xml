@@ -54,7 +54,7 @@
                 android:layout_alignParentEnd="true" />
         </RelativeLayout>
 
-        <foodtruckuser.randombox.sweng.cbnu.com.foodtruckuser.ui.SquaredFrameLayout
+        <kr.ac.jbnu.se.foodtruckowner.ui.SquaredFrameLayout
             android:id="@+id/vImageRoot"
             android:layout_width="300dp"
             android:layout_height="300dp"
@@ -79,7 +79,7 @@
                 android:layout_height="match_parent"
                 android:background="@drawable/bg_like_circle_background"
                 android:visibility="invisible" />
-        </foodtruckuser.randombox.sweng.cbnu.com.foodtruckuser.ui.SquaredFrameLayout>
+        </kr.ac.jbnu.se.foodtruckowner.ui.SquaredFrameLayout>
 
         <TextView
             android:id="@+id/ivFeedBottom"

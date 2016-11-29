@@ -2,11 +2,8 @@ package kr.ac.jbnu.se.foodtruckowner.ui.sign;
 
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.content.Intent;
-import android.graphics.Color;
-import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
@@ -15,23 +12,16 @@ import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.Toast;
 
-import com.github.kimkevin.cachepot.CachePot;
-
-import java.io.IOException;
-import java.io.Serializable;
-
 import kr.ac.jbnu.se.foodtruckowner.CustomCachePot;
 import kr.ac.jbnu.se.foodtruckowner.R;
 import kr.ac.jbnu.se.foodtruckowner.model.Owner;
 import kr.ac.jbnu.se.foodtruckowner.service.ApiService;
+import kr.ac.jbnu.se.foodtruckowner.service.ServiceGenerator;
 import kr.ac.jbnu.se.foodtruckowner.ui.base.BaseActivity;
-import kr.ac.jbnu.se.foodtruckowner.ui.base.BaseDrawerActivity;
 import kr.ac.jbnu.se.foodtruckowner.ui.main.MainActivity;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 import static java.sql.Types.NULL;
 
@@ -107,37 +97,30 @@ public class SigninActivity extends BaseActivity {
             editor.commit();
         }
 
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://server-blackdog11.c9users.io")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        ApiService service = retrofit.create(ApiService.class);
-
+        ApiService service = ServiceGenerator.createService(ApiService.class);
         Call<Owner> convertedContent = service.request_login(et_email.getText().toString(), et_password.getText().toString());
-
         convertedContent.enqueue(new Callback<Owner>() {
             @Override
             public void onResponse(Call<Owner> call, Response<Owner> response) {
                 // if parsing the JSON body failed, `response.body()` returns null
-                Owner decodedResponse = response.body();
                 owner_info = response.body();
-                CustomCachePot.getInstance().push(owner_info); //메뉴프레그먼트에서 쓸 수 있게 객체 정보 push Signin => MainActivity
-                Log.d("로그인", "업주아이디 : " + String.valueOf(decodedResponse.getId()));
 
-                if (decodedResponse == null) {
+                if (owner_info == null) {
                     Log.d("TAG", "아이디비번오류");
                     Toast.makeText(getApplicationContext(), "아이디 또는 비밀번호가 일치하지 않습니다.", Toast.LENGTH_LONG).show();
                     return;
-                }
-
-                if (String.valueOf(decodedResponse.getEmail()).equals(et_email.getText().toString())) {
+                } else if (String.valueOf(owner_info.getEmail()).equals(et_email.getText().toString())) {
                     Log.d("TAGG", "로그인성공!");
+
+                    CustomCachePot.getInstance().push(owner_info); //메뉴프레그먼트에서 쓸 수 있게 객체 정보 push Signin => MainActivity
+
                     Toast.makeText(getApplicationContext(), "환영합니다. 푸드트럭", Toast.LENGTH_LONG).show();
+
                     Intent loginIntent = new Intent(SigninActivity.this, MainActivity.class);
-//                    loginIntent.putExtra("owner_info", owner_info);
                     startActivity(loginIntent);
                     finish();
+                } else {
+                    Log.d("TAG", "잘못된 정보");
                 }
             }
 
