@@ -9,20 +9,16 @@ import android.view.Window;
 
 import com.github.kimkevin.cachepot.CachePot;
 
-import java.util.ArrayList;
-
 import kr.ac.jbnu.se.foodtruckowner.CustomCachePot;
 import kr.ac.jbnu.se.foodtruckowner.R;
 import kr.ac.jbnu.se.foodtruckowner.model.FoodTruckModel;
-import kr.ac.jbnu.se.foodtruckowner.model.MenuModel;
 import kr.ac.jbnu.se.foodtruckowner.model.Owner;
 import kr.ac.jbnu.se.foodtruckowner.service.ApiService;
+import kr.ac.jbnu.se.foodtruckowner.service.ServiceGenerator;
 import kr.ac.jbnu.se.foodtruckowner.ui.base.BaseDrawerActivity;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends BaseDrawerActivity {
     DrawerLayout mDrawerLayout;
@@ -44,7 +40,7 @@ public class MainActivity extends BaseDrawerActivity {
 
         requestMyTruckInfo(ownerInfo.getId());
 
-        CachePot.getInstance().push(ownerInfo); //MainActivity => FragmentMenu
+        //CachePot.getInstance().push(ownerInfo); //MainActivity => FragmentMenu
         Log.d("TAG", "MainActivity: 보낸 유저정보" + ownerInfo.getEmail()); //-> 스택처럼 Pop하면 사라지므로 다시 넣어서 써야함
 
 
@@ -79,21 +75,22 @@ public class MainActivity extends BaseDrawerActivity {
     }
 
     public void requestMyTruckInfo(int ownerId) {
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://server-blackdog11.c9users.io/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        ApiService service = retrofit.create(ApiService.class);
 
         //onwer_info에서 업주 아이디 가져와서 그 업주 아이디를 가진 푸드트럭의 메뉴를 받아온다.
+        ApiService service = ServiceGenerator.createService(ApiService.class);
         Call<FoodTruckModel> convertedContent = service.requestMyTruckInfo(ownerId);
-
         convertedContent.enqueue(new Callback<FoodTruckModel>() {
             @Override
             public void onResponse(Call<FoodTruckModel> call, Response<FoodTruckModel> response) {
                 myTruckInfo = response.body();
-                CachePot.getInstance().push(myTruckInfo);// MainActivity => modi_dialog_Fragment
+
+                if(myTruckInfo != null) {
+                    //푸드트럭 정보가 서버에 저장되어 있으면
+                    CachePot.getInstance().push(myTruckInfo);// MainActivity => modi_dialog_Fragment
+                }
+                else {
+                    //푸드트럭 정보가 없으면
+                }
 
                 Log.d("TAG", "트럭이름 : " + myTruckInfo.getFtName());
 
