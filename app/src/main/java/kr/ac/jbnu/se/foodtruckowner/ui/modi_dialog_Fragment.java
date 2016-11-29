@@ -12,26 +12,19 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.github.kimkevin.cachepot.CachePot;
 import com.google.gson.JsonObject;
-
-import java.util.ArrayList;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import kr.ac.jbnu.se.foodtruckowner.R;
 import kr.ac.jbnu.se.foodtruckowner.adapter.MenuAdapter;
 import kr.ac.jbnu.se.foodtruckowner.model.FoodTruckModel;
-import kr.ac.jbnu.se.foodtruckowner.model.MenuModel;
-import kr.ac.jbnu.se.foodtruckowner.model.Owner;
 import kr.ac.jbnu.se.foodtruckowner.service.ApiService;
-import kr.ac.jbnu.se.foodtruckowner.ui.navimenu.FragmentMenu;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-import static java.lang.Integer.parseInt;
 // TODO: 2016-11-27 메뉴 추가시 중복 처리 해야함
 public class modi_dialog_Fragment extends DialogFragment {
     EditText et_menu_name;
@@ -66,10 +59,7 @@ public class modi_dialog_Fragment extends DialogFragment {
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle saveInstanceState) {
 
-        truckInfo = CachePot.getInstance().pop(FoodTruckModel.class); //MainActivity => modi_dialog_Fragment
-        Log.d("TAG", "메뉴추가 : 트럭 id " + truckInfo.getFT_ID());
-
-        CachePot.getInstance().push(truckInfo); //다이얼로그 다시 열었을 때 오류 안나게하려고
+        Log.d("TAG", "메뉴추가 : 트럭 id " + FoodTruckModel.getInstance().getFT_ID());
 
         View view = inflater.inflate(
                 R.layout.fragment_modi_dialog_, container);

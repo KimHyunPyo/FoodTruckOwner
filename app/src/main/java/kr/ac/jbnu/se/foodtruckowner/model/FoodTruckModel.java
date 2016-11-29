@@ -118,8 +118,8 @@ public class FoodTruckModel {
         this.FT_LOCATIONNAME = FT_LOCATIONNAME;
     }
 
-    public FoodTruckUrlModel getFT_IMAGE_URL() {
-        return FT_IMAGE_URL;
+    public String getFT_IMAGE_URL() {
+        return FT_IMAGE_URL.getUrl();
     }
 
     public void setFT_IMAGE_URL(FoodTruckUrlModel FT_IMAGE_URL) {

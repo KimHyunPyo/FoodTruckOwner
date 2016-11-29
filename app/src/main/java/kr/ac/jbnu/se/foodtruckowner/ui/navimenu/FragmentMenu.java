@@ -1,10 +1,8 @@
 package kr.ac.jbnu.se.foodtruckowner.ui.navimenu;
 
 
-import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.RecyclerView;
@@ -15,18 +13,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import com.github.kimkevin.cachepot.CachePot;
-
 import java.util.ArrayList;
 
-import cn.pedant.SweetAlert.SweetAlertDialog;
 import kr.ac.jbnu.se.foodtruckowner.R;
 import kr.ac.jbnu.se.foodtruckowner.adapter.MenuAdapter;
 import kr.ac.jbnu.se.foodtruckowner.model.MenuModel;
 import kr.ac.jbnu.se.foodtruckowner.ui.modi_dialog_Fragment;
 import kr.ac.jbnu.se.foodtruckowner.model.Owner;
 import kr.ac.jbnu.se.foodtruckowner.service.ApiService;
-import kr.ac.jbnu.se.foodtruckowner.ui.sign.SigninActivity;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -68,16 +62,8 @@ public class FragmentMenu extends Fragment {
 
     public void initMenu() {
         listitems.clear();
-
-        Log.d("TAG", "됌?");
-        //유저 정보 담은 객체 다른 액티비티에서 담아오는거
-        owner_info = CachePot.getInstance().pop(Owner.class); //MainActivity => FragmentMenu
-        Log.d("TAG", "오너 아이디 : " + owner_info.getId());
-
-        CachePot.getInstance().push(owner_info); //다시 메뉴버튼 눌렀을 때 오류 안나게하려고
-
-        //오너 아이디를 줘서 그 트럭의 메뉴 받아옴
-        requestTruckMenu(owner_info.getId());
+        Log.d("TAG", "오너 아이디 : " + Owner.getInstance().getId());
+        requestTruckMenu(Owner.getInstance().getId());
     }
 
     // TODO: 2016-11-27 번호가 중간에 비면 안나옴. 중간 삭제시 id재정렬 해줘야함
