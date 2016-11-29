@@ -1,20 +1,16 @@
 package kr.ac.jbnu.se.foodtruckowner.ui;
 
 import android.os.Bundle;
-import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-
 
 import java.util.ArrayList;
 
@@ -22,7 +18,14 @@ import kr.ac.jbnu.se.foodtruckowner.R;
 
 import kr.ac.jbnu.se.foodtruckowner.adapter.ReviewAnimator;
 import kr.ac.jbnu.se.foodtruckowner.adapter.ReviewItemAdapter;
-import kr.ac.jbnu.se.foodtruckowner.model.ReViewItem;
+import kr.ac.jbnu.se.foodtruckowner.model.FoodTruckModel;
+import kr.ac.jbnu.se.foodtruckowner.model.MenuModel;
+import kr.ac.jbnu.se.foodtruckowner.model.ReviewItem;
+import kr.ac.jbnu.se.foodtruckowner.service.ApiService;
+import kr.ac.jbnu.se.foodtruckowner.service.ServiceGenerator;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by hyunjung on 2016-11-25.
@@ -30,21 +33,7 @@ import kr.ac.jbnu.se.foodtruckowner.model.ReViewItem;
 
 public class AcitivityTruckReview extends Fragment {
 
-    private ArrayList<ReViewItem> reviewitems = new ArrayList<>();
-    private static final Integer[] CenterIMAGES= {0, 0, 0, R.drawable.menuitem2,R.drawable.menuitem3};
-
-    private static final Integer[] BottomIMAGES= {R.drawable.img_feed_bottom_1,R.drawable.img_feed_bottom_2,
-            R.drawable.img_feed_bottom_1,R.drawable.img_feed_bottom_2,R.drawable.img_feed_bottom_1};
-
-    private static final Integer[] UserIMAGES= {R.drawable.truck1,R.drawable.truck2,R.drawable.truck3,
-            R.drawable.truck4,R.drawable.truck5};
-    private static final Integer[] LikeConunts= {33,112,63,235,100533};
-    private static final String[] UserNames= {"도혀니", "으버미", "현펴", "횬죵이", "영비니"};
-    private static final String[] WriteText = {"이쁜 현정아!~", "기숙사 가서 졸지말고!", "리뷰 빨리 옮기거랔ㅋㅋㅋ\n사진 없는거 그대로나오는거" +
-            "는 나중에 디비연결하고 다시 리사이징 할꺼야 글씨만 나오게 지금 기능 되는거 사진 누르면 좋아요하면 라이크갯수 왔다갔다만함" +
-            "나머지는 되면 그때 말해줌!"
-            ,"이식당 맛없어여 이러려고 여기왔나 자괴감 들고....", "개존망탱구리네요"};
-
+    private ArrayList<ReviewItem> reviewitems = new ArrayList<>();
     private ReviewItemAdapter reviewAdapter;
     private RecyclerView review_view;
     private Toolbar toolbar;
@@ -57,18 +46,6 @@ public class AcitivityTruckReview extends Fragment {
 
         initFT();
         review_view = (RecyclerView) view.findViewById(R.id.review_view);
-
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext()) {
-            @Override
-            protected int getExtraLayoutSpace(RecyclerView.State state) {
-                return 300;
-            }
-        };
-        review_view.setHasFixedSize(true);
-        review_view.setLayoutManager(linearLayoutManager);
-        reviewAdapter = new ReviewItemAdapter(getContext(), reviewitems);
-        review_view.setAdapter(reviewAdapter);
-        review_view.setItemAnimator(new ReviewAnimator());
 
         return view;
     }
@@ -86,19 +63,52 @@ public class AcitivityTruckReview extends Fragment {
 
     public void initFT() {
         reviewitems.clear();
-        for (int i = 0; i < 5; i++) {
-            ReViewItem item1 = new ReViewItem();
-            item1.setCenterimage(CenterIMAGES[i]);
-            item1.setBottomimage(BottomIMAGES[i]);
-            item1.setUserImage(UserIMAGES[i]);
-            item1.setUserText(UserNames[i]);
-            item1.setReviewText(WriteText[i]);
-            item1.setLikesCount(LikeConunts[i]);
-            reviewitems.add(item1);
-        }
+        requestReview(FoodTruckModel.getInstance().getFT_ID());
     }
 
     public void showLikedSnackbar() {
         Snackbar.make(clContent, "Liked!", Snackbar.LENGTH_SHORT).show();
+    }
+
+    public void requestReview(int foodtruck_id) {
+        ApiService service = ServiceGenerator.createService(ApiService.class);
+        Call<ArrayList<ReviewItem>> call = service.request_review(foodtruck_id);
+        call.enqueue(new Callback<ArrayList<ReviewItem>>() {
+            @Override
+            public void onResponse(Call<ArrayList<ReviewItem>> call, Response<ArrayList<ReviewItem>> response) {
+                ArrayList<ReviewItem> reviewList = response.body();
+
+                if(reviewList == null) {
+                    Log.d("REVIEW", "No Review");
+                } else {
+                    for (ReviewItem review : reviewList) {
+                        reviewitems.add(review);
+                        Log.d("REVIEW", review.getTitle());
+                    }
+                    showViewList(reviewitems);
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<ReviewItem>> call, Throwable t) {
+                Log.d("REVIEW", t.toString());
+            }
+        });
+    }
+
+    private void showViewList(ArrayList<ReviewItem> listitems) {
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext()) {
+            @Override
+            protected int getExtraLayoutSpace(RecyclerView.State state) {
+                return 300;
+            }
+        };
+
+        review_view.setHasFixedSize(true);
+        review_view.setLayoutManager(linearLayoutManager);
+        reviewAdapter = new ReviewItemAdapter(getContext(), listitems);
+        review_view.setAdapter(reviewAdapter);
+        review_view.setItemAnimator(new ReviewAnimator());
     }
 }

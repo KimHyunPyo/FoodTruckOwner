@@ -22,8 +22,4 @@ public class ServiceGenerator {
         Retrofit retrofit = builder.client(httpClient.build()).build();
         return retrofit.create(serviceClass);
     }
-
-    public String getApiBaseUrl(){
-        return API_BASE_URL;
-    }
 }

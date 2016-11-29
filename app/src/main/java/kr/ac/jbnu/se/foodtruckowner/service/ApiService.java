@@ -8,6 +8,7 @@ import kr.ac.jbnu.se.foodtruckowner.model.FoodTruckModel;
 import kr.ac.jbnu.se.foodtruckowner.model.Item;
 import kr.ac.jbnu.se.foodtruckowner.model.MenuModel;
 import kr.ac.jbnu.se.foodtruckowner.model.Owner;
+import kr.ac.jbnu.se.foodtruckowner.model.ReviewItem;
 import okhttp3.MultipartBody;
 import retrofit2.Call;
 import retrofit2.http.Field;
@@ -92,4 +93,6 @@ public interface ApiService {
     @GET("/owner/change_mytruck_info")
     Call<FoodTruckModel> change_mytruck_info(@Field("modify_info") JsonObject modify_info);
 
+    @GET("/common/foodtruck_reviews")
+    Call<ArrayList<ReviewItem>> request_review(@Query("foodtruck_id") int foodtruck_id);
 }

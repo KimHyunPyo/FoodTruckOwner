@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import kr.ac.jbnu.se.foodtruckowner.R;
 import kr.ac.jbnu.se.foodtruckowner.adapter.MenuAdapter;
 import kr.ac.jbnu.se.foodtruckowner.model.MenuModel;
+import kr.ac.jbnu.se.foodtruckowner.service.ServiceGenerator;
 import kr.ac.jbnu.se.foodtruckowner.ui.modi_dialog_Fragment;
 import kr.ac.jbnu.se.foodtruckowner.model.Owner;
 import kr.ac.jbnu.se.foodtruckowner.service.ApiService;
@@ -69,12 +70,7 @@ public class FragmentMenu extends Fragment {
     // TODO: 2016-11-27 번호가 중간에 비면 안나옴. 중간 삭제시 id재정렬 해줘야함
     public void requestTruckMenu(int owner_id) {
 
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://server-blackdog11.c9users.io/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        ApiService service = retrofit.create(ApiService.class);
+        ApiService service = ServiceGenerator.createService(ApiService.class);
 
         //onwer_info에서 업주 아이디 가져와서 그 업주 아이디를 가진 푸드트럭의 메뉴를 받아온다.
         Call<ArrayList<MenuModel>> convertedContent = service.truck_menus_owner(owner_id);
@@ -113,6 +109,7 @@ public class FragmentMenu extends Fragment {
         menuAdapter.notifyDataSetChanged();// Notify the adapter
         //onResume();
     }
+
     private void showInputNameDialog() {
         FragmentManager fragmentManager = getFragmentManager();
         modi_dialog_Fragment inputDialog = new modi_dialog_Fragment();
