@@ -19,6 +19,7 @@ import kr.ac.jbnu.se.foodtruckowner.R;
 import kr.ac.jbnu.se.foodtruckowner.adapter.MenuAdapter;
 import kr.ac.jbnu.se.foodtruckowner.model.FoodTruckModel;
 import kr.ac.jbnu.se.foodtruckowner.service.ApiService;
+import kr.ac.jbnu.se.foodtruckowner.service.ServiceGenerator;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -35,9 +36,6 @@ public class modi_dialog_Fragment extends DialogFragment {
     MenuAdapter menuAdapter;
 
     private DialogInterface.OnDismissListener onDismissListener;
-
-    private FoodTruckModel truckInfo;
-    private Boolean menuAddSuccess;
 
     public void setOnDismissListener(DialogInterface.OnDismissListener onDismissListener) {
         this.onDismissListener = onDismissListener;
@@ -78,7 +76,7 @@ public class modi_dialog_Fragment extends DialogFragment {
                         addMenuInfo.addProperty("name", et_menu_name.getText().toString());
                         addMenuInfo.addProperty("price", et_menu_price.getText().toString());
                         addMenuInfo.addProperty("image", ""); //이미지 넣어라.
-                        addMenuInfo.addProperty("foodtruck_id", truckInfo.getFT_ID());
+                        addMenuInfo.addProperty("foodtruck_id", FoodTruckModel.getInstance().getFT_ID());
 
                         requestAddMenu(addMenuInfo);
                     } else {
@@ -111,22 +109,15 @@ public class modi_dialog_Fragment extends DialogFragment {
     }
 
     public void requestAddMenu(JsonObject addMenuInfo) {
-        ////서버로 add_menu 요청. 서버 리턴값 성공시 true, 실패시 false
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://server-blackdog11.c9users.io/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
 
-        ApiService service = retrofit.create(ApiService.class);
-
+        ApiService service = ServiceGenerator.createService(ApiService.class);
         Call<Boolean> convertedContent = service.add_menu(addMenuInfo);
-
         convertedContent.enqueue(new Callback<Boolean>() {
             @Override
             public void onResponse(Call<Boolean> call, Response<Boolean> response) {
                 Log.d("TAG", "메뉴추가 성공?" + response.body().toString());
 
-                menuAddSuccess = response.body();
+                Boolean menuAddSuccess = response.body();
 
                 if (menuAddSuccess == true) {
                     SweetAlertDialog sd = new SweetAlertDialog(getActivity());
@@ -134,10 +125,6 @@ public class modi_dialog_Fragment extends DialogFragment {
                     sd.setCanceledOnTouchOutside(true);
                     sd.setTitleText("완료 되었습니다.");
                     sd.show();
-                    //---gets the calling activity
-                    //InputNameDialogListener activity = (InputNameDialogListener) getActivity();
-                    //activity.onFinishInputDialog(et_menu_name.getText().toString());
-                    //---dismiss the alert
                     dismiss();
                 } else {
                     return;
