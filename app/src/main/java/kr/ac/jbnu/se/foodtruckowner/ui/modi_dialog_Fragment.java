@@ -110,7 +110,6 @@ public class modi_dialog_Fragment extends DialogFragment {
         return view;
     }
 
-    // TODO: 2016-11-27 Add 후 refresh 해줘야함.
     public void requestAddMenu(JsonObject addMenuInfo) {
         ////서버로 add_menu 요청. 서버 리턴값 성공시 true, 실패시 false
         Retrofit retrofit = new Retrofit.Builder()

@@ -16,15 +16,22 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.gms.common.api.Api;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
+import kr.ac.jbnu.se.foodtruckowner.service.ApiService;
+import kr.ac.jbnu.se.foodtruckowner.service.ServiceGenerator;
 import kr.ac.jbnu.se.foodtruckowner.ui.modi_dialog_Fragment;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import kr.ac.jbnu.se.foodtruckowner.R;
 import kr.ac.jbnu.se.foodtruckowner.model.MenuModel;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MenuViewHolder> {
 
@@ -35,9 +42,6 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MenuViewHolder
     private MenuViewHolder holder;
     private String call;
     private FragmentManager fm;
-
-    String Url = "https://server-blackdog11.c9users.io/";
-
 
     public MenuAdapter(Context context, ArrayList<MenuModel> listitems, String Call, FragmentManager fm) {
         this.context = context;
@@ -60,13 +64,9 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MenuViewHolder
         final MenuModel model = listitems.get(position);
         this.holder = holder;
 
-
-//        Bitmap image = BitmapFactory.decodeResource(context.getResources(), model.getImage());
-//        setBitmapImage(image);
         holder.title.setText(model.getTitle() + "");
-        Log.d("TAG", "메뉴이름넘어오니? :" + model.getTitle());
         holder.price.setText(model.getPrice() + "원");
-        Picasso.with(context).load(Url + listitems.get(position).getImage().getUrl()).into(holder.imageview);
+        Picasso.with(context).load(ServiceGenerator.API_BASE_URL + listitems.get(position).getImage().getUrl()).into(holder.imageview);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,49 +74,22 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MenuViewHolder
                 Log.d("TAG", "해당 아이템 번호 = " + position);
                 //dialog 띄우기
                 new SweetAlertDialog(context, SweetAlertDialog.WARNING_TYPE)
-                        .setTitleText("Are you sure?")
-
-                        .setContentText("Won't be able to recover this file!")
-                        //수정버튼 text
-                        .setCancelText("수정")
-                        //삭제버튼 text
+                        .setTitleText("메뉴 삭제")
+                        .setContentText("해당 메뉴의 삭제를 원하시면 삭제 버튼을 눌러주세요.")
                         .setConfirmText("삭제")
                         .showCancelButton(true)
-                        //수정버튼 리스너
-                        .setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
-
-                            @Override
-
-                            public void onClick(SweetAlertDialog sDialog) {
-                                sDialog.dismiss();
-                                modifyMenu(position);
-
-                            }
-
-                        })
-                        // 삭제버튼 리스너
                         .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
-
                             @Override
-
                             public void onClick(SweetAlertDialog sDialog) {
-
                                 sDialog.setTitleText("삭제되었습니다.")
                                         .setConfirmText("확인")
-
                                         .showCancelButton(false)
-
                                         .setCancelClickListener(null)
-
                                         .setConfirmClickListener(null)
-
                                         .changeAlertType(SweetAlertDialog.SUCCESS_TYPE);
                                 deleteMenu(position);
-
                             }
-
-                        })
-                        .show();
+                        }).show();
 
             }
         });
@@ -129,23 +102,27 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MenuViewHolder
     }
 
     //메뉴 삭제
-    public void deleteMenu(int pos) {
-        listitems.remove(pos);
-        notifyDataSetChanged();
+    public void deleteMenu(final int pos) {
+        ApiService service = ServiceGenerator.createService(ApiService.class);
+        Call<Boolean> call = service.delete_menu(listitems.get(pos).getId());
+        call.enqueue(new Callback<Boolean>() {
+            @Override
+            public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                Boolean result = response.body();
+                if(result == true) {
+                    listitems.remove(pos);
+                    notifyDataSetChanged();
+                } else {
+
+                }
+            }
+            @Override
+            public void onFailure(Call<Boolean> call, Throwable t) {
+                Log.d("MENU", "메뉴 삭제 오류");
+                Log.d("MENU", t.toString());
+            }
+        });
         return;
-    }
-
-    //메뉴 추가
-    public void addMenu(MenuModel menu) {
-        listitems.add(menu);
-        notifyDataSetChanged();
-    }
-
-    //메뉴수정
-    public void modifyMenu(int pos) {
-        MenuModel tempModel = listitems.get(pos);
-        show_modi_dialog_Fragment();
-        notifyDataSetChanged();
     }
 
     //수정 다이얼로그 띄우기
@@ -155,29 +132,12 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MenuViewHolder
         inputDialog.show(fm, "Input Dialog");
     }
 
-    private void setBitmapImage(Bitmap image) {
-        float width = ((Activity) context).getWindowManager().getDefaultDisplay().getWidth();
-        float margin = (int) convertDpToPixel(10f, (Activity) context);
-        // two images, three margins of 10dips
-        imageWidth = ((width - (margin)) / 2);
-        System.out.println(imageWidth);
-        if (image != null) {
-            float i = ((float) imageWidth) / ((float) image.getWidth());
-            imageHeight = i * (image.getHeight());
-            holder.imageview.setImageBitmap(Bitmap.createScaledBitmap(image, (int) imageWidth, (int) imageHeight, false));
-        } else {
-            holder.imageview.setImageBitmap(image);
-        }
-    }
-
-
     private float convertDpToPixel(float dp, Context context) {
         Resources resources = context.getResources();
         DisplayMetrics metrics = resources.getDisplayMetrics();
         float px = dp * (metrics.densityDpi / 160f);
         return px;
     }
-
 
     public class MenuViewHolder extends RecyclerView.ViewHolder {
         // View holder for griddview recycler view as we used in listview
