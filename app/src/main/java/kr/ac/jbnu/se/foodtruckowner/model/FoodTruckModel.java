@@ -7,9 +7,9 @@ import com.google.gson.annotations.SerializedName;
  */
 public class FoodTruckModel {
     @SerializedName("id")
-    private String FT_ID;
+    private int FT_ID;
     @SerializedName("owner_id")
-    private String FT_OWNER_ID;
+    private int FT_OWNER_ID;
     @SerializedName("name")
     private String FT_NAME;
     @SerializedName("category")
@@ -17,32 +17,30 @@ public class FoodTruckModel {
     @SerializedName("tag")
     private String FT_TAG;
     @SerializedName("rating")
-    private String FT_RATING;
-    //    @SerializedName("like")
-    private Boolean FT_LIKE = false;
+    private float FT_RATING;
     @SerializedName("open")
-    private String FT_START;
+    private Boolean FT_START;
     @SerializedName("payment_card")
-    private String FT_PAYMENT;
+    private Boolean FT_PAYMENT;
     @SerializedName("image")
     private FoodTruckUrlModel FT_IMAGE_URL;
     @SerializedName("lat")
-    private Double FT_LAT; //위도 Y축
+    private Double FT_LAT; //위도
     @SerializedName("lng")
-    private Double FT_LNG; //경도 X축
+    private Double FT_LNG; //경도
 
+    private int FT_LIKE = 0;
     private String FT_LOCATIONNAME;
-    private int FT_IMAGE;
 
-    public String getFT_ID() {return FT_ID;}
+    public int getFT_ID() {return FT_ID;}
 
-    public void setFT_ID(String FT_ID) {this.FT_ID = FT_ID;}
+    public void setFT_ID(int FT_ID) {this.FT_ID = FT_ID;}
 
-    public String getFtOwnerId() {
+    public int getFtOwnerId() {
         return FT_OWNER_ID;
     }
 
-    public void setFtOwnerId(String ftOwnerId) {
+    public void setFtOwnerId(int ftOwnerId) {
         FT_OWNER_ID = ftOwnerId;
     }
 
@@ -70,44 +68,36 @@ public class FoodTruckModel {
         FT_TAG = ftTaag;
     }
 
-    public String getFtRating() {
+    public float getFtRating() {
         return FT_RATING;
     }
 
-    public void setFtRating(String ftRating) {
+    public void setFtRating(float ftRating) {
         FT_RATING = ftRating;
     }
 
-    public Boolean getFtLike() {
+    public int getFtLike() {
         return FT_LIKE;
     }
 
-    public void setFtLike(Boolean ftLike) {
+    public void setFtLike(int ftLike) {
         FT_LIKE = ftLike;
     }
 
-    public String getFtStart() {
+    public Boolean getFtStart() {
         return FT_START;
     }
 
-    public void setFtStart(String ftStart) {
+    public void setFtStart(Boolean ftStart) {
         FT_START = ftStart;
     }
 
-    public String getFtPayment() {
+    public Boolean getFtPayment() {
         return FT_PAYMENT;
     }
 
-    public void setFtPayment(String ftPayment) {
+    public void setFtPayment(Boolean ftPayment) {
         FT_PAYMENT = ftPayment;
-    }
-
-    public int getFtImage() {
-        return FT_IMAGE;
-    }
-
-    public void setFtImage(int ftImage) {
-        FT_IMAGE = ftImage;
     }
 
     public String getFT_LOCATIONNAME() {

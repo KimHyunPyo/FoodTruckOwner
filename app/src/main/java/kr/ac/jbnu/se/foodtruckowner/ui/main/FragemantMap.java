@@ -23,6 +23,7 @@ import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.Toast;
 
+import com.github.kimkevin.cachepot.CachePot;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -38,7 +39,9 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.hedgehog.ratingbar.RatingBar;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
+import kr.ac.jbnu.se.foodtruckowner.CustomCachePot;
 import kr.ac.jbnu.se.foodtruckowner.R;
+import kr.ac.jbnu.se.foodtruckowner.model.FoodTruckModel;
 import kr.ac.jbnu.se.foodtruckowner.service.GpsService;
 
 public class FragemantMap extends Fragment implements GoogleApiClient.OnConnectionFailedListener,GoogleApiClient.ConnectionCallbacks,
@@ -62,6 +65,7 @@ public class FragemantMap extends Fragment implements GoogleApiClient.OnConnecti
     private Switch loc_agreee;
     private Switch turn_buss;
     private RatingBar mRatingBar;
+    private FoodTruckModel myTruck;
 
 
     @Override
@@ -80,7 +84,7 @@ public class FragemantMap extends Fragment implements GoogleApiClient.OnConnecti
         mRatingBar = (RatingBar)view.findViewById(R.id.Ratingbar);
         initRatingBar();
 
-
+        //Log.d("RATING", ""+myTruck.getFtRating());
 
         gpsService = new GpsService(getActivity());
         GooglePlayServicesUtil.isGooglePlayServicesAvailable(getActivity());

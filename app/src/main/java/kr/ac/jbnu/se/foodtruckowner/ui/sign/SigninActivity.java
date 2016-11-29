@@ -12,8 +12,11 @@ import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.Toast;
 
+import com.github.kimkevin.cachepot.CachePot;
+
 import kr.ac.jbnu.se.foodtruckowner.CustomCachePot;
 import kr.ac.jbnu.se.foodtruckowner.R;
+import kr.ac.jbnu.se.foodtruckowner.model.FoodTruckModel;
 import kr.ac.jbnu.se.foodtruckowner.model.Owner;
 import kr.ac.jbnu.se.foodtruckowner.service.ApiService;
 import kr.ac.jbnu.se.foodtruckowner.service.ServiceGenerator;
@@ -112,13 +115,30 @@ public class SigninActivity extends BaseActivity {
                 } else if (String.valueOf(owner_info.getEmail()).equals(et_email.getText().toString())) {
                     Log.d("TAGG", "로그인성공!");
 
-                    CustomCachePot.getInstance().push(owner_info); //메뉴프레그먼트에서 쓸 수 있게 객체 정보 push Signin => MainActivity
+                    ApiService service = ServiceGenerator.createService(ApiService.class);
+                    Call<FoodTruckModel> callMyTruck = service.requestMyTruckInfo(owner_info.getId());
+                    callMyTruck.enqueue(new Callback<FoodTruckModel>() {
+                        @Override
+                        public void onResponse(Call<FoodTruckModel> call, Response<FoodTruckModel> response) {
+                            FoodTruckModel myTruck = response.body();
 
-                    Toast.makeText(getApplicationContext(), "환영합니다. 푸드트럭", Toast.LENGTH_LONG).show();
+                            if(myTruck != null) {
+                                CachePot.getInstance().push(owner_info); //메뉴프레그먼트에서 쓸 수 있게 객체 정보 push Signin => MainActivity
+                                Toast.makeText(getApplicationContext(), "환영합니다. 푸드트럭", Toast.LENGTH_LONG).show();
 
-                    Intent loginIntent = new Intent(SigninActivity.this, MainActivity.class);
-                    startActivity(loginIntent);
-                    finish();
+                                Intent loginIntent = new Intent(SigninActivity.this, MainActivity.class);
+                                startActivity(loginIntent);
+                                finish();
+                            } else {
+                                //푸드트럭 정보 입력 화면으로 이동
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<FoodTruckModel> call, Throwable t) {
+                            Toast.makeText(getApplicationContext(), "푸드트럭 정보 수신 오류", Toast.LENGTH_LONG).show();
+                        }
+                    });
                 } else {
                     Log.d("TAG", "잘못된 정보");
                 }

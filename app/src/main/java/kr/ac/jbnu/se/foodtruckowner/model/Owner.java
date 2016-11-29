@@ -12,8 +12,6 @@ public class Owner implements Serializable {
     private int id;
     @SerializedName("email")
     private String email;
-    @SerializedName("password")
-    private String password;
     @SerializedName("phone_number")
     private String phone_number;
     @SerializedName("business_number")
@@ -29,14 +27,6 @@ public class Owner implements Serializable {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public String getPhone_number() {

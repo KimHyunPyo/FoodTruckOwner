@@ -35,14 +35,13 @@ public class MainActivity extends BaseDrawerActivity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main);
 
-        ownerInfo = CustomCachePot.getInstance().pop(Owner.class); //SignIn => MainActivity
+        ownerInfo = CachePot.getInstance().pop(Owner.class); //SignIn => MainActivity
+        CachePot.getInstance().push(ownerInfo); //MainActivity => FragmentMenu
+
         Log.d("TAG", "MainActivity: 유저정보 " +  ownerInfo.getEmail());
-
-        requestMyTruckInfo(ownerInfo.getId());
-
-        //CachePot.getInstance().push(ownerInfo); //MainActivity => FragmentMenu
         Log.d("TAG", "MainActivity: 보낸 유저정보" + ownerInfo.getEmail()); //-> 스택처럼 Pop하면 사라지므로 다시 넣어서 써야함
 
+        //requestMyTruckInfo(ownerInfo.getId());
 
 //        ReviewFragment reviewFragment = (ReviewFragment) getSupportFragmentManager().findFragmentById(R.id.reviewListFragment);
 //        reviewFragment.addItem(ContextCompat.getDrawable(this, R.drawable.profle),
