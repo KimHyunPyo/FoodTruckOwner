@@ -130,6 +130,10 @@ public class SigninActivity extends BaseActivity {
                                 startActivity(loginIntent);
                                 finish();
                             } else {
+
+                                Intent loginIntent = new Intent(SigninActivity.this, TruckInfoActivity.class);
+                                startActivity(loginIntent);
+                                finish();
                                 //푸드트럭 정보 입력 화면으로 이동
                             }
                         }

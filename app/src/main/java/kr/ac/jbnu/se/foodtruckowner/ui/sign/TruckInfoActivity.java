@@ -24,13 +24,15 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import kr.ac.jbnu.se.foodtruckowner.R;
+import kr.ac.jbnu.se.foodtruckowner.model.FoodTruckModel;
 
 import static android.R.attr.data;
 import static kr.ac.jbnu.se.foodtruckowner.R.id.owner_id;
 
 public class TruckInfoActivity extends AppCompatActivity {
 
-    final int REQ_CODE_SELECT_IMAGE=100;
+    final int REQ_CODE_SELECT_IMAGE = 100;
+    private FoodTruckModel model;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +42,7 @@ public class TruckInfoActivity extends AppCompatActivity {
 
         Intent truckintent = getIntent();
 
-        Button truckbtn = (Button) findViewById(R.id.truckbtn);
+        Button bt_insert = (Button) findViewById(R.id.bt_insert_truck);
         Button bt_upload = (Button) findViewById(R.id.bt_upload);
         final Spinner city = (Spinner) findViewById(R.id.city);
 
@@ -49,12 +51,10 @@ public class TruckInfoActivity extends AppCompatActivity {
         city.setAdapter(adapter);
 
 
-
-
-
-        truckbtn.setOnClickListener(new View.OnClickListener() {
+        bt_insert.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 Intent loginIntent = new Intent(TruckInfoActivity.this, SigninActivity.class);
                 startActivity(loginIntent);
                 finish();
@@ -64,9 +64,12 @@ public class TruckInfoActivity extends AppCompatActivity {
         city.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
             }
+
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {}
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
         });
 
         bt_upload.setOnClickListener(new View.OnClickListener() {
@@ -85,7 +88,8 @@ public class TruckInfoActivity extends AppCompatActivity {
                 intent.putExtra("crop", "true");
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, tempUri);
 
-                intent.setType("image/*");}
+                intent.setType("image/*");
+            }
 
             protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
@@ -136,23 +140,12 @@ public class TruckInfoActivity extends AppCompatActivity {
             }
 
 
-
-
-
-
-
         });
 
 
-
-
-
-
-
-
     }
 
-    }
+}
 
 
 

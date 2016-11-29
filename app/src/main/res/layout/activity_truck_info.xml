@@ -270,7 +270,7 @@
             android:layout_centerHorizontal="true"
             android:textColor="@android:color/white"
             custom:pb_colorNormal="@color/blue_normal"
-            android:id="@+id/truckbtn"
+            android:id="@+id/bt_insert_truck"
             android:layout_below="@id/payment"
             android:layout_marginTop="10dp" />
 
