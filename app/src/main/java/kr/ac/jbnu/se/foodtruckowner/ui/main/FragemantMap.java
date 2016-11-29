@@ -84,8 +84,6 @@ public class FragemantMap extends Fragment implements GoogleApiClient.OnConnecti
         mRatingBar = (RatingBar)view.findViewById(R.id.Ratingbar);
         initRatingBar();
 
-        //Log.d("RATING", ""+myTruck.getFtRating());
-
         gpsService = new GpsService(getActivity());
         GooglePlayServicesUtil.isGooglePlayServicesAvailable(getActivity());
         map = mapview.getMap();

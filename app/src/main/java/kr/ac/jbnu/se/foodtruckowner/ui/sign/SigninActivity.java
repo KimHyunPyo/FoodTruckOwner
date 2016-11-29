@@ -41,9 +41,6 @@ public class SigninActivity extends BaseActivity {
     private EditText et_email;
     private EditText et_password;
 
-    private Owner owner_info;
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -106,35 +103,35 @@ public class SigninActivity extends BaseActivity {
             @Override
             public void onResponse(Call<Owner> call, Response<Owner> response) {
                 // if parsing the JSON body failed, `response.body()` returns null
-                owner_info = response.body();
+                Owner.uniqueInstance = response.body();
 
-                if (owner_info == null) {
+                if (Owner.getInstance() == null) {
                     Log.d("TAG", "아이디비번오류");
                     Toast.makeText(getApplicationContext(), "아이디 또는 비밀번호가 일치하지 않습니다.", Toast.LENGTH_LONG).show();
                     return;
-                } else if (String.valueOf(owner_info.getEmail()).equals(et_email.getText().toString())) {
+                } else if (String.valueOf(Owner.getInstance().getEmail()).equals(et_email.getText().toString())) {
                     Log.d("TAGG", "로그인성공!");
 
+                    //푸드트럭 정보 요청
                     ApiService service = ServiceGenerator.createService(ApiService.class);
-                    Call<FoodTruckModel> callMyTruck = service.requestMyTruckInfo(owner_info.getId());
+                    Call<FoodTruckModel> callMyTruck = service.requestMyTruckInfo(Owner.getInstance().getId());
                     callMyTruck.enqueue(new Callback<FoodTruckModel>() {
                         @Override
                         public void onResponse(Call<FoodTruckModel> call, Response<FoodTruckModel> response) {
-                            FoodTruckModel myTruck = response.body();
+                            FoodTruckModel.uniqueInstance = response.body();
 
-                            if(myTruck != null) {
-                                CachePot.getInstance().push(owner_info); //메뉴프레그먼트에서 쓸 수 있게 객체 정보 push Signin => MainActivity
+                            if(FoodTruckModel.getInstance() == null) {
+                                Log.d("TAGG", "푸드트럭 정보 없음");
+                                Intent loginIntent = new Intent(SigninActivity.this, TruckInfoActivity.class);
+                                startActivity(loginIntent);
+                                finish();
+                            } else {
+                                Log.d("TAGG", "푸드트럭 정보 있음");
                                 Toast.makeText(getApplicationContext(), "환영합니다. 푸드트럭", Toast.LENGTH_LONG).show();
 
                                 Intent loginIntent = new Intent(SigninActivity.this, MainActivity.class);
                                 startActivity(loginIntent);
                                 finish();
-                            } else {
-
-                                Intent loginIntent = new Intent(SigninActivity.this, TruckInfoActivity.class);
-                                startActivity(loginIntent);
-                                finish();
-                                //푸드트럭 정보 입력 화면으로 이동
                             }
                         }
 

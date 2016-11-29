@@ -6,6 +6,16 @@ import com.google.gson.annotations.SerializedName;
  * Created by son on 11/1/16.
  */
 public class FoodTruckModel {
+    public volatile static FoodTruckModel uniqueInstance;
+    private FoodTruckModel() { }
+
+    public static FoodTruckModel getInstance() {
+        if(uniqueInstance == null) { //있는지 체크 없으면
+            uniqueInstance = new FoodTruckModel(); //생성한뒤
+        }
+        return uniqueInstance;
+    }
+
     @SerializedName("id")
     private int FT_ID;
     @SerializedName("owner_id")
