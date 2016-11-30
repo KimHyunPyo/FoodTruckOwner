@@ -17,6 +17,8 @@ public class FestivalModel {
     private String start_date;
     private String end_date;
 
+
+
     private View.OnClickListener requestBtnClickListener;
 
     public FestivalModel() {

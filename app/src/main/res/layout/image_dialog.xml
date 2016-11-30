@@ -24,7 +24,7 @@
             android:layout_width="match_parent"
             android:id="@+id/text_owner_id"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/head_image"/>
+            android:layout_below="@+id/festive_image"/>
 
         <EditText
             android:layout_width="match_parent"
