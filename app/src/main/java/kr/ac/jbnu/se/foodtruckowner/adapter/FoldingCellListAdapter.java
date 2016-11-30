@@ -1,6 +1,7 @@
 package kr.ac.jbnu.se.foodtruckowner.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +14,8 @@ import android.widget.TextView;
 import java.util.HashSet;
  import java.util.List;
 
- import kr.ac.jbnu.se.foodtruckowner.R;
+import cn.pedant.SweetAlert.SweetAlertDialog;
+import kr.ac.jbnu.se.foodtruckowner.R;
  import kr.ac.jbnu.se.foodtruckowner.model.FestivalModel;
 
 
@@ -25,7 +27,7 @@ public class FoldingCellListAdapter extends ArrayAdapter<FestivalModel> {
 
     private HashSet<Integer> unfoldedIndexes = new HashSet<>();
    private View.OnClickListener defaultRequestBtnClickListener;
-
+    private Context context;
     final int REQ_CODE_SELECT_IMAGE=100;
 
     public FoldingCellListAdapter(Context context, List<FestivalModel> objects) {
@@ -71,12 +73,48 @@ public class FoldingCellListAdapter extends ArrayAdapter<FestivalModel> {
         viewHolder.festive.setText(item.getFestive_title());
         viewHolder.place.setText(item.getPlace());
         viewHolder.requestsCount.setText(String.valueOf(item.getRequestsCount()));
-
         viewHolder.contentRequestBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.d("TAG","떠라! ");
+                new SweetAlertDialog(getContext(), SweetAlertDialog.WARNING_TYPE)
+
+                        .setTitleText("정말 신청하시겠습니까?")
+                        .setContentText("확인 버튼을 누르면 취소할 수 없습니다.")
+                        //취소버튼 text
+                        .setCancelText("취소")
+                        //확인버튼 text
+                        .setConfirmText("확인")
+                        .showCancelButton(true)
+                        //취소버튼 리스너
+                        .setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
+
+                            @Override
+
+                            public void onClick(SweetAlertDialog sDialog) {
+                                sDialog.setTitleText("삭제되었습니다.")
+                                        .setConfirmText("확인")
+                                        .showCancelButton(false)
+                                        .setCancelClickListener(null)
+                                        .setConfirmClickListener(null)
+                                        .changeAlertType(SweetAlertDialog.SUCCESS_TYPE);
+
+                            }
+
+                        })
+                        // 확인버튼 리스너
+                        .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+
+                            @Override
+
+                            public void onClick(SweetAlertDialog sDialog) {
 
 
+                            }
+
+                        })
+
+                        .show();
             }
         });
 /*
@@ -84,10 +122,13 @@ public class FoldingCellListAdapter extends ArrayAdapter<FestivalModel> {
 */
                 // set custom btn handler for list item from that item
         if (item.akgetRequestBtnClickListener() != null) {
-            viewHolder.contentRequestBtn.setOnClickListener(item.akgetRequestBtnClickListener());
+            //viewHolder.contentRequestBtn.setOnClickListener(item.akgetRequestBtnClickListener());
+             Log.d("클릭", "null아님");
         } else {
             // (optionally) add "default" handler if no handler found in item
-            viewHolder.contentRequestBtn.setOnClickListener(defaultRequestBtnClickListener);
+            //viewHolder.contentRequestBtn.setOnClickListener(defaultRequestBtnClickListener);
+            Log.d("클릭", "null아야");
+
         }
 
 
