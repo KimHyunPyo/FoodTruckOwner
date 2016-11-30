@@ -86,13 +86,16 @@ public class FragemantMap extends Fragment implements GoogleApiClient.OnConnecti
         getActivity().getWindowManager().getDefaultDisplay().getMetrics(metrics);
 
         int displaywidth =  metrics.widthPixels;
-        int displayheight =  metrics.heightPixels/4;
+        int displayheight =  metrics.heightPixels/3;
         //푸드트럭 메인 이미지 홈 화면에 삽입
         ImageView truckMainImage = (ImageView)view.findViewById(R.id.truck_main_image);
         Picasso.with(getContext())
                 .load(ServiceGenerator.API_BASE_URL + FoodTruckModel.getInstance().getFT_IMAGE_URL())
                 .resize(displaywidth,displayheight)
                 .into(truckMainImage);
+
+        TextView tvlikes = (TextView) view.findViewById(R.id.tvlikes);
+        tvlikes.setText(""+FoodTruckModel.getInstance().getFtLike());
 
         mapview=(MapView)view.findViewById(R.id.map);
         mGoogleApiClient = new GoogleApiClient.Builder(getContext())
@@ -111,9 +114,10 @@ public class FragemantMap extends Fragment implements GoogleApiClient.OnConnecti
         GooglePlayServicesUtil.isGooglePlayServicesAvailable(getActivity());
         map = mapview.getMap();
         turn_buss = (Switch)view.findViewById(R.id.sw_turn_buss);
+
         turn_buss.setChecked(FoodTruckModel.getInstance().getFtStart());
 
-        final Button btpush  = (Button) view.findViewById(R.id.bt_loction_push);
+        final Button btpush  = (Button) view.findViewById(R.id.bt_location_push);
 
         btpush.setText("위치정보 공개");
         btpush.setOnClickListener(new Button.OnClickListener(){
@@ -213,7 +217,6 @@ public class FragemantMap extends Fragment implements GoogleApiClient.OnConnecti
         });
         return view;
     }
-
 
     private void initRatingBar(){
         mRatingBar.setStarEmptyDrawable(getResources().getDrawable(R.drawable.ic_star_empty));
