@@ -83,8 +83,8 @@ public interface ApiService {
     @GET("/owner/set_open")
     Call<Boolean> set_open(@Query("foodtruck_id") int foodtruck_id);
 
-    @GET("/owner/close_open")
-    Call<Boolean> close_open(@Query("foodtruck_id") int foodtruck_id);
+    @GET("/owner/set_close")
+    Call<Boolean> set_close(@Query("foodtruck_id") int foodtruck_id);
 
     @Multipart
     @POST("/owner/upload_truck_image")

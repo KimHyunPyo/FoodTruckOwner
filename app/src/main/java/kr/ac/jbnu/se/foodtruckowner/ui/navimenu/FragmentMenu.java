@@ -69,12 +69,18 @@ public class FragmentMenu extends Fragment {
             public void onResponse(Call<ArrayList<MenuModel>> call, Response<ArrayList<MenuModel>> response) {
                 ArrayList<MenuModel> menuList = response.body();
 
-                for (MenuModel menu : menuList) {
-                    listitems.add(menu);
+                if (menuList == null) {
+                    Toast.makeText(getActivity(), "메뉴를 추가해주세요.", Toast.LENGTH_SHORT).show();
+                    return;
+                } else {
 
-                    Log.d("TAG", "메뉴이름" + menu.getTitle());
+                    for (MenuModel menu : menuList) {
+                        listitems.add(menu);
+
+                        Log.d("TAG", "메뉴이름" + menu.getTitle());
+                    }
+                    showViewList(listitems); //서버에서 받아오면 카드뷰 그려주게하기
                 }
-                showViewList(listitems); //서버에서 받아오면 카드뷰 그려주게하기
             }
 
             @Override
