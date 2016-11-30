@@ -11,25 +11,25 @@ public class Item {
 
     private String year;
     private String pledgePrice;
-    private String fromAddress;
-    private String toAddress;
+    private String festive_title;
+    private String place;
     private int requestsCount;
-    private String date;
-    private String time;
+    private String start_date;
+    private String end_date;
 
     private View.OnClickListener requestBtnClickListener;
 
     public Item() {
     }
 
-    public Item(String year, String pledgePrice, String fromAddress, String toAddress, int requestsCount, String date, String time) {
+    public Item(String year, String pledgePrice, String festive_title, String place, int requestsCount, String start_date, String time) {
         this.year = year;
         this.pledgePrice = pledgePrice;
-        this.fromAddress = fromAddress;
-        this.toAddress = toAddress;
+        this.festive_title = festive_title;
+        this.place = place;
         this.requestsCount = requestsCount;
-        this.date = date;
-        this.time = time;
+        this.start_date = start_date;
+        this.end_date = end_date;
 
     }
 
@@ -37,7 +37,7 @@ public class Item {
         return year;
     }
 
-    public void setYear(String price) {
+    public void setYear(String year) {
         this.year = year;
     }
 
@@ -49,20 +49,20 @@ public class Item {
         this.pledgePrice = pledgePrice;
     }
 
-    public String getFromAddress() {
-        return fromAddress;
+    public String getFestive_title() {
+        return festive_title;
     }
 
-    public void setFromAddress(String fromAddress) {
-        this.fromAddress = fromAddress;
+    public void setFestive_title(String festive_title) {
+        this.festive_title = festive_title;
     }
 
-    public String getToAddress() {
-        return toAddress;
+    public String getPlace() {
+        return place;
     }
 
-    public void setToAddress(String toAddress) {
-        this.toAddress = toAddress;
+    public void setPlace(String place) {
+        this.place = place;
     }
 
     public int getRequestsCount() {
@@ -73,22 +73,22 @@ public class Item {
         this.requestsCount = requestsCount;
     }
 
-    public String getDate() {
-        return date;
+    public String getStart_date() {
+        return start_date;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public void setStart_date(String start_date) {
+        this.start_date = start_date;
     }
 
-    public String getTime() {
-        return time;
+    public String getEnd_date() {
+        return end_date;
     }
-    public void setTime(String time) {
-        this.time = time;
+    public void setEnd_date(String end_date) {
+        this.end_date = end_date;
     }
 
-    public View.OnClickListener getRequestBtnClickListener() {
+    public View.OnClickListener akgetRequestBtnClickListener() {
         return requestBtnClickListener;
     }
 
@@ -103,16 +103,17 @@ public class Item {
 
         Item item = (Item) o;
 
+
         if (requestsCount != item.requestsCount) return false;
         if (year != null ? !year.equals(item.year) : item.year != null) return false;
         if (pledgePrice != null ? !pledgePrice.equals(item.pledgePrice) : item.pledgePrice != null)
             return false;
-        if (fromAddress != null ? !fromAddress.equals(item.fromAddress) : item.fromAddress != null)
+        if (festive_title != null ? !festive_title.equals(item.festive_title) : item.festive_title != null)
             return false;
-        if (toAddress != null ? !toAddress.equals(item.toAddress) : item.toAddress != null)
+        if (place != null ? !place.equals(item.place) : item.place != null)
             return false;
-        if (date != null ? !date.equals(item.date) : item.date != null) return false;
-        return !(time != null ? !time.equals(item.time) : item.time != null);
+        if (start_date != null ? !start_date.equals(item.start_date) : item.start_date != null) return false;
+        return !(end_date != null ? !end_date.equals(item.end_date) : item.end_date != null);
 
     }
 
@@ -120,11 +121,11 @@ public class Item {
     public int hashCode() {
         int result = year != null ? year.hashCode() : 0;
         result = 31 * result + (pledgePrice != null ? pledgePrice.hashCode() : 0);
-        result = 31 * result + (fromAddress != null ? fromAddress.hashCode() : 0);
-        result = 31 * result + (toAddress != null ? toAddress.hashCode() : 0);
+        result = 31 * result + (festive_title != null ? festive_title.hashCode() : 0);
+        result = 31 * result + (place != null ? place.hashCode() : 0);
         result = 31 * result + requestsCount;
-        result = 31 * result + (date != null ? date.hashCode() : 0);
-        result = 31 * result + (time != null ? time.hashCode() : 0);
+        result = 31 * result + (start_date != null ? start_date.hashCode() : 0);
+        result = 31 * result + (end_date != null ? end_date.hashCode() : 0);
         return result;
     }
 
