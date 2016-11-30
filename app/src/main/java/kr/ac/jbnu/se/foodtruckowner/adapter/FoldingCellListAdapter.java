@@ -26,6 +26,8 @@ public class FoldingCellListAdapter extends ArrayAdapter<FestivalModel> {
     private HashSet<Integer> unfoldedIndexes = new HashSet<>();
    private View.OnClickListener defaultRequestBtnClickListener;
 
+    final int REQ_CODE_SELECT_IMAGE=100;
+
     public FoldingCellListAdapter(Context context, List<FestivalModel> objects) {
         super(context, 0, objects);
     }
@@ -43,14 +45,14 @@ public class FoldingCellListAdapter extends ArrayAdapter<FestivalModel> {
             cell = (FoldingCell) vi.inflate(R.layout.cell, parent, false);
             // binding view parts to view holder
             viewHolder.year = (TextView) cell.findViewById(R.id.title_date_year);
-            viewHolder.time = (TextView) cell.findViewById(R.id.title_time_label);
-            viewHolder.date = (TextView) cell.findViewById(R.id.title_date_label);
-            viewHolder.fromAddress = (TextView) cell.findViewById(R.id.title_from_address);
-            viewHolder.toAddress = (TextView) cell.findViewById(R.id.title_to_address);
+            viewHolder.end_date = (TextView) cell.findViewById(R.id.title_end_date);
+            viewHolder.start_date = (TextView) cell.findViewById(R.id.title_start_date);
+            viewHolder.festive = (TextView) cell.findViewById(R.id.title_festive);
+            viewHolder.place = (TextView) cell.findViewById(R.id.title_place);
             viewHolder.requestsCount = (TextView) cell.findViewById(R.id.title_requests_count);
-            viewHolder.contentRequestBtn = (TextView) cell.findViewById(R.id.content_request_btn);
+            viewHolder.contentRequestBtn = (TextView) cell.findViewById(R.id.request_btn);
             viewHolder.folding = (TextView) cell.findViewById(R.id.folding);
-            viewHolder.headImage = (ImageView) cell.findViewById(R.id.head_image);
+            viewHolder.headImage = (ImageView) cell.findViewById(R.id.festive_image);
             cell.setTag(viewHolder);
         } else {
             // for existing cell set valid valid state(without animation)
@@ -64,39 +66,21 @@ public class FoldingCellListAdapter extends ArrayAdapter<FestivalModel> {
 
         // bind data from selected element to view through view holder
         viewHolder.year.setText(item.getYear());
-        viewHolder.time.setText(item.getStart_date());
-        viewHolder.date.setText(item.getEnd_date());
-        viewHolder.fromAddress.setText(item.getFestive_title());
-        viewHolder.toAddress.setText(item.getPlace());
+        viewHolder.end_date.setText(item.getStart_date());
+        viewHolder.start_date.setText(item.getEnd_date());
+        viewHolder.festive.setText(item.getFestive_title());
+        viewHolder.place.setText(item.getPlace());
         viewHolder.requestsCount.setText(String.valueOf(item.getRequestsCount()));
 
-/*
-        viewHolder.folding.setOnClickListener(new View.OnClickListener() {
-            @Override
-                public void onClick( View view) {
-                // toggle clicked cell state
-                ((FoldingCell) view).toggle(false);
-                // register in adapter that state for selected cell is toggled
-                registerToggle(position);
-
-                                              }
-                                          });*/
-
-       /* viewHolder.headImage.setOnClickListener(new View.OnClickListener() {
+        viewHolder.contentRequestBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                Dialog dialog = new Dialog(getContext());
-                dialog.setContentView(R.layout.image_dialog);
-                dialog.setTitle("행사 이미지");
-
-                ImageView image = (ImageView) dialog.findViewById(R.id.image);
-                image.setImageResource(R.drawable.head_image);
-
-                dialog.show();
 
             }
         });
+/*
+     dn
 */
                 // set custom btn handler for list item from that item
         if (item.akgetRequestBtnClickListener() != null) {
@@ -140,11 +124,11 @@ public class FoldingCellListAdapter extends ArrayAdapter<FestivalModel> {
     private static class ViewHolder {
     TextView year;
     TextView contentRequestBtn;
-    TextView fromAddress;
-    TextView toAddress;
+    TextView festive;
+    TextView place;
     TextView requestsCount;
-    TextView date;
-    TextView time;
+    TextView start_date;
+    TextView end_date;
     TextView folding;
     ImageView headImage;
 }

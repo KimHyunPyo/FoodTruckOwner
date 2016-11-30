@@ -125,6 +125,13 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MenuViewHolder
         return;
     }
 
+    //수정 다이얼로그 띄우기
+    private void show_modi_dialog_Fragment() {
+        modi_dialog_Fragment inputDialog = new modi_dialog_Fragment();
+        inputDialog.setDialogTitle("Enter Name");
+        inputDialog.show(fm, "Input Dialog");
+    }
+
     private float convertDpToPixel(float dp, Context context) {
         Resources resources = context.getResources();
         DisplayMetrics metrics = resources.getDisplayMetrics();
