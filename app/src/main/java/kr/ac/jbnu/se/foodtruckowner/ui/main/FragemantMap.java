@@ -126,36 +126,16 @@ public class FragemantMap extends Fragment implements GoogleApiClient.OnConnecti
             public void onClick(View v) {
                 if(turn_buss.isChecked()){
                     new SweetAlertDialog(getActivity(), SweetAlertDialog.WARNING_TYPE)
-                            .setTitleText("위치정보를 공개하시 겠습니까?")
-                            .setContentText("Won't be able to recover this file!")
-                            .setCancelText("아니요!")
-                            .setConfirmText("네 공개해요")
+                            .setTitleText("공개 여부")
+                            .setContentText("선택하신 위치로 공개하시겠습니까?")
+                            .setCancelText("아니요")
+                            .setConfirmText("네")
                             .showCancelButton(true)
                             .setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
                                 @Override
                                 public void onClick(SweetAlertDialog sDialog) {
-                                    // reuse previous dialog instance, keep widget user state, reset them if you need
-                                    sDialog.setTitleText("공개되었습니다.")
-                                            .setConfirmText("OK")
-                                            .showCancelButton(false)
-                                            .setCancelClickListener(null)
-                                            .setConfirmClickListener(null)
-                                            .changeAlertType(SweetAlertDialog.ERROR_TYPE);
-
-                                    // or you can new a SweetAlertDialog to show
-                               /* sDialog.dismiss();
-                                new SweetAlertDialog(SampleActivity.this, SweetAlertDialog.ERROR_TYPE)
-                                        .setTitleText("Cancelled!")
-                                        .setContentText("Your imaginary file is safe :)")
-                                        .setConfirmText("OK")
-                                        .show();*/
-                                }
-                            })
-                            .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                                @Override
-                                public void onClick(SweetAlertDialog sDialog) {
-                                    sDialog.setTitleText("Deleted!")
-                                            .setContentText("Your imaginary file has been deleted!")
+                                    sDialog.setTitleText("최소")
+                                            .setContentText("최소되었습니다.")
                                             .setConfirmText("OK")
                                             .showCancelButton(false)
                                             .setCancelClickListener(null)
@@ -163,7 +143,34 @@ public class FragemantMap extends Fragment implements GoogleApiClient.OnConnecti
                                             .changeAlertType(SweetAlertDialog.SUCCESS_TYPE);
                                 }
                             })
-                            .show();
+                            .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                                @Override
+                                public void onClick(final SweetAlertDialog sDialog) {
+                                    ApiService service = ServiceGenerator.createService(ApiService.class);
+                                    Call<Boolean> call = service.set_location(FoodTruckModel.getInstance().getFT_ID(), (float)USER_X, (float)USER_Y);
+                                    call.enqueue(new Callback<Boolean>() {
+                                        @Override
+                                        public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                                            Boolean check = response.body();
+                                            if(check) {
+                                                sDialog.setTitleText("공개되었습니다.")
+                                                        .setConfirmText("OK")
+                                                        .showCancelButton(false)
+                                                        .setCancelClickListener(null)
+                                                        .setConfirmClickListener(null)
+                                                        .changeAlertType(SweetAlertDialog.ERROR_TYPE);
+                                            } else {
+                                                Toast.makeText(getActivity(), "정보 전송 실패", Toast.LENGTH_SHORT).show();
+                                            }
+                                        }
+
+                                        @Override
+                                        public void onFailure(Call<Boolean> call, Throwable t) {
+
+                                        }
+                                    });
+                                }
+                            }).show();
 
                 }
                 else{
@@ -359,8 +366,6 @@ public class FragemantMap extends Fragment implements GoogleApiClient.OnConnecti
         } else {
             // Show rationale and request permission.
         }
-
-
     }
 
     @Override
