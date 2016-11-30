@@ -30,6 +30,7 @@ import java.util.regex.Pattern;
 
 import kr.ac.jbnu.se.foodtruckowner.R;
 import kr.ac.jbnu.se.foodtruckowner.service.ApiService;
+import kr.ac.jbnu.se.foodtruckowner.service.ServiceGenerator;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -215,13 +216,8 @@ public class SignUpActivity extends AppCompatActivity implements ProgressGenerat
 
 
     private void getSignUpRequest() {
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://server-blackdog11.c9users.io")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
 
-        ApiService service = retrofit.create(ApiService.class);
-
+        ApiService service = ServiceGenerator.createService(ApiService.class);
         Call<Integer> convertedContent = service.owner_join(et_signup_email.getText().toString(), et_signup_pw.getText().toString(),
                 et_signup_Ph_num.getText().toString(), et_signup_business_num.getText().toString());
 

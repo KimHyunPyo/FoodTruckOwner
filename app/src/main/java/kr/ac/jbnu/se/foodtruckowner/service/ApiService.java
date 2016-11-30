@@ -5,7 +5,7 @@ import com.google.gson.JsonObject;
 import java.util.ArrayList;
 
 import kr.ac.jbnu.se.foodtruckowner.model.FoodTruckModel;
-import kr.ac.jbnu.se.foodtruckowner.model.Item;
+import kr.ac.jbnu.se.foodtruckowner.model.FestivalModel;
 import kr.ac.jbnu.se.foodtruckowner.model.MenuModel;
 import kr.ac.jbnu.se.foodtruckowner.model.Owner;
 import kr.ac.jbnu.se.foodtruckowner.model.ReviewItem;
@@ -60,7 +60,7 @@ public interface ApiService {
     // ======================= 행사 관련 요청 =======================
         //행사 정보 요청
     @GET("/common/festival_info")
-    Call<ArrayList<Item>> festival_info();
+    Call<ArrayList<FestivalModel>> festival_info();
 
         //행사 참가신청 요청
     @GET("/owner/request_festival")
@@ -72,7 +72,7 @@ public interface ApiService {
 
         //내가 참가신청한 행사 정보 요청
     @GET("/owner/selected_festival_info")
-    Call<ArrayList<Item>> selected_festival(@Query("onwer_id") int owner_id);
+    Call<ArrayList<FestivalModel>> selected_festival(@Query("onwer_id") int owner_id);
 
     // ====================== 트럭 정보 ======================
         //푸드트럭 정보 생성 신청

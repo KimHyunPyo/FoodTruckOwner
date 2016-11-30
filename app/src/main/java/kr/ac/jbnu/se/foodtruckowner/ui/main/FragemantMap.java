@@ -76,7 +76,10 @@ public class FragemantMap extends Fragment implements GoogleApiClient.OnConnecti
 
         //푸드트럭 메인 이미지 홈 화면에 삽입
         ImageView truckMainImage = (ImageView)view.findViewById(R.id.truck_main_image);
-        Picasso.with(getContext()).load(ServiceGenerator.API_BASE_URL + FoodTruckModel.getInstance().getFT_IMAGE_URL()).into(truckMainImage);
+        Picasso.with(getContext())
+                .load(ServiceGenerator.API_BASE_URL + FoodTruckModel.getInstance().getFT_IMAGE_URL())
+                .resize(300,150)
+                .into(truckMainImage);
 
         mapview=(MapView)view.findViewById(R.id.map);
         mGoogleApiClient = new GoogleApiClient.Builder(getContext())

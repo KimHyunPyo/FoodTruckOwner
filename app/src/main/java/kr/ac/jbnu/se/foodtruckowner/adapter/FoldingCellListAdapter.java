@@ -1,45 +1,39 @@
 package kr.ac.jbnu.se.foodtruckowner.adapter;
 
-import android.app.Dialog;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
- import android.widget.AdapterView;
- import android.widget.ArrayAdapter;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
  import com.ramotion.foldingcell.FoldingCell;
 
-import java.util.ArrayList;
 import java.util.HashSet;
  import java.util.List;
 
  import kr.ac.jbnu.se.foodtruckowner.R;
- import kr.ac.jbnu.se.foodtruckowner.model.Item;
+ import kr.ac.jbnu.se.foodtruckowner.model.FestivalModel;
 
-//import static kr.ac.jbnu.se.foodtruckowner.R.id.folding;
-//import static kr.ac.jbnu.se.foodtruckowner.R.id.head_image;
-//import static kr.ac.jbnu.se.foodtruckowner.R.id.imageView;
 
 /**
  * Simple example of ListAdapter for using with Folding Cell
  * Adapter holds indexes of unfolded elements for correct work with default reusable views behavior
  */
-public class FoldingCellListAdapter extends ArrayAdapter<Item> {
+public class FoldingCellListAdapter extends ArrayAdapter<FestivalModel> {
 
     private HashSet<Integer> unfoldedIndexes = new HashSet<>();
    private View.OnClickListener defaultRequestBtnClickListener;
 
-    public FoldingCellListAdapter(Context context, List<Item> objects) {
+    public FoldingCellListAdapter(Context context, List<FestivalModel> objects) {
         super(context, 0, objects);
     }
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         // get item for selected view
-        Item item = getItem(position);
+        FestivalModel item = getItem(position);
         // if cell is exists - reuse it, if not - create the new one from resource
         FoldingCell cell = (FoldingCell) convertView;
         ViewHolder viewHolder;
@@ -70,10 +64,10 @@ public class FoldingCellListAdapter extends ArrayAdapter<Item> {
 
         // bind data from selected element to view through view holder
         viewHolder.year.setText(item.getYear());
-        viewHolder.time.setText(item.getTime());
-        viewHolder.date.setText(item.getDate());
-        viewHolder.fromAddress.setText(item.getFromAddress());
-        viewHolder.toAddress.setText(item.getToAddress());
+        viewHolder.time.setText(item.getStart_date());
+        viewHolder.date.setText(item.getEnd_date());
+        viewHolder.fromAddress.setText(item.getFestive_title());
+        viewHolder.toAddress.setText(item.getPlace());
         viewHolder.requestsCount.setText(String.valueOf(item.getRequestsCount()));
 
 /*
@@ -105,8 +99,8 @@ public class FoldingCellListAdapter extends ArrayAdapter<Item> {
         });
 */
                 // set custom btn handler for list item from that item
-        if (item.getRequestBtnClickListener() != null) {
-            viewHolder.contentRequestBtn.setOnClickListener(item.getRequestBtnClickListener());
+        if (item.akgetRequestBtnClickListener() != null) {
+            viewHolder.contentRequestBtn.setOnClickListener(item.akgetRequestBtnClickListener());
         } else {
             // (optionally) add "default" handler if no handler found in item
             viewHolder.contentRequestBtn.setOnClickListener(defaultRequestBtnClickListener);

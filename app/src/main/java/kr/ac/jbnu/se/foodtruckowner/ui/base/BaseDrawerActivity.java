@@ -6,15 +6,19 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import butterknife.BindView;
 import kr.ac.jbnu.se.foodtruckowner.R;
+import kr.ac.jbnu.se.foodtruckowner.model.FoodTruckModel;
+import kr.ac.jbnu.se.foodtruckowner.model.Owner;
 import kr.ac.jbnu.se.foodtruckowner.ui.navimenu.FestiveFragment;
 import kr.ac.jbnu.se.foodtruckowner.ui.navimenu.FragmentMenu;
 import kr.ac.jbnu.se.foodtruckowner.ui.navimenu.SettingsFragment;
@@ -41,9 +45,12 @@ public class BaseDrawerActivity extends BaseActivity {
         LayoutInflater.from(this).inflate(layoutResID, viewGroup, true);
         bindViews();
         mContext = this;
+
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);;
         NavigationView vNavigation =(NavigationView)findViewById(R.id.vNavigation);
         mFragmentManager = getSupportFragmentManager();
+
+
         vNavigation.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem menuItem) {
@@ -79,7 +86,6 @@ public class BaseDrawerActivity extends BaseActivity {
 
         mDrawerToggle.syncState();
         nv_Listner(mContext);
-
     }
 
     public void nv_Listner(Context mContext){
@@ -97,6 +103,4 @@ public class BaseDrawerActivity extends BaseActivity {
             });
         }
     }
-
-
 }

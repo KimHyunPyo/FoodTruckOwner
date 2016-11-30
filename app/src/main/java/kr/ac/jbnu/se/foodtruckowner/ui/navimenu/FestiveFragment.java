@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import kr.ac.jbnu.se.foodtruckowner.R;
 import kr.ac.jbnu.se.foodtruckowner.adapter.FoldingCellListAdapter;
-import kr.ac.jbnu.se.foodtruckowner.model.Item;
+import kr.ac.jbnu.se.foodtruckowner.model.FestivalModel;
 
 /**
  * Created by Ratan on 7/29/2015.
@@ -32,7 +32,7 @@ public class FestiveFragment extends Fragment {
         ListView theListView = (ListView) view.findViewById(R.id.mainListView);
 
         // prepare elements to display
-        final ArrayList<Item> items = Item.getTestingList();
+        final ArrayList<FestivalModel> items = FestivalModel.getTestingList();
 
         // add custom btn handler to first list item
         //입점신청하기버튼 리스너

@@ -5,7 +5,10 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.view.Window;
+import android.widget.TextView;
 
 import kr.ac.jbnu.se.foodtruckowner.R;
 import kr.ac.jbnu.se.foodtruckowner.model.FoodTruckModel;
@@ -18,13 +21,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class MainActivity extends BaseDrawerActivity {
-    DrawerLayout mDrawerLayout;
-    NavigationView mNavigationView;
     FragmentManager mFragmentManager;
     FragmentTransaction mFragmentTransaction;
-
-    private FoodTruckModel myTruckInfo;
-    private Owner ownerInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,20 +33,20 @@ public class MainActivity extends BaseDrawerActivity {
         Log.d("TAG", "MainActivity: 유저정보 " +  Owner.getInstance().getEmail());
         Log.d("TAG", "MainActivity: 보낸 유저정보" + Owner.getInstance().getEmail());
 
-//        ReviewFragment reviewFragment = (ReviewFragment) getSupportFragmentManager().findFragmentById(R.id.reviewListFragment);
-//        reviewFragment.addItem(ContextCompat.getDrawable(this, R.drawable.profle),
-//                "New Box", "New Account Box Black 36dp");
-//        @Override
-//        protected void onCreate (Bundle savedInstanceState){
-//            ReviewFragment reviewFragment = (ReviewFragment) getSupportFragmentManager().findFragmentById(R.id.reviewListFragment);
-//            reviewFragment.addItem(ContextCompat.getDrawable(this, R.drawable.profle),
-//                    "New Box", "New Account Box Black 36dp");
-//        }
-
-
         /**
          *Setup the DrawerLayout and NavigationView
          */
+
+        NavigationView vNavigation =(NavigationView)findViewById(R.id.vNavigation);
+        View headerView = vNavigation.getHeaderView(0);
+        
+        String text = FoodTruckModel.getInstance().getFtName();
+        TextView truck_name = (TextView) headerView.findViewById(R.id.nv_truckName);
+        truck_name.setText(text);
+
+        text = Owner.getInstance().getEmail();
+        TextView owner_name = (TextView) headerView.findViewById(R.id.nv_ownerName);
+        owner_name.setText(text);
 
         /**
          * Lets inflate the very first fragment

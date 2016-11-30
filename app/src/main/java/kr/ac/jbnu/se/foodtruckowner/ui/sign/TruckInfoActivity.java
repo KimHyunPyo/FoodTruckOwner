@@ -1,14 +1,12 @@
 package kr.ac.jbnu.se.foodtruckowner.ui.sign;
 
 import android.app.Activity;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -26,19 +24,16 @@ import java.io.IOException;
 import kr.ac.jbnu.se.foodtruckowner.R;
 import kr.ac.jbnu.se.foodtruckowner.model.FoodTruckModel;
 
-import static android.R.attr.data;
-import static kr.ac.jbnu.se.foodtruckowner.R.id.owner_id;
-
 public class TruckInfoActivity extends AppCompatActivity {
 
     final int REQ_CODE_SELECT_IMAGE = 100;
     private FoodTruckModel model;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_truck_info);
-
 
         Intent truckintent = getIntent();
 

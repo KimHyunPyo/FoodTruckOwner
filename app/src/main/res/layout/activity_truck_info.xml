@@ -164,7 +164,7 @@
             android:weightSum="1">
 
 
-            <imageView
+            <ImageView
                 android:background="#ffffffff"
                 android:id="@+id/imageUpload"
                 android:paddingLeft="20.0dip"

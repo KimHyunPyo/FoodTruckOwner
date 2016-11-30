@@ -100,13 +100,17 @@ public class SigninActivity extends BaseActivity {
             @Override
             public void onResponse(Call<Owner> call, Response<Owner> response) {
                 // if parsing the JSON body failed, `response.body()` returns null
-                Owner.uniqueInstance = response.body();
+                Owner test = response.body();
 
-                if (Owner.getInstance() == null) {
+                if (test == null) {
                     Log.d("TAG", "아이디비번오류");
                     Toast.makeText(getApplicationContext(), "아이디 또는 비밀번호가 일치하지 않습니다.", Toast.LENGTH_LONG).show();
                     return;
-                } else if (String.valueOf(Owner.getInstance().getEmail()).equals(et_email.getText().toString())) {
+                } else {
+                    Owner.uniqueInstance = test;
+                }
+
+                if (String.valueOf(Owner.getInstance().getEmail()).equals(et_email.getText().toString())) {
                     Log.d("TAGG", "로그인성공!");
 
                     //푸드트럭 정보 요청
@@ -115,17 +119,18 @@ public class SigninActivity extends BaseActivity {
                     callMyTruck.enqueue(new Callback<FoodTruckModel>() {
                         @Override
                         public void onResponse(Call<FoodTruckModel> call, Response<FoodTruckModel> response) {
-                            FoodTruckModel.uniqueInstance = response.body();
+                            FoodTruckModel check_data = response.body();
 
-                            if(FoodTruckModel.getInstance() == null) {
+                            if(check_data == null) {
                                 Log.d("TAGG", "푸드트럭 정보 없음");
                                 Intent loginIntent = new Intent(SigninActivity.this, TruckInfoActivity.class);
                                 startActivity(loginIntent);
                                 finish();
                             } else {
                                 Log.d("TAGG", "푸드트럭 정보 있음");
-                                Toast.makeText(getApplicationContext(), "환영합니다. 푸드트럭", Toast.LENGTH_LONG).show();
+                                FoodTruckModel.uniqueInstance = check_data;
 
+                                Toast.makeText(getApplicationContext(), "환영합니다. 푸드트럭", Toast.LENGTH_LONG).show();
                                 Intent loginIntent = new Intent(SigninActivity.this, MainActivity.class);
                                 startActivity(loginIntent);
                                 finish();

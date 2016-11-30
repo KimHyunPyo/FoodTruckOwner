@@ -7,7 +7,7 @@ import java.util.ArrayList;
 /**
  * Simple POJO model for example
  */
-public class Item {
+public class FestivalModel {
 
     private String year;
     private String pledgePrice;
@@ -19,10 +19,10 @@ public class Item {
 
     private View.OnClickListener requestBtnClickListener;
 
-    public Item() {
+    public FestivalModel() {
     }
 
-    public Item(String year, String pledgePrice, String festive_title, String place, int requestsCount, String start_date, String time) {
+    public FestivalModel(String year, String pledgePrice, String festive_title, String place, int requestsCount, String start_date, String end_date) {
         this.year = year;
         this.pledgePrice = pledgePrice;
         this.festive_title = festive_title;
@@ -101,8 +101,7 @@ public class Item {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Item item = (Item) o;
-
+        FestivalModel item = (FestivalModel) o;
 
         if (requestsCount != item.requestsCount) return false;
         if (year != null ? !year.equals(item.year) : item.year != null) return false;
@@ -132,13 +131,13 @@ public class Item {
     /**
      * @return List of elements prepared for tests
      */
-    public static ArrayList<Item> getTestingList() {
-        ArrayList<Item> items = new ArrayList<>();
-        items.add(new Item("2016", "", "서울 밤도깨비 야시장", "서울특별시 한강공원 일대", 7, "12월24일 \n~\n ", "12월26일"));
-        items.add(new Item("2016", "", "서울 밤도깨비 야시장", "서울특별시 한강공원 일대", 7, "12월24일 \n~\n ", "12월26일"));
-        items.add(new Item("2016", "", "서울 밤도깨비 야시장", "서울특별시 한강공원 일대", 7, "12월24일 \n~\n ", "12월26일"));
-        items.add(new Item("2016", "", "서울 밤도깨비 야시장", "서울특별시 한강공원 일대", 7, "12월24일 \n~\n ", "12월26일"));
-        items.add(new Item("2016", "", "서울 밤도깨비 야시장", "서울특별시 한강공원 일대", 7, "12월24일 \n~\n ", "12월26일"));
+    public static ArrayList<FestivalModel> getTestingList() {
+        ArrayList<FestivalModel> items = new ArrayList<>();
+        items.add(new FestivalModel("2016", "", "서울 밤도깨비 야시장", "서울특별시 한강공원 일대", 7, "12월24일 \n~\n ", "12월26일"));
+        items.add(new FestivalModel("2016", "", "서울 밤도깨비 야시장", "서울특별시 한강공원 일대", 7, "12월24일 \n~\n ", "12월26일"));
+        items.add(new FestivalModel("2016", "", "서울 밤도깨비 야시장", "서울특별시 한강공원 일대", 7, "12월24일 \n~\n ", "12월26일"));
+        items.add(new FestivalModel("2016", "", "서울 밤도깨비 야시장", "서울특별시 한강공원 일대", 7, "12월24일 \n~\n ", "12월26일"));
+        items.add(new FestivalModel("2016", "", "서울 밤도깨비 야시장", "서울특별시 한강공원 일대", 7, "12월24일 \n~\n ", "12월26일"));
         return items;
 
     }

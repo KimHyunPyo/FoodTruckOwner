@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -32,16 +33,7 @@ public class FragmentMenu extends Fragment {
 
     private static RecyclerView myRecyclerView;
     private MenuAdapter menuAdapter;
-
     ArrayList<MenuModel> listitems = new ArrayList<>();
-    private Owner owner_info;
-
-    //String and Integer array for Recycler View Items
-    public static final String[] TITLES = {"디저트 ", "피자 3000원", "박도현 0원", "1000원"
-            , "2000원"};
-    public static final Integer[] IMAGES = {R.drawable.menuitem, R.drawable.menuitem2, R.drawable.menuitem3, R.drawable.menuitem4, R.drawable.menuitem5,
-    };
-    public static final Integer[] PRICES = {5000, 3000, 0, 1000, 2000};
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -67,20 +59,15 @@ public class FragmentMenu extends Fragment {
         requestTruckMenu(Owner.getInstance().getId());
     }
 
-    // TODO: 2016-11-27 번호가 중간에 비면 안나옴. 중간 삭제시 id재정렬 해줘야함
     public void requestTruckMenu(int owner_id) {
 
-        ApiService service = ServiceGenerator.createService(ApiService.class);
-
         //onwer_info에서 업주 아이디 가져와서 그 업주 아이디를 가진 푸드트럭의 메뉴를 받아온다.
+        ApiService service = ServiceGenerator.createService(ApiService.class);
         Call<ArrayList<MenuModel>> convertedContent = service.truck_menus_owner(owner_id);
-
         convertedContent.enqueue(new Callback<ArrayList<MenuModel>>() {
             @Override
             public void onResponse(Call<ArrayList<MenuModel>> call, Response<ArrayList<MenuModel>> response) {
                 ArrayList<MenuModel> menuList = response.body();
-
-                Log.d("TAG", "바디: " + response.body().toString());
 
                 for (MenuModel menu : menuList) {
                     listitems.add(menu);
