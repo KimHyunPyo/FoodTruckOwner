@@ -39,6 +39,7 @@ public class FragmentMenu extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_menu, container, false);
         Button btadd = (Button) view.findViewById(R.id.bt_menu_add);
+
         //리사이클뷰(카드뷰)
         myRecyclerView = (RecyclerView) view.findViewById(R.id.menu_view);
         // Here 2 is no. of columns to be displayed

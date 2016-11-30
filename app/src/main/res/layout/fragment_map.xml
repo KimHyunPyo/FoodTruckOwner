@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.and
     roid.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     xmlns:hedgehog="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
@@ -12,12 +12,12 @@
         android:layout_height="match_parent">
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:gravity="center_horizontal"
             android:orientation="vertical">
 
@@ -54,14 +54,6 @@
                     android:paddingRight="20dp"
                     android:textSize="25dp"
                     android:text="영업여부" />
-                <Switch
-                    android:id="@+id/sw_loc_agree"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingLeft="20dp"
-                    android:paddingRight="20dp"
-                    android:textSize="25dp"
-                    android:text="위치정보 공개" />
 
 
             </LinearLayout>
@@ -77,8 +69,19 @@
                 android:layout_height="360dp"
                 android:layout_weight="8"></com.google.android.gms.maps.MapView>
         </LinearLayout>
+
+
     </LinearLayout>
     </ScrollView>
+    <Button
+        android:id="@+id/bt_loction_push"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="@color/colorPrimary"
+        android:textColor="@color/white"
+        android:text="메뉴추가" />
+
 </LinearLayout>
 
 

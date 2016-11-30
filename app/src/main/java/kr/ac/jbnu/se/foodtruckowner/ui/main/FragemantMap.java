@@ -13,6 +13,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,6 +24,7 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -71,18 +73,25 @@ public class FragemantMap extends Fragment implements GoogleApiClient.OnConnecti
     private Switch loc_agree;
     private Switch turn_buss;
     private RatingBar mRatingBar;
-    private FoodTruckModel myTruck;
+
+    int width;
+    int height;
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_map, container, false);
 
+        DisplayMetrics metrics = new DisplayMetrics();
+        getActivity().getWindowManager().getDefaultDisplay().getMetrics(metrics);
+
+        int displaywidth =  metrics.widthPixels;
+        int displayheight =  metrics.heightPixels/4;
         //푸드트럭 메인 이미지 홈 화면에 삽입
         ImageView truckMainImage = (ImageView)view.findViewById(R.id.truck_main_image);
         Picasso.with(getContext())
                 .load(ServiceGenerator.API_BASE_URL + FoodTruckModel.getInstance().getFT_IMAGE_URL())
-                .resize(300,150)
+                .resize(displaywidth,displayheight)
                 .into(truckMainImage);
 
         mapview=(MapView)view.findViewById(R.id.map);
@@ -102,10 +111,63 @@ public class FragemantMap extends Fragment implements GoogleApiClient.OnConnecti
         GooglePlayServicesUtil.isGooglePlayServicesAvailable(getActivity());
         map = mapview.getMap();
         turn_buss = (Switch)view.findViewById(R.id.sw_turn_buss);
-        loc_agree = (Switch)view.findViewById(R.id.sw_loc_agree);
-
         turn_buss.setChecked(FoodTruckModel.getInstance().getFtStart());
 
+        final Button btpush  = (Button) view.findViewById(R.id.bt_loction_push);
+
+        btpush.setText("위치정보 공개");
+        btpush.setOnClickListener(new Button.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+                if(turn_buss.isChecked()){
+                    new SweetAlertDialog(getActivity(), SweetAlertDialog.WARNING_TYPE)
+                            .setTitleText("위치정보를 공개하시 겠습니까?")
+                            .setContentText("Won't be able to recover this file!")
+                            .setCancelText("아니요!")
+                            .setConfirmText("네 공개해요")
+                            .showCancelButton(true)
+                            .setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                                @Override
+                                public void onClick(SweetAlertDialog sDialog) {
+                                    // reuse previous dialog instance, keep widget user state, reset them if you need
+                                    sDialog.setTitleText("공개되었습니다.")
+                                            .setConfirmText("OK")
+                                            .showCancelButton(false)
+                                            .setCancelClickListener(null)
+                                            .setConfirmClickListener(null)
+                                            .changeAlertType(SweetAlertDialog.ERROR_TYPE);
+
+                                    // or you can new a SweetAlertDialog to show
+                               /* sDialog.dismiss();
+                                new SweetAlertDialog(SampleActivity.this, SweetAlertDialog.ERROR_TYPE)
+                                        .setTitleText("Cancelled!")
+                                        .setContentText("Your imaginary file is safe :)")
+                                        .setConfirmText("OK")
+                                        .show();*/
+                                }
+                            })
+                            .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                                @Override
+                                public void onClick(SweetAlertDialog sDialog) {
+                                    sDialog.setTitleText("Deleted!")
+                                            .setContentText("Your imaginary file has been deleted!")
+                                            .setConfirmText("OK")
+                                            .showCancelButton(false)
+                                            .setCancelClickListener(null)
+                                            .setConfirmClickListener(null)
+                                            .changeAlertType(SweetAlertDialog.SUCCESS_TYPE);
+                                }
+                            })
+                            .show();
+
+                }
+                else{
+                    Toast.makeText(getActivity(), "영업중으로 전환해주세요", Toast.LENGTH_LONG).show();
+                }
+
+            }
+        });
         turn_buss.setOnCheckedChangeListener(new Switch.OnCheckedChangeListener(){
             public void onCheckedChanged(CompoundButton cb, boolean isChecking){
                 String str = String.valueOf(isChecking);
@@ -149,26 +211,9 @@ public class FragemantMap extends Fragment implements GoogleApiClient.OnConnecti
                 }
             }
         });
-
-        loc_agree.setOnCheckedChangeListener(new Switch.OnCheckedChangeListener(){
-            public void onCheckedChanged(CompoundButton cb, boolean isChecking){
-                String str = String.valueOf(isChecking);
-                if (isChecking) {
-                    if (mapview.isActivated()== false) {
-                        mapview.onResume();
-                    }
-                    Toast.makeText(getActivity(), "위치공개해라", Toast.LENGTH_LONG).show();
-                } else {
-                    mapview.onPause();
-                    gpsService.stopUsingGPS();
-                    Toast.makeText(getActivity(), "공개하지마라", Toast.LENGTH_LONG).show();
-                }
-            }
-
-
-        });
         return view;
     }
+
 
     private void initRatingBar(){
         mRatingBar.setStarEmptyDrawable(getResources().getDrawable(R.drawable.ic_star_empty));
