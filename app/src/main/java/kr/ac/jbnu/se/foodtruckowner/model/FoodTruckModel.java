@@ -38,9 +38,8 @@ public class FoodTruckModel {
     private Double FT_LAT; //위도
     @SerializedName("lng")
     private Double FT_LNG; //경도
-
+    @SerializedName("like")
     private int FT_LIKE = 0;
-    private String FT_LOCATIONNAME;
 
     public int getFT_ID() {return FT_ID;}
 
@@ -108,14 +107,6 @@ public class FoodTruckModel {
 
     public void setFtPayment(Boolean ftPayment) {
         FT_PAYMENT = ftPayment;
-    }
-
-    public String getFT_LOCATIONNAME() {
-        return FT_LOCATIONNAME;
-    }
-
-    public void setFT_LOCATIONNAME(String FT_LOCATIONNAME) {
-        this.FT_LOCATIONNAME = FT_LOCATIONNAME;
     }
 
     public String getFT_IMAGE_URL() {

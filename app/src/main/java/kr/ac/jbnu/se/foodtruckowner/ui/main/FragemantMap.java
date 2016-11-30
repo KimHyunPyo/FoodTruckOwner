@@ -43,8 +43,12 @@ import com.squareup.picasso.Picasso;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import kr.ac.jbnu.se.foodtruckowner.R;
 import kr.ac.jbnu.se.foodtruckowner.model.FoodTruckModel;
+import kr.ac.jbnu.se.foodtruckowner.service.ApiService;
 import kr.ac.jbnu.se.foodtruckowner.service.GpsService;
 import kr.ac.jbnu.se.foodtruckowner.service.ServiceGenerator;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class FragemantMap extends Fragment implements GoogleApiClient.OnConnectionFailedListener,GoogleApiClient.ConnectionCallbacks,
         OnMapReadyCallback, LocationListener{
@@ -64,7 +68,7 @@ public class FragemantMap extends Fragment implements GoogleApiClient.OnConnecti
     private double USER_Y;
     private GoogleMap map;
     private GpsService gpsService;
-    private Switch loc_agreee;
+    private Switch loc_agree;
     private Switch turn_buss;
     private RatingBar mRatingBar;
     private FoodTruckModel myTruck;
@@ -98,22 +102,55 @@ public class FragemantMap extends Fragment implements GoogleApiClient.OnConnecti
         GooglePlayServicesUtil.isGooglePlayServicesAvailable(getActivity());
         map = mapview.getMap();
         turn_buss = (Switch)view.findViewById(R.id.sw_turn_buss);
-        loc_agreee = (Switch)view.findViewById(R.id.sw_loc_agree);
+        loc_agree = (Switch)view.findViewById(R.id.sw_loc_agree);
+
+        turn_buss.setChecked(FoodTruckModel.getInstance().getFtStart());
+
         turn_buss.setOnCheckedChangeListener(new Switch.OnCheckedChangeListener(){
             public void onCheckedChanged(CompoundButton cb, boolean isChecking){
                 String str = String.valueOf(isChecking);
+                ApiService service = ServiceGenerator.createService(ApiService.class);
                 if(isChecking)
                 {
-                    Toast.makeText(getActivity(), "영업시작한다", Toast.LENGTH_LONG).show();
+                    Call<Boolean> call = service.set_open(FoodTruckModel.getInstance().getFT_ID());
+                    call.enqueue(new Callback<Boolean>() {
+                        @Override
+                        public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                            Boolean check = response.body();
+                            if(check)
+                                Toast.makeText(getActivity(), "영업 설정이 되었습니다. 영업 알림을 위해 위치 설정을 해주세요.", Toast.LENGTH_SHORT).show();
+                            else
+                                return;
+                        }
+
+                        @Override
+                        public void onFailure(Call<Boolean> call, Throwable t) {
+
+                        }
+                    });
                 }
                 else{
-                    Toast.makeText(getActivity(), "영업종료한다", Toast.LENGTH_LONG).show();
+                    Call<Boolean> call = service.set_close(FoodTruckModel.getInstance().getFT_ID());
+                    call.enqueue(new Callback<Boolean>() {
+                        @Override
+                        public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                            Boolean check = response.body();
+                            if(check)
+                                Toast.makeText(getActivity(), "영업 종료", Toast.LENGTH_SHORT).show();
+                            else
+                                return;
+                        }
+
+                        @Override
+                        public void onFailure(Call<Boolean> call, Throwable t) {
+
+                        }
+                    });
                 }
             }
-
-
         });
-        loc_agreee.setOnCheckedChangeListener(new Switch.OnCheckedChangeListener(){
+
+        loc_agree.setOnCheckedChangeListener(new Switch.OnCheckedChangeListener(){
             public void onCheckedChanged(CompoundButton cb, boolean isChecking){
                 String str = String.valueOf(isChecking);
                 if (isChecking) {
@@ -184,6 +221,7 @@ public class FragemantMap extends Fragment implements GoogleApiClient.OnConnecti
         });
         alert.show();
     }
+
     private void setCuttrntLocation(){
         if (gpsService.isGetLocation()) {
             USER_X = gpsService.getLatitude();
@@ -230,6 +268,8 @@ public class FragemantMap extends Fragment implements GoogleApiClient.OnConnecti
         stopGps();
         super.onStop();
     }
+
+    //안맞는 버전때문에 넣어놈
     @Override
     public void onMapReady(GoogleMap googleMap) {
         //안드 6.0 달라진 퍼미션
@@ -251,6 +291,7 @@ public class FragemantMap extends Fragment implements GoogleApiClient.OnConnecti
             // Show rationale and request permission.
         }
     }
+
     //최초 한번만 현위치 잡음
     @Override
     public void onConnected(@Nullable Bundle bundle) {
