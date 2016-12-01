@@ -17,14 +17,17 @@ public class FestivalModel {
     private String start_date;
     private String end_date;
 
+    private String festive_content_view;
+    private int recruitment_truck;
+    private int request_truck;
+    private String food_category;
+    private String deadline;
+
 
 
     private View.OnClickListener requestBtnClickListener;
 
-    public FestivalModel() {
-    }
-
-    public FestivalModel(String year, String pledgePrice, String festive_title, String place, int requestsCount, String start_date, String end_date) {
+    public FestivalModel(String year, String pledgePrice, String festive_title, String place, int requestsCount, String start_date, String end_date,String festive_content_view,int recruitment_truck,int request_truck,String food_category,String deadline) {
         this.year = year;
         this.pledgePrice = pledgePrice;
         this.festive_title = festive_title;
@@ -32,6 +35,12 @@ public class FestivalModel {
         this.requestsCount = requestsCount;
         this.start_date = start_date;
         this.end_date = end_date;
+
+        this.festive_content_view = festive_content_view;
+        this.recruitment_truck = recruitment_truck;
+        this.request_truck = request_truck;
+        this.food_category = food_category;
+        this.deadline = deadline;
 
     }
 
@@ -90,13 +99,31 @@ public class FestivalModel {
         this.end_date = end_date;
     }
 
+
+    public String getFestive_content_view() { return festive_content_view;}
+
+    public void setFestive_content_view(String festive_content_view) {this.festive_content_view = festive_content_view;}
+
+    public int getRecruitment_truck() {return recruitment_truck;}
+
+    public void setRecruitment_truck(int recruitment_truck) {this.recruitment_truck = recruitment_truck;}
+    public int getRequest_truck() {return request_truck;}
+
+    public void setRequest_truck(int request_truck) {this.request_truck = request_truck;}
+
+    public String getFood_category() {return food_category;}
+
+    public void setFood_category(String food_category) {this.food_category = food_category;}
+
+    public String getDeadline() {return deadline;}
+
+    public void setDeadline(String deadline) {this.deadline = deadline;}
+
     public View.OnClickListener akgetRequestBtnClickListener() {
         return requestBtnClickListener;
     }
 
-    public void setRequestBtnClickListener(View.OnClickListener requestBtnClickListener) {
-        this.requestBtnClickListener = requestBtnClickListener;
-    }
+    public void setRequestBtnClickListener(View.OnClickListener requestBtnClickListener) {this.requestBtnClickListener = requestBtnClickListener;}
 
     @Override
     public boolean equals(Object o) {
@@ -113,9 +140,20 @@ public class FestivalModel {
             return false;
         if (place != null ? !place.equals(item.place) : item.place != null)
             return false;
-        if (start_date != null ? !start_date.equals(item.start_date) : item.start_date != null) return false;
+        if (start_date != null ? !start_date.equals(item.start_date) : item.start_date != null)
         return !(end_date != null ? !end_date.equals(item.end_date) : item.end_date != null);
 
+        if (recruitment_truck!= item.recruitment_truck) return false;
+        if (request_truck != item.request_truck) return false;
+        if (festive_content_view != null ? !festive_content_view.equals(item.festive_content_view) : item.festive_content_view != null)
+            return false;
+        if (food_category != null ? !food_category.equals(item.food_category) : item.food_category != null)
+            return false;
+        if (deadline != null ? !deadline.equals(item.deadline) : item.deadline != null)
+            return false;
+
+
+        return  false;
     }
 
     @Override
@@ -127,6 +165,13 @@ public class FestivalModel {
         result = 31 * result + requestsCount;
         result = 31 * result + (start_date != null ? start_date.hashCode() : 0);
         result = 31 * result + (end_date != null ? end_date.hashCode() : 0);
+
+        result = 31 * result + recruitment_truck;
+        result = 31 * result + request_truck;
+        result = 31 * result + (festive_content_view != null ? festive_content_view.hashCode() : 0);
+        result = 31 * result + (food_category != null ? food_category.hashCode() : 0);
+        result = 31 * result + (deadline!= null ? deadline.hashCode() : 0);
+
         return result;
     }
 
@@ -135,11 +180,11 @@ public class FestivalModel {
      */
     public static ArrayList<FestivalModel> getTestingList() {
         ArrayList<FestivalModel> items = new ArrayList<>();
-        items.add(new FestivalModel("2016", "", "서울 밤도깨비 야시장", "서울특별시 한강공원 일대", 7, "12월24일 \n~\n ", "12월26일"));
-        items.add(new FestivalModel("2016", "", "서울 밤도깨비 야시장", "서울특별시 한강공원 일대", 7, "12월24일 \n~\n ", "12월26일"));
-        items.add(new FestivalModel("2016", "", "서울 밤도깨비 야시장", "서울특별시 한강공원 일대", 7, "12월24일 \n~\n ", "12월26일"));
-        items.add(new FestivalModel("2016", "", "서울 밤도깨비 야시장", "서울특별시 한강공원 일대", 7, "12월24일 \n~\n ", "12월26일"));
-        items.add(new FestivalModel("2016", "", "서울 밤도깨비 야시장", "서울특별시 한강공원 일대", 7, "12월24일 \n~\n ", "12월26일"));
+        items.add(new FestivalModel("2016", "", "서울 밤도깨비 야시장", "서울특별시 한강공원 일대", 7, "12월24일 \n~\n ", "12월26일","횬종이",15,13,"곧","아사합니닿ㅎ"));
+        items.add(new FestivalModel("2016", "", "서울 밤도깨비 야시장", "서울특별시 한강공원 일대", 7, "12월24일 \n~\n ", "12월26일","",15,13,"",""));
+        items.add(new FestivalModel("2016", "", "서울 밤도깨비 야시장", "서울특별시 한강공원 일대", 7, "12월24일 \n~\n ", "12월26일","",15,13,"",""));
+        items.add(new FestivalModel("2016", "", "서울 밤도깨비 야시장", "서울특별시 한강공원 일대", 7, "12월24일 \n~\n ", "12월26일","",15,13,"",""));
+        items.add(new FestivalModel("2016", "", "서울 밤도깨비 야시장", "서울특별시 한강공원 일대", 7, "12월24일 \n~\n ", "12월26일","",15,13,"",""));
         return items;
 
     }

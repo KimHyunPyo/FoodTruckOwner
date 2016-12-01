@@ -18,9 +18,8 @@
     <string name="to_badge" translatable="false">신청트럭 수</string>
     <string name="delivery_date_badge" translatable="false">지원 종류</string>
     <string name="delivery_time_mock" translatable="false">무관</string>
-    <string name="delivery_date_mock" translatable="false">May 16, 2016</string>
-    <string name="deadline_badge" translatable="false">REQUEST DEADLINE</string>
-    <string name="deadline_time_mock" translatable="false">24 minutes</string>
+    <string name="recruitment_deadline" translatable="false">모집 기한</string>
+    <string name="deadline" translatable="false">24 minutes</string>
     <string name="request_btn_text" translatable="false">입점 신청하기</string>
     <string name="btn_annotation_mock" translatable="false">이 행사에 참가신청을 원하면 버튼을 눌러주세요</string>
     <string name="content_from1_mock">20대</string>

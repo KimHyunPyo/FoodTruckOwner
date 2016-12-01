@@ -54,7 +54,7 @@
             android:layout_height="wrap_content"
             android:padding="0dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/head_image" />
+            android:src="@drawable/festive_img" />
 
 
     </RelativeLayout>
@@ -91,6 +91,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="2dp"
                 android:layout_marginStart="10dp"
+                android:layout_below="@+id/festive_content"
                 android:textColor="@color/mainTextColor"
                 android:textSize="18sp"
                 android:textStyle="bold" />
@@ -231,15 +232,15 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
-                    android:text="@string/deadline_badge" />
+                    android:text="@string/recruitment_deadline" />
 
                 <TextView
-                    android:id="@+id/festive_date"
+                    android:id="@+id/deadline"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignStart="@id/recruitment_deadline"
                     android:layout_below="@id/recruitment_deadline"
-                    android:text="@string/deadline_time_mock"
+                    android:text="@string/deadline"
                     android:textColor="@color/mainTextColor"
                     android:textSize="18sp"
                     android:textStyle="bold" />
