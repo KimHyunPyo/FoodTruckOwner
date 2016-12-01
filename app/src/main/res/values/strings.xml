@@ -141,6 +141,17 @@
         <item>제주특별자치도</item>
     </string-array>
 
+    <string-array name="categoty_select">
+        <item>판매할 메뉴 카테고리를 선택하세요</item>
+        <item>한식</item>
+        <item>중식</item>
+        <item>일식</item>
+        <item>분식</item>
+        <item>카페·음료</item>
+        <item>디저트</item>
+
+    </string-array>
+
     <plurals name="likes_count">
         <item quantity="one">%d like</item>
         <item quantity="other">%d likes</item>
