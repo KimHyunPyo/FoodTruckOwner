@@ -164,6 +164,11 @@
                 android:layout_height="230dp">
 
             </com.google.android.gms.maps.MapView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="45dp">
+            </LinearLayout>
         </LinearLayout>
 
     </LinearLayout>
@@ -173,7 +178,7 @@
     <Button
         android:id="@+id/bt_location_push"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="45dp"
         android:background="@color/colorPrimary"
         android:textColor="@color/white"
         android:layout_alignParentBottom="true"

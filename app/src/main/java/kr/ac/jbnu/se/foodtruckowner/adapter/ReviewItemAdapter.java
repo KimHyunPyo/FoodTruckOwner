@@ -80,8 +80,8 @@ public void onClick(View v) {
         if (mContext instanceof AcitivityTruckDetail) {
         ((AcitivityTruckDetail) mContext).showLikedSnackbar();
         }
-        else if(mContext instanceof AcitivityTruckReview){
-        ((AcitivityTruckReview) mContext).showLikedSnackbar();
+        else if(mContext instanceof FragmentTruckReview){
+        ((FragmentTruckReview) mContext).showLikedSnackbar();
         }
         }
         }
@@ -97,8 +97,8 @@ public void onClick(View view) {
         if (mContext instanceof AcitivityTruckDetail) {
         ((AcitivityTruckDetail) mContext).showLikedSnackbar();
         }
-        else if(mContext instanceof AcitivityTruckReview){
-        ((AcitivityTruckReview) mContext).showLikedSnackbar();
+        else if(mContext instanceof FragmentTruckReview){
+        ((FragmentTruckReview) mContext).showLikedSnackbar();
         }
         }
 
