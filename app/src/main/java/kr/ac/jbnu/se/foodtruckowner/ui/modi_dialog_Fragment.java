@@ -98,7 +98,6 @@ public class modi_dialog_Fragment extends DialogFragment {
                         addMenuInfo.addProperty("price", et_menu_price.getText().toString());
                         addMenuInfo.addProperty("image", ""); //이미지 넣어라.
                         addMenuInfo.addProperty("foodtruck_id", FoodTruckModel.getInstance().getFT_ID());
-
                         requestAddMenu(addMenuInfo);
                     } else {
                         Toast.makeText(getActivity(), "메뉴 가격을 입력하세요.", Toast.LENGTH_LONG).show();
