@@ -1,6 +1,9 @@
 package kr.ac.jbnu.se.foodtruckowner.model;
 
+import com.google.gson.JsonObject;
 import com.google.gson.annotations.SerializedName;
+
+import org.json.JSONObject;
 
 /**
  * Created by son on 11/1/16.
@@ -32,6 +35,8 @@ public class FoodTruckModel {
     private Boolean FT_START;
     @SerializedName("payment_card")
     private Boolean FT_PAYMENT;
+    @SerializedName("region")
+    private String FT_REGION;
     @SerializedName("image")
     private FoodTruckUrlModel FT_IMAGE_URL;
     @SerializedName("lat")
@@ -131,6 +136,19 @@ public class FoodTruckModel {
 
     public void setFT_LNG(Double FT_LNG) {
         this.FT_LNG = FT_LNG;
+    }
+
+    public JsonObject getJsonToSaveTruckInfo() {
+        JsonObject ob = new JsonObject();
+
+        ob.addProperty("name", FT_NAME);
+        ob.addProperty("category", FT_CATEGORY);
+        ob.addProperty("tag", FT_TAG);
+        ob.addProperty("payment_card", FT_PAYMENT);
+        ob.addProperty("region", FT_REGION);
+        ob.addProperty("owner_id", Owner.getInstance().getId());
+
+        return ob;
     }
 
     public class FoodTruckUrlModel {

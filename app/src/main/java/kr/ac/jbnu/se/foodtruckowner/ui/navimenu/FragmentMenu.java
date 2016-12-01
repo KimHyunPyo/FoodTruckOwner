@@ -64,7 +64,7 @@ public class FragmentMenu extends Fragment {
 
         //onwer_info에서 업주 아이디 가져와서 그 업주 아이디를 가진 푸드트럭의 메뉴를 받아온다.
         ApiService service = ServiceGenerator.createService(ApiService.class);
-        Call<ArrayList<MenuModel>> convertedContent = service.truck_menus_owner(owner_id);
+        Call<ArrayList<MenuModel>> convertedContent = service.truck_menus(owner_id);
         convertedContent.enqueue(new Callback<ArrayList<MenuModel>>() {
             @Override
             public void onResponse(Call<ArrayList<MenuModel>> call, Response<ArrayList<MenuModel>> response) {

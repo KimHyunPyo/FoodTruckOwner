@@ -55,7 +55,6 @@
                 android:layout_height="48dp"
                 android:layout_marginLeft="20.0dip"
                 android:layout_marginRight="20.0dip"
-
                 android:hint="판매할 메뉴 카테고리 선택"
                 android:entries="@array/category_select"
                 style="?android:attr/spinnerItemStyle"
