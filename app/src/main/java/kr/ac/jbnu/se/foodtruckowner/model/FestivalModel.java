@@ -23,8 +23,6 @@ public class FestivalModel {
     private String food_category;
     private String deadline;
 
-
-
     private View.OnClickListener requestBtnClickListener;
 
     public FestivalModel(String year, String pledgePrice, String festive_title, String place, int requestsCount, String start_date, String end_date,String festive_content_view,int recruitment_truck,int request_truck,String food_category,String deadline) {
