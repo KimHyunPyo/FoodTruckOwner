@@ -61,24 +61,11 @@ public class SignUpActivity extends AppCompatActivity implements ProgressGenerat
         setContentView(R.layout.signup_activity);
         overridePendingTransition(R.anim.trans_right_in, R.anim.trans_right_out);
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("회원가입");
-        toolbar.setTitleTextColor(Color.WHITE);
-        setSupportActionBar(toolbar);
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayShowCustomEnabled(true); //커스터마이징 하기 위해 필요
-        actionBar.setDisplayShowTitleEnabled(false);
-        actionBar.setDisplayHomeAsUpEnabled(true); // 뒤로가기 버튼, 디폴트로 true만 해도 백버튼이 생김
-        //actionBar.setHomeAsUpIndicator(R.drawable.button_back); //뒤로가기 버튼을 본인이 만든 아이콘으로 하기 위해 필요
-
         et_signup_email = ((EditText) findViewById(R.id.et_signup_email));
         et_signup_pw = ((EditText) findViewById(R.id.et_signup_pw));
         et_signup_pwconfirm = ((EditText) findViewById(R.id.et_signup_pwconfirm));
         et_signup_business_num = (EditText) findViewById(R.id.et_signup_business_num);
         et_signup_Ph_num = (EditText) findViewById(R.id.et_signup_Ph_num);
-        upload2 = (ImageView) findViewById(R.id.upload2);
-
-        Button iu = (Button) findViewById(R.id.img_up);
 
 
         final ActionProcessButton bt_singup_fragment_login = (ActionProcessButton) findViewById(R.id.bt_singup_login);
@@ -102,47 +89,6 @@ public class SignUpActivity extends AppCompatActivity implements ProgressGenerat
             }
         });
 
-        iu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                //버튼 클릭시 처리로직
-                Intent intent = new Intent();
-                //갤러리호출
-                //intent.setType(android.provider.MediaStore.Images.Media.CONTENT_TYPE);
-               // intent.setData(android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                intent.setType("image/*");
-                intent.setAction(Intent.ACTION_GET_CONTENT);
-
-                intent.putExtra("crop", "true");
-                intent.putExtra("aspectX", 0);
-                intent.putExtra("aspectY", 0);
-                intent.putExtra("outputX", 200);
-                intent.putExtra("outputY", 150);
-
-                try {
-                    intent.putExtra("return-data", true);
-                    startActivityForResult(Intent.createChooser(intent,
-                            "Complete action using"), PICK_FROM_GALLERY);
-                    Log.d("카메라", "1");
-                } catch (ActivityNotFoundException e) {
-                    Log.d("카메라", "실패");
-                }
-            }
-        });
-    }
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-
-        Log.d("카메라", "2");
-        if (requestCode == PICK_FROM_GALLERY) {
-            Log.d("카메라", "3");
-            Bundle extras2 = data.getExtras();
-            if (extras2 != null) {
-                Log.d("카메라", "4");
-                Bitmap photo = extras2.getParcelable("data");
-                upload2.setImageBitmap(photo);
-            }
-        }
     }
 
     @Override

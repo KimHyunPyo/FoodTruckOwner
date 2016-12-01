@@ -76,7 +76,7 @@
             android:layout_height="match_parent">
 
             <TextView
-                android:id="@+id/content_avatar_title"
+                android:id="@+id/festive_content"
                 style="@style/ContentMainBadgeTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
