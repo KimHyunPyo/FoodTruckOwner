@@ -70,13 +70,8 @@ public class FragemantMap extends Fragment implements GoogleApiClient.OnConnecti
     private double USER_Y;
     private GoogleMap map;
     private GpsService gpsService;
-    private Switch loc_agree;
     private Switch turn_buss;
     private RatingBar mRatingBar;
-
-    int width;
-    int height;
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -113,6 +108,15 @@ public class FragemantMap extends Fragment implements GoogleApiClient.OnConnecti
         gpsService = new GpsService(getActivity());
         GooglePlayServicesUtil.isGooglePlayServicesAvailable(getActivity());
         map = mapview.getMap();
+        map.setOnMyLocationButtonClickListener(new GoogleMap.OnMyLocationButtonClickListener() {
+            @Override
+            public boolean onMyLocationButtonClick() {
+                setCuttrntLocation();
+                return true;
+            }
+        });
+
+
         turn_buss = (Switch)view.findViewById(R.id.sw_turn_buss);
 
         turn_buss.setChecked(FoodTruckModel.getInstance().getFtStart());
@@ -358,13 +362,15 @@ public class FragemantMap extends Fragment implements GoogleApiClient.OnConnecti
             map.moveCamera(CameraUpdateFactory.newLatLng(CuttrntLocation));
             // Map 을 zoom 합니다.
             map.animateCamera(CameraUpdateFactory.zoomTo(13));
-            //map.setMyLocationEnabled(true);
         }
+
+        //My Location 계층을 활성화하기 전에 지원 라이브러리를 사용하여 권한을 확인
         if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
             map.setMyLocationEnabled(true);
         } else {
             // Show rationale and request permission.
+            Log.e("MAP", "내 위치 기능 사용권한 에러");
         }
     }
 
@@ -377,9 +383,12 @@ public class FragemantMap extends Fragment implements GoogleApiClient.OnConnecti
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
         Log.d("구글맵", "온커넥션페일드");
     }
+
     //위치정보 바뀔때마다 위치 갱신함
     @Override
     public void onLocationChanged(Location location) {
+
+
         Log.d("구글맵", "온로케이션체인지드");
         gpsService.stopUsingGPS();
         stopGps();
