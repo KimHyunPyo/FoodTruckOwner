@@ -55,6 +55,13 @@ public class FoldingCellListAdapter extends ArrayAdapter<FestivalModel> {
             viewHolder.contentRequestBtn = (TextView) cell.findViewById(R.id.request_btn);
             viewHolder.folding = (TextView) cell.findViewById(R.id.folding);
             viewHolder.headImage = (ImageView) cell.findViewById(R.id.festive_image);
+
+            viewHolder.festive_content_view = (TextView) cell.findViewById(R.id.festive_content_view);
+            viewHolder.recruitment_truck = (TextView) cell.findViewById(R.id.recruitment_truck);
+            viewHolder.request_truck = (TextView) cell.findViewById(R.id.request_truck);
+            viewHolder.food_category = (TextView) cell.findViewById(R.id.food_category);
+            viewHolder.deadline = (TextView) cell.findViewById(R.id.deadline);
+
             cell.setTag(viewHolder);
         } else {
             // for existing cell set valid valid state(without animation)
@@ -73,6 +80,13 @@ public class FoldingCellListAdapter extends ArrayAdapter<FestivalModel> {
         viewHolder.festive.setText(item.getFestive_title());
         viewHolder.place.setText(item.getPlace());
         viewHolder.requestsCount.setText(String.valueOf(item.getRequestsCount()));
+
+        viewHolder.festive_content_view.setText(item.getFestive_content_view());
+        viewHolder.recruitment_truck.setText(String.valueOf(item.getRecruitment_truck()));
+        viewHolder.request_truck.setText(String.valueOf(item.getRequest_truck()));
+        viewHolder.food_category.setText(item.getFood_category());
+        viewHolder.deadline.setText(item.getDeadline());
+
         viewHolder.contentRequestBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -172,5 +186,12 @@ public class FoldingCellListAdapter extends ArrayAdapter<FestivalModel> {
     TextView end_date;
     TextView folding;
     ImageView headImage;
+
+        TextView festive_content_view;
+        TextView recruitment_truck;
+        TextView request_truck;
+        TextView food_category;
+        TextView deadline;
+
 }
 }

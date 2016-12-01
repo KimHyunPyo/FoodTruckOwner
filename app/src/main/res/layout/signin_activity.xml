@@ -31,7 +31,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="이메일 주소"
-                android:text="owner@naver.com"
+                android:text="test@naver.com"
                 android:theme="@style/MyEditText" />
 
             <requestFocus />
@@ -56,7 +56,7 @@
                 android:hint="비밀번호"
                 android:inputType="textPassword"
                 android:password="true"
-                android:text="1234"
+                android:text="12345678"
                 android:theme="@style/MyEditText" />
 
             <requestFocus />

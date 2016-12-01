@@ -46,7 +46,7 @@ public interface ApiService {
         //업주가 자신의 메뉴 보려고 요청
     //@FormUrlEncoded
     @GET("/common/truck_menus")
-    Call<ArrayList<MenuModel>> truck_menus(@Query("id") int owner_id);
+    Call<ArrayList<MenuModel>> truck_menus(@Query("foodtruck_id") int foodtruck_id);
 
         //메뉴 추가 요청
     @FormUrlEncoded
