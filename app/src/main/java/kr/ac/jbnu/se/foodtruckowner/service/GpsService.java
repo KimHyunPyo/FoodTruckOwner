@@ -156,6 +156,14 @@ public class GpsService extends Service implements LocationListener {
         alertDialog.show();
     }
 
+    public Boolean isGPSEnabled() {
+        return isGPSEnabled;
+    }
+
+    public void setIsGPSEnabled() {
+        isGPSEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+    }
+
     @Override
     public IBinder onBind(Intent arg0) {
         return null;

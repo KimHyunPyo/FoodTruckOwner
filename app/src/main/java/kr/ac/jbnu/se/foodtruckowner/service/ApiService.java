@@ -95,4 +95,7 @@ public interface ApiService {
 
     @GET("/common/foodtruck_reviews")
     Call<ArrayList<ReviewItem>> request_review(@Query("foodtruck_id") int foodtruck_id);
+
+    @GET("/owner/set_location")
+    Call<Boolean> set_location(@Query("foodtruck_id") int foodtruck_id, @Query("lat") float lat, @Query("lng") float lng);
 }

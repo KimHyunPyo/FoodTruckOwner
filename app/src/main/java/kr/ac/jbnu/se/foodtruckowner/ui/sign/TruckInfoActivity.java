@@ -27,8 +27,6 @@ import kr.ac.jbnu.se.foodtruckowner.model.FoodTruckModel;
 public class TruckInfoActivity extends AppCompatActivity {
 
     final int REQ_CODE_SELECT_IMAGE = 100;
-    private FoodTruckModel model;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,8 +85,6 @@ public class TruckInfoActivity extends AppCompatActivity {
             }
 
             protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-
-
                 Toast.makeText(getBaseContext(), "resultCode : " + resultCode, Toast.LENGTH_SHORT).show();
 
                 if (requestCode == REQ_CODE_SELECT_IMAGE) {

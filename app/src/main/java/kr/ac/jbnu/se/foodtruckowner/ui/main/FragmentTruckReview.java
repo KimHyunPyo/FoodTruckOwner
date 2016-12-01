@@ -1,11 +1,10 @@
-package kr.ac.jbnu.se.foodtruckowner.ui;
+package kr.ac.jbnu.se.foodtruckowner.ui.main;
 
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,7 +18,6 @@ import kr.ac.jbnu.se.foodtruckowner.R;
 import kr.ac.jbnu.se.foodtruckowner.adapter.ReviewAnimator;
 import kr.ac.jbnu.se.foodtruckowner.adapter.ReviewItemAdapter;
 import kr.ac.jbnu.se.foodtruckowner.model.FoodTruckModel;
-import kr.ac.jbnu.se.foodtruckowner.model.MenuModel;
 import kr.ac.jbnu.se.foodtruckowner.model.ReviewItem;
 import kr.ac.jbnu.se.foodtruckowner.service.ApiService;
 import kr.ac.jbnu.se.foodtruckowner.service.ServiceGenerator;
@@ -30,13 +28,11 @@ import retrofit2.Response;
 /**
  * Created by hyunjung on 2016-11-25.
  */
-
-public class AcitivityTruckReview extends Fragment {
+public class FragmentTruckReview extends Fragment {
 
     private ArrayList<ReviewItem> reviewitems = new ArrayList<>();
     private ReviewItemAdapter reviewAdapter;
     private RecyclerView review_view;
-    private Toolbar toolbar;
     private LinearLayout clContent;
 
     @Override
@@ -53,7 +49,6 @@ public class AcitivityTruckReview extends Fragment {
     public boolean onOptionsItemSelected(android.view.MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                // NavUtils.navigateUpFromSameTask(this);
                 getActivity().finish();
                 getActivity().overridePendingTransition(R.anim.trans_right_in, R.anim.trans_right_out);
                 return true;

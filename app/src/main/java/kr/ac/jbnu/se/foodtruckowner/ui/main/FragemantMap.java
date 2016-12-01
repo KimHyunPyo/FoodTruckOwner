@@ -13,6 +13,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,6 +24,7 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -30,6 +32,7 @@ import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -68,22 +71,27 @@ public class FragemantMap extends Fragment implements GoogleApiClient.OnConnecti
     private double USER_Y;
     private GoogleMap map;
     private GpsService gpsService;
-    private Switch loc_agree;
     private Switch turn_buss;
     private RatingBar mRatingBar;
-    private FoodTruckModel myTruck;
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_map, container, false);
 
+        DisplayMetrics metrics = new DisplayMetrics();
+        getActivity().getWindowManager().getDefaultDisplay().getMetrics(metrics);
+
+        int displaywidth =  metrics.widthPixels;
+        int displayheight =  metrics.heightPixels/3;
         //푸드트럭 메인 이미지 홈 화면에 삽입
         ImageView truckMainImage = (ImageView)view.findViewById(R.id.truck_main_image);
         Picasso.with(getContext())
                 .load(ServiceGenerator.API_BASE_URL + FoodTruckModel.getInstance().getFT_IMAGE_URL())
-                .resize(300,150)
+                .resize(displaywidth,displayheight)
                 .into(truckMainImage);
+
+        TextView tvlikes = (TextView) view.findViewById(R.id.tvlikes);
+        tvlikes.setText(""+FoodTruckModel.getInstance().getFtLike());
 
         mapview=(MapView)view.findViewById(R.id.map);
         mGoogleApiClient = new GoogleApiClient.Builder(getContext())
@@ -101,11 +109,91 @@ public class FragemantMap extends Fragment implements GoogleApiClient.OnConnecti
         gpsService = new GpsService(getActivity());
         GooglePlayServicesUtil.isGooglePlayServicesAvailable(getActivity());
         map = mapview.getMap();
-        turn_buss = (Switch)view.findViewById(R.id.sw_turn_buss);
-        loc_agree = (Switch)view.findViewById(R.id.sw_loc_agree);
 
+        map.getUiSettings().setZoomControlsEnabled(true);
+        map.setOnMyLocationButtonClickListener(new GoogleMap.OnMyLocationButtonClickListener() {
+            @Override
+            public boolean onMyLocationButtonClick() {
+                //버튼이 눌릴때마다 gps사용 여부를 체크한다.
+                gpsService.setIsGPSEnabled();
+
+                //gps 사용여부에 따라
+                if(gpsService.isGPSEnabled()) {
+                    setCuttrntLocation();   //사용중 - 현재위치에 마커를 찍음
+                    map.animateCamera(CameraUpdateFactory.newLatLngZoom(CuttrntLocation, 17));
+                } else {
+                    gpsService.showSettingsAlert(); //미사용중 - gps사용을 유도
+               }
+                return false;
+            }
+        });
+
+
+        turn_buss = (Switch)view.findViewById(R.id.sw_turn_buss);
         turn_buss.setChecked(FoodTruckModel.getInstance().getFtStart());
 
+        final Button btpush  = (Button) view.findViewById(R.id.bt_location_push);
+
+        btpush.setText("위치정보 공개");
+        btpush.setOnClickListener(new Button.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+                if(turn_buss.isChecked()){
+                    new SweetAlertDialog(getActivity(), SweetAlertDialog.WARNING_TYPE)
+                            .setTitleText("공개 여부")
+                            .setContentText("선택하신 위치로 공개하시겠습니까?")
+                            .setCancelText("아니요")
+                            .setConfirmText("네")
+                            .showCancelButton(true)
+                            .setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                                @Override
+                                public void onClick(SweetAlertDialog sDialog) {
+                                    sDialog.setTitleText("최소")
+                                            .setContentText("최소되었습니다.")
+                                            .setConfirmText("OK")
+                                            .showCancelButton(false)
+                                            .setCancelClickListener(null)
+                                            .setConfirmClickListener(null)
+                                            .changeAlertType(SweetAlertDialog.ERROR_TYPE);
+                                }
+                            })
+                            .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                                @Override
+                                public void onClick(final SweetAlertDialog sDialog) {
+                                    ApiService service = ServiceGenerator.createService(ApiService.class);
+                                    Call<Boolean> call = service.set_location(FoodTruckModel.getInstance().getFT_ID(), (float)USER_X, (float)USER_Y);
+                                    call.enqueue(new Callback<Boolean>() {
+                                        @Override
+                                        public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                                            Boolean check = response.body();
+                                            if(check) {
+                                                sDialog.setTitleText("공개되었습니다.")
+                                                        .setConfirmText("OK")
+                                                        .showCancelButton(false)
+                                                        .setCancelClickListener(null)
+                                                        .setConfirmClickListener(null)
+                                                        .changeAlertType(SweetAlertDialog.SUCCESS_TYPE);
+                                            } else {
+                                                Toast.makeText(getActivity(), "정보 전송 실패", Toast.LENGTH_SHORT).show();
+                                            }
+                                        }
+
+                                        @Override
+                                        public void onFailure(Call<Boolean> call, Throwable t) {
+
+                                        }
+                                    });
+                                }
+                            }).show();
+
+                }
+                else{
+                    Toast.makeText(getActivity(), "영업중으로 전환해주세요", Toast.LENGTH_LONG).show();
+                }
+
+            }
+        });
         turn_buss.setOnCheckedChangeListener(new Switch.OnCheckedChangeListener(){
             public void onCheckedChanged(CompoundButton cb, boolean isChecking){
                 String str = String.valueOf(isChecking);
@@ -148,24 +236,6 @@ public class FragemantMap extends Fragment implements GoogleApiClient.OnConnecti
                     });
                 }
             }
-        });
-
-        loc_agree.setOnCheckedChangeListener(new Switch.OnCheckedChangeListener(){
-            public void onCheckedChanged(CompoundButton cb, boolean isChecking){
-                String str = String.valueOf(isChecking);
-                if (isChecking) {
-                    if (mapview.isActivated()== false) {
-                        mapview.onResume();
-                    }
-                    Toast.makeText(getActivity(), "위치공개해라", Toast.LENGTH_LONG).show();
-                } else {
-                    mapview.onPause();
-                    gpsService.stopUsingGPS();
-                    Toast.makeText(getActivity(), "공개하지마라", Toast.LENGTH_LONG).show();
-                }
-            }
-
-
         });
         return view;
     }
@@ -226,28 +296,19 @@ public class FragemantMap extends Fragment implements GoogleApiClient.OnConnecti
         if (gpsService.isGetLocation()) {
             USER_X = gpsService.getLatitude();
             USER_Y = gpsService.getLongitude();
-            //sharedPreference.put(sharedPreference.user_x, String.valueOf(x)); //서버에 넘겨줄 좌표값
-            //sharedPreference.put(sharedPreference.user_y, String.valueOf(y));
             // Creating a LatLng object for the current location
             CuttrntLocation = new LatLng(USER_X, USER_Y);
             Log.d("GPS수신......X : ", String.valueOf(USER_X));
             Log.d("GPS수신......Y : ", String.valueOf(USER_Y));
-            map.moveCamera(CameraUpdateFactory.newLatLng(CuttrntLocation));
 
-            map.animateCamera(CameraUpdateFactory.zoomTo(17));
-
-            // 마커 설정.
+            // 마커 설정
             MarkerOptions optFirst = new MarkerOptions();
             optFirst.position(CuttrntLocation);// 위도 • 경도
-            optFirst.title("회원님의 위치입니다.");// 제목 미리보기
-            optFirst.snippet("요기!");
-            optFirst.icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_launcher));
+            optFirst.title("현재 위치");// 제목 미리보기
             map.addMarker(optFirst).showInfoWindow();
-        } else {
-            // GPS 를 사용할수 없으므로
-            gpsService.showSettingsAlert();
         }
     }
+
     @Override
     public void onStart() {
         super.onStart();
@@ -284,12 +345,6 @@ public class FragemantMap extends Fragment implements GoogleApiClient.OnConnecti
             }
         }
         Log.d("구글맵", "온맵레디");
-        if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION)
-                == PackageManager.PERMISSION_GRANTED) {
-            map.setMyLocationEnabled(true);
-        } else {
-            // Show rationale and request permission.
-        }
     }
 
     //최초 한번만 현위치 잡음
@@ -303,16 +358,16 @@ public class FragemantMap extends Fragment implements GoogleApiClient.OnConnecti
             map.moveCamera(CameraUpdateFactory.newLatLng(CuttrntLocation));
             // Map 을 zoom 합니다.
             map.animateCamera(CameraUpdateFactory.zoomTo(13));
-            //map.setMyLocationEnabled(true);
         }
+
+        //My Location 계층을 활성화하기 전에 지원 라이브러리를 사용하여 권한을 확인
         if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
             map.setMyLocationEnabled(true);
         } else {
             // Show rationale and request permission.
+            Log.e("MAP", "내 위치 기능 사용권한 에러");
         }
-
-
     }
 
     @Override
@@ -324,27 +379,25 @@ public class FragemantMap extends Fragment implements GoogleApiClient.OnConnecti
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
         Log.d("구글맵", "온커넥션페일드");
     }
+
     //위치정보 바뀔때마다 위치 갱신함
     @Override
     public void onLocationChanged(Location location) {
         Log.d("구글맵", "온로케이션체인지드");
-        gpsService.stopUsingGPS();
-        stopGps();
     }
 
     @Override
     public void onDestroy()
     {
         Log.d("구글맵", "온디스트로이");
-        gpsService.stopUsingGPS();
         stopGps();
         super.onDestroy();
 
     }
     public void stopGps()
     {
-        gpsService.stopUsingGPS();
         Log.d("구글맵", "스탑지피에스");
+        gpsService.stopUsingGPS();
         if (this.mGoogleApiClient.isConnected()) {
             LocationServices.FusedLocationApi.removeLocationUpdates(this.mGoogleApiClient, this);
         }

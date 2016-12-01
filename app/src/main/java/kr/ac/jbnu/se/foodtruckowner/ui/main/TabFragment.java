@@ -12,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import kr.ac.jbnu.se.foodtruckowner.R;
-import kr.ac.jbnu.se.foodtruckowner.ui.AcitivityTruckReview;
 
 /**
  * Created by Ratan on 7/27/2015.
@@ -71,7 +70,7 @@ public class TabFragment extends Fragment {
                 case 0:
                     return new FragemantMap();
                 case 1:
-                    return new AcitivityTruckReview();
+                    return new FragmentTruckReview();
             }
             return null;
         }
