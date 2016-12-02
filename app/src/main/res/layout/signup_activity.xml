@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<RelativeLayout android:background="@color/common_action_bar_splitter"
+<LinearLayout android:background="@color/common_action_bar_splitter"
     android:clickable="true"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
@@ -9,6 +9,9 @@
     xmlns:custom="http://schemas.android.com/tools"
     android:backgroundTint="@color/white">
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
     <LinearLayout
         android:orientation="vertical"
@@ -58,7 +61,6 @@
             android:hint="비밀번호(8자 이상)"
             android:inputType="textPassword"
             android:password="true"
-            android:text="1234"
             android:theme="@style/MyEditText" />
 
     </android.support.design.widget.TextInputLayout>
@@ -82,7 +84,6 @@
             android:hint="비밀번호 확인"
             android:inputType="textPassword"
             android:password="true"
-            android:text="1234"
             android:theme="@style/MyEditText" />
 
 
@@ -90,32 +91,32 @@
 
 
         <LinearLayout
-            android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentStart="true"
-            android:weightSum="3">
-
-
+            android:weightSum="3"
+            >
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="20dp"
                 android:layout_marginTop="40dp"
-                android:paddingLeft="5dp"
-                android:paddingRight="5dp"
                 app:errorEnabled="true"
-                app:errorTextAppearance="@style/MyErrorText">
+                app:errorTextAppearance="@style/MyErrorText"
+                android:layout_weight="1">
 
-              <EditText
-                  android:id="@+id/et_signup_Ph_num"
-                  android:layout_width="match_parent"
-                  android:layout_height="48dip"
-                  android:hint="핸드폰 번호'-'없이 입력"/>
 
-          </android.support.design.widget.TextInputLayout>
+                <EditText
+                    android:id="@+id/et_signup_Ph_num"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="핸드폰 번호 '_' 없이 입력"
+                    android:inputType="textPassword"
+                    android:password="true"
+                    android:theme="@style/MyEditText" />
+
+
+            </android.support.design.widget.TextInputLayout>
 
             <Button
                 android:id="@+id/bt_Pnconfirm"
@@ -129,58 +130,64 @@
                 android:layout_marginLeft="20.0dip"
                 android:layout_marginRight="20.0dip"
                 android:layout_marginBottom="10.0dip"
-                android:layout_below="@id/et_signup_Ph_num"
+
+                android:layout_gravity="center"
                 android:onClick="Onclick_Confrim"/>
+
 
         </LinearLayout>
 
 
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        android:weightSum="3"
-        >
 
 
-        <android.support.design.widget.TextInputLayout
+
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="20dp"
-            android:layout_marginTop="40dp"
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp"
-            app:errorEnabled="true"
-            app:errorTextAppearance="@style/MyErrorText">
+            android:weightSum="3"
+            >
 
-
-            <EditText
-                android:id="@+id/et_signup_business_num"
+            <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="48dip"
-                android:hint="사업자 등록번호 '-'없이 입력"
-                android:theme="@style/MyEditText" />
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:layout_marginTop="40dp"
+                app:errorEnabled="true"
+                app:errorTextAppearance="@style/MyErrorText"
+                android:layout_weight="1">
 
-        </android.support.design.widget.TextInputLayout>
+
+                <EditText
+                    android:id="@+id/et_signup_business_num"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="사업자등록 번호 '_' 없이 입력"
+                    android:inputType="textPassword"
+                    android:password="true"
+                    android:theme="@style/MyEditText" />
+
+
+            </android.support.design.widget.TextInputLayout>
 
             <Button
                 android:id="@+id/bt_bnconfirm"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="인증하기"
                 android:layout_weight="2"
+                android:text="인증하기"
                 android:textColor="@android:color/white"
                 android:textSize="14.0sp"
+                android:background="@color/colorPrimary"
                 android:layout_marginLeft="20.0dip"
                 android:layout_marginRight="20.0dip"
                 android:layout_marginBottom="10.0dip"
-                android:background="@color/colorPrimary"
-                android:layout_below="@id/et_signup_business_num"
+
+                android:layout_gravity="center"
                 android:onClick="Onclick_Confrim"/>
 
-       </LinearLayout>
+
+        </LinearLayout>
 
     <LinearLayout
         android:orientation="horizontal"
@@ -210,4 +217,5 @@
             android:onClick="Onclick_Signup"/>
     </LinearLayout>
     </LinearLayout>
-</RelativeLayout>
+    </ScrollView>
+</LinearLayout>
