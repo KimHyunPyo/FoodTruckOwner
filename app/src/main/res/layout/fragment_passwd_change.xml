@@ -31,6 +31,7 @@
                 android:id="@+id/et_pw_2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:inputType="textPassword"
                 android:hint="변경 비밀번호"
                 android:theme="@style/MyEditText"/>
 
@@ -49,6 +50,7 @@
                 android:id="@+id/et_pw_3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:inputType="textPassword"
                 android:hint="비밀번호 확인"
                 android:theme="@style/MyEditText"/>
 

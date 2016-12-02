@@ -40,7 +40,7 @@ public interface ApiService {
 
         //업주 비밀번호 변경 요청
     @GET("owner/change_password")
-    Call<Integer> change_password(@Query("owenr_id") int owenr_id, @Query("password") String password, @Query("password_confirmation") String password_confirmation);
+    Call<Integer> change_password(@Query("owner_id") int owner_id, @Query("password") String password, @Query("password_confirmation") String password_confirmation);
 
     // ======================= 메뉴 관련 요청 =======================
         //업주가 자신의 메뉴 보려고 요청

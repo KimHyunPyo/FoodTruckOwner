@@ -113,10 +113,6 @@ public class SignUpActivity extends AppCompatActivity implements ProgressGenerat
         return Pattern.compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$").matcher(paramString).matches();
     }
 
-//    private boolean check_id(String paramString) {
-//        return Pattern.compile("([A-Za-z0-9].{2,10})").matcher(paramString).matches();
-//    }
-
     private boolean check_pw(String paramString) {
         return Pattern.compile("(([A-Za-z0-9]).{7,20})").matcher(paramString).matches();
     }
@@ -130,21 +126,6 @@ public class SignUpActivity extends AppCompatActivity implements ProgressGenerat
     }
 
     private Boolean StartSingUp() {
-//        if (pwconfrim) {
-//            if (check_id(this.et_signup_email.getText().toString())) {
-//                if (check_pw(this.et_signup_pw.getText().toString())) {
-//                    getSignUpRequest();
-//                    return true;
-//                }
-//                Toast.makeText(SignUpActivity.this, "비밀번호를 8자이상 입력해주세요", Toast.LENGTH_SHORT).show();
-//                return false;
-//            }
-//            Toast.makeText(SignUpActivity.this, "올바른 아이디 형식이 아닙니다", Toast.LENGTH_SHORT).show();
-//            return false;
-//        }
-//        Toast.makeText(SignUpActivity.this, "비밀번호를 확인해주세요", Toast.LENGTH_SHORT).show();
-//        return false;
-
         if (check_email(this.et_signup_email.getText().toString())) {
             if (check_pw(this.et_signup_pw.getText().toString())) {
                 if (check_pw_confirm()) {
