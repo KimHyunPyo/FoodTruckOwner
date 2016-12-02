@@ -1,13 +1,15 @@
 package kr.ac.jbnu.se.foodtruckowner.ui.sign;
 
-import android.app.Activity;
+import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.Cursor;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -16,18 +18,31 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.google.gson.JsonObject;
+
 import java.io.BufferedOutputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.IOException;
 
 import kr.ac.jbnu.se.foodtruckowner.R;
+import kr.ac.jbnu.se.foodtruckowner.Util.FileUtils;
 import kr.ac.jbnu.se.foodtruckowner.model.FoodTruckModel;
+import kr.ac.jbnu.se.foodtruckowner.model.Owner;
+import kr.ac.jbnu.se.foodtruckowner.service.ApiService;
+import kr.ac.jbnu.se.foodtruckowner.service.ServiceGenerator;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class TruckInfoActivity extends AppCompatActivity {
 
@@ -37,31 +52,100 @@ public class TruckInfoActivity extends AppCompatActivity {
     private Uri mImageCaptureUri;
     private String absoultePath;
     private ImageView imageUpload;
+    private String imageName;
+
+    private EditText truck_name;
+    private Spinner truck_category;
+    private RadioGroup payment_card;
+    private Spinner city;
+
+    private File image;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_truck_info);
 
-        Intent truckintent = getIntent();
+        permissionsCheck();
 
         Button bt_insert = (Button) findViewById(R.id.bt_insert_truck);
         Button bt_upload = (Button) findViewById(R.id.bt_upload);
-        final Spinner city = (Spinner) findViewById(R.id.city);
         imageUpload = (ImageView) findViewById(R.id.imageUpload);
 
+        city = (Spinner) findViewById(R.id.city);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.city_select, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         city.setAdapter(adapter);
 
+        truck_name = (EditText) this.findViewById(R.id.truck_name);
+        truck_category = (Spinner) this.findViewById(R.id.category);
+        payment_card =(RadioGroup)findViewById(R.id.radioPayment);
 
         bt_insert.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Boolean card;
+                int selectedId = payment_card.getCheckedRadioButtonId();
+                RadioButton selected_radio = (RadioButton) findViewById(selectedId);
+                if(selected_radio.getText().equals("카드결제 가능")) {
+                    card = true;
+                } else {
+                    card = false;
+                }
 
-                Intent loginIntent = new Intent(TruckInfoActivity.this, SigninActivity.class);
-                startActivity(loginIntent);
-                finish();
+                int category = truck_category.getSelectedItemPosition();
+                if(category == 0) {
+                    Toast.makeText(getApplicationContext(), "카테고리를 선택하여 주세요.", Toast.LENGTH_SHORT);
+                    return;
+                }
+
+                String truck_city;
+                if(city.getSelectedItemPosition() == 0) {
+                    Toast.makeText(getApplicationContext(), "주 도시를 선택하여 주세요.", Toast.LENGTH_SHORT);
+                    return;
+                } else {
+                    truck_city = city.getSelectedItem().toString();
+                }
+
+                String foodtruck_name = truck_name.getText().toString();
+                if(foodtruck_name.equals("")) {
+                    Toast.makeText(getApplicationContext(), "푸드트럭 이름을 입력해주세요.", Toast.LENGTH_SHORT);
+                    return;
+                }
+
+                //입력받은 정보를 제이슨 객체에 입력
+                JsonObject ob = new JsonObject();
+                ob.addProperty("name", foodtruck_name);
+                ob.addProperty("category", category);
+                ob.addProperty("tag", new String());
+                ob.addProperty("payment_card", card);
+                ob.addProperty("region", truck_city);
+                ob.addProperty("owner_id", Owner.getInstance().getId());
+
+
+                RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"), image);
+                MultipartBody.Part imageFileBody = MultipartBody.Part.createFormData("image", image.getName(), requestBody);
+
+                ApiService service = ServiceGenerator.createService(ApiService.class);
+                Call<Boolean> call = service.save_truckInfo(imageFileBody, ob);
+                call.enqueue(new Callback<Boolean>() {
+                    @Override
+                    public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                        Boolean check = response.body();
+                        if(check) {
+                            Intent loginIntent = new Intent(TruckInfoActivity.this, SigninActivity.class);
+                            startActivity(loginIntent);
+                            finish();
+                        } else {
+                            Log.e("TRUCK", "서버 반환값이 false");
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<Boolean> call, Throwable t) {
+                        Log.e("TRUCK", t.toString());
+                    }
+                });
             }
         });
 
@@ -109,8 +193,6 @@ public class TruckInfoActivity extends AppCompatActivity {
 
             }
 
-
-
         });
 }
 
@@ -125,6 +207,7 @@ public class TruckInfoActivity extends AppCompatActivity {
         intent.putExtra(android.provider.MediaStore.EXTRA_OUTPUT, mImageCaptureUri);
         startActivityForResult(intent, PICK_FROM_CAMERA);
     }
+
     public void doTakeAlbumAction() // 앨범에서 이미지 가져오기
     {
         // 앨범 호출
@@ -132,6 +215,7 @@ public class TruckInfoActivity extends AppCompatActivity {
         intent.setType(android.provider.MediaStore.Images.Media.CONTENT_TYPE);
         startActivityForResult(intent, PICK_FROM_ALBUM);
     }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode,resultCode,data);
@@ -147,6 +231,8 @@ public class TruckInfoActivity extends AppCompatActivity {
                 // 실제 코드에서는 좀더 합리적인 방법을 선택하시기 바랍니다.
                 mImageCaptureUri = data.getData();
                 Log.d("SmartWheel",mImageCaptureUri.getPath().toString());
+
+                image = FileUtils.getFile(getApplicationContext(), mImageCaptureUri);
             }
 
             case PICK_FROM_CAMERA:
@@ -178,8 +264,9 @@ public class TruckInfoActivity extends AppCompatActivity {
                 final Bundle extras = data.getExtras();
 
                 // CROP된 이미지를 저장하기 위한 FILE 경로
+                imageName = System.currentTimeMillis()+".jpg";
                 String filePath = Environment.getExternalStorageDirectory().getAbsolutePath()+
-                        "/SmartWheel/"+System.currentTimeMillis()+".jpg";
+                        "/SmartWheel/"+ imageName;
 
                 if(extras != null)
                 {
@@ -190,14 +277,15 @@ public class TruckInfoActivity extends AppCompatActivity {
                     storeCropImage(photo, filePath); // CROP된 이미지를 외부저장소, 앨범에 저장한다.
                     absoultePath = filePath;
                     break;
-
                 }
+
                 // 임시 파일 삭제
                 File f = new File(mImageCaptureUri.getPath());
                 if(f.exists())
                 {
                     f.delete();
                 }
+
             }
         }
     }
@@ -214,14 +302,12 @@ public class TruckInfoActivity extends AppCompatActivity {
         BufferedOutputStream out = null;
 
         try {
-
             copyFile.createNewFile();
             out = new BufferedOutputStream(new FileOutputStream(copyFile));
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
 
             // sendBroadcast를 통해 Crop된 사진을 앨범에 보이도록 갱신한다.
-           sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE,
-                    Uri.fromFile(copyFile)));
+           sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(copyFile)));
             out.flush();
             out.close();
         } catch (Exception e) {
@@ -229,7 +315,34 @@ public class TruckInfoActivity extends AppCompatActivity {
         }
     }
 
+    //안드6.0 부터는 퍼미션 접근 방법이 달라져서 따로 체크해줘야함
+    private void permissionsCheck(){
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.READ_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
 
+            // Should we show an explanation?
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                    Manifest.permission.READ_EXTERNAL_STORAGE)) {
+
+                // Show an expanation to the user *asynchronously* -- don't block
+                // this thread waiting for the user's response! After the user
+                // sees the explanation, try again to request the permission.
+
+            } else {
+
+                // No explanation needed, we can request the permission.
+
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                        1);
+
+                // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
+                // app-defined int constant. The callback method gets the
+                // result of the request.
+            }
+        }
+    }
 
 }
 

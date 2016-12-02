@@ -146,11 +146,12 @@
     <string-array name="category_select">
         <item>카테고리를 선택하세요</item>
         <item>한식</item>
-        <item>중식</item>
         <item>일식</item>
+        <item>양식</item>
+        <item>중식</item>
         <item>분식</item>
-        <item>카페·음료</item>
         <item>디저트</item>
+        <item>음료</item>
     </string-array>
 
     <plurals name="likes_count">
