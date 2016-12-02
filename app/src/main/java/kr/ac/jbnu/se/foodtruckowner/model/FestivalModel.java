@@ -10,12 +10,14 @@ import java.util.ArrayList;
 public class FestivalModel {
 
     private String year;
-    private String pledgePrice;
     private String festive_title;
     private String place;
-    private int requestsCount;
     private String start_date;
     private String end_date;
+
+    private String title_recruitment_truck;
+    private String title_cost;
+    private String title_deadline;
 
     private String festive_content_view;
     private int recruitment_truck;
@@ -27,14 +29,16 @@ public class FestivalModel {
 
     private View.OnClickListener requestBtnClickListener;
 
-    public FestivalModel(String year, String pledgePrice, String festive_title, String place, int requestsCount, String start_date, String end_date,String festive_content_view,int recruitment_truck,int request_truck,String food_category,String deadline) {
+    public FestivalModel(String year,String festive_title, String place,  String end_date ,String start_date ,String festive_content_view,int recruitment_truck,int request_truck,String food_category,String deadline,String title_recruitment_truck,String title_cost,String title_deadline) {
         this.year = year;
-        this.pledgePrice = pledgePrice;
         this.festive_title = festive_title;
         this.place = place;
-        this.requestsCount = requestsCount;
         this.start_date = start_date;
         this.end_date = end_date;
+
+        this.title_recruitment_truck = title_recruitment_truck;
+        this.title_cost = title_cost;
+        this.title_deadline= title_deadline;
 
         this.festive_content_view = festive_content_view;
         this.recruitment_truck = recruitment_truck;
@@ -50,14 +54,6 @@ public class FestivalModel {
 
     public void setYear(String year) {
         this.year = year;
-    }
-
-    public String getPledgePrice() {
-        return pledgePrice;
-    }
-
-    public void setPledgePrice(String pledgePrice) {
-        this.pledgePrice = pledgePrice;
     }
 
     public String getFestive_title() {
@@ -76,13 +72,6 @@ public class FestivalModel {
         this.place = place;
     }
 
-    public int getRequestsCount() {
-        return requestsCount;
-    }
-
-    public void setRequestsCount(int requestsCount) {
-        this.requestsCount = requestsCount;
-    }
 
     public String getStart_date() {
         return start_date;
@@ -124,6 +113,17 @@ public class FestivalModel {
     }
 
     public void setRequestBtnClickListener(View.OnClickListener requestBtnClickListener) {this.requestBtnClickListener = requestBtnClickListener;}
+    public String getTitle_recruitment_truck() {return title_recruitment_truck;}
+
+    public void setTitle_recruitment_truck(String title_recruitment_truck) {this.title_recruitment_truck = title_recruitment_truck;
+    }
+    public String getTitle_cost() {return title_cost;}
+
+    public void setTitle_cost(String title_cost) {this.title_cost = title_cost;}
+
+    public String getTitle_deadline() {return title_deadline;}
+
+    public void setTitle_deadline(String title_deadline) {this.title_deadline = title_deadline;}
 
     @Override
     public boolean equals(Object o) {
@@ -132,10 +132,7 @@ public class FestivalModel {
 
         FestivalModel item = (FestivalModel) o;
 
-        if (requestsCount != item.requestsCount) return false;
         if (year != null ? !year.equals(item.year) : item.year != null) return false;
-        if (pledgePrice != null ? !pledgePrice.equals(item.pledgePrice) : item.pledgePrice != null)
-            return false;
         if (festive_title != null ? !festive_title.equals(item.festive_title) : item.festive_title != null)
             return false;
         if (place != null ? !place.equals(item.place) : item.place != null)
@@ -151,6 +148,12 @@ public class FestivalModel {
             return false;
         if (deadline != null ? !deadline.equals(item.deadline) : item.deadline != null)
             return false;
+        if (title_recruitment_truck != null ? !title_recruitment_truck.equals(item.title_recruitment_truck) : item.title_recruitment_truck != null)
+            return false;
+        if (title_cost!= null ? !title_cost.equals(item.title_cost) : item.title_cost != null)
+            return false;
+        if (title_deadline != null ? !title_deadline.equals(item.title_deadline) : item.title_deadline != null)
+            return false;
 
 
         return  false;
@@ -159,10 +162,8 @@ public class FestivalModel {
     @Override
     public int hashCode() {
         int result = year != null ? year.hashCode() : 0;
-        result = 31 * result + (pledgePrice != null ? pledgePrice.hashCode() : 0);
         result = 31 * result + (festive_title != null ? festive_title.hashCode() : 0);
         result = 31 * result + (place != null ? place.hashCode() : 0);
-        result = 31 * result + requestsCount;
         result = 31 * result + (start_date != null ? start_date.hashCode() : 0);
         result = 31 * result + (end_date != null ? end_date.hashCode() : 0);
 
@@ -172,6 +173,10 @@ public class FestivalModel {
         result = 31 * result + (food_category != null ? food_category.hashCode() : 0);
         result = 31 * result + (deadline!= null ? deadline.hashCode() : 0);
 
+        result = 31 * result + (title_recruitment_truck != null ? title_recruitment_truck.hashCode() : 0);
+        result = 31 * result + (title_cost != null ? title_cost.hashCode() : 0);
+        result = 31 * result + (title_deadline != null ? title_deadline.hashCode() : 0);
+
         return result;
     }
 
@@ -180,11 +185,11 @@ public class FestivalModel {
      */
     public static ArrayList<FestivalModel> getTestingList() {
         ArrayList<FestivalModel> items = new ArrayList<>();
-        items.add(new FestivalModel("2016", "", "서울 밤도깨비 야시장", "서울특별시 한강공원 일대", 7, "12월24일 \n~\n ", "12월26일","횬종이",15,13,"곧","아사합니닿ㅎ"));
-        items.add(new FestivalModel("2016", "", "서울 밤도깨비 야시장", "서울특별시 한강공원 일대", 7, "12월24일 \n~\n ", "12월26일","",15,13,"",""));
-        items.add(new FestivalModel("2016", "", "서울 밤도깨비 야시장", "서울특별시 한강공원 일대", 7, "12월24일 \n~\n ", "12월26일","",15,13,"",""));
-        items.add(new FestivalModel("2016", "", "서울 밤도깨비 야시장", "서울특별시 한강공원 일대", 7, "12월24일 \n~\n ", "12월26일","",15,13,"",""));
-        items.add(new FestivalModel("2016", "", "서울 밤도깨비 야시장", "서울특별시 한강공원 일대", 7, "12월24일 \n~\n ", "12월26일","",15,13,"",""));
+        items.add(new FestivalModel("2016", "서울 밤도깨비 야시장", "서울특별시 한강공원 일대", "12월24일 \n~ ", "12월26일","언제까지어깨춤을추게할거야 내어깨를봐 탈골됐잖아 탈골 탈골탈골탈고탈골 \n장소: 서울특별시 여의도 한강공원\n 날짜 2016년 12월24~12월26일까지  ",15,13,"곧","아사합니닿ㅎ","15","5만원","12월26일"));
+        items.add(new FestivalModel("2016",  "서울 밤도깨비 야시장", "서울특별시 한강공원 일대",  "12월24일 \n~ ", "12월26일","",15,13,"","","15","5만원","12월26일"));
+        items.add(new FestivalModel("2016",  "서울 밤도깨비 야시장", "서울특별시 한강공원 일대",  "12월24일 \n~ ", "12월26일","",15,13,"","","15","5만원","12월26일"));
+        items.add(new FestivalModel("2016", "서울 밤도깨비 야시장", "서울특별시 한강공원 일대",  "12월24일 \n~", "12월26일","",15,13,"","","15","5만원","12월26일"));
+        items.add(new FestivalModel("2016",  "서울 밤도깨비 야시장", "서울특별시 한강공원 일대",  "12월24일 \n~ ", "12월26일","",15,13,"","","15","5만원","12월26일"));
         return items;
 
     }

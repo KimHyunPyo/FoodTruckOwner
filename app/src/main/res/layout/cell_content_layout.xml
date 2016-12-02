@@ -93,7 +93,7 @@
                 android:layout_marginStart="10dp"
                 android:layout_below="@+id/festive_content"
                 android:textColor="@color/mainTextColor"
-                android:textSize="18sp"
+                android:textSize="13sp"
                 android:textStyle="bold" />
 
 

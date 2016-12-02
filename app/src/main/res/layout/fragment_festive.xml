@@ -5,7 +5,7 @@
     android:id="@+id/mainListView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background"
+    android:background="@drawable/backgroundr1"
     android:clipChildren="false"
     android:clipToPadding="false"
     android:divider="@android:color/transparent"

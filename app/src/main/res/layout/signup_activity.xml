@@ -64,15 +64,15 @@
     </android.support.design.widget.TextInputLayout>
 
 
-    <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="20dp"
-                android:layout_marginTop="10dp"
-                android:paddingLeft="5dp"
-                android:paddingRight="5dp"
-                app:errorEnabled="true"
-                app:errorTextAppearance="@style/MyErrorText">
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:layout_marginTop="40dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            app:errorEnabled="true"
+            app:errorTextAppearance="@style/MyErrorText">
 
 
         <EditText
@@ -98,24 +98,23 @@
             android:weightSum="3">
 
 
-          <android.support.design.widget.TextInputLayout
+
+            <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_margin="20dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="40dp"
                 android:paddingLeft="5dp"
                 android:paddingRight="5dp"
                 app:errorEnabled="true"
-                android:layout_weight="1"
                 app:errorTextAppearance="@style/MyErrorText">
 
               <EditText
                   android:id="@+id/et_signup_Ph_num"
                   android:layout_width="match_parent"
-                  android:layout_height="wrap_content"
-                  android:hint="핸드폰 번호'-'없이 입력">
+                  android:layout_height="48dip"
+                  android:hint="핸드폰 번호'-'없이 입력"/>
 
-              </EditText>
           </android.support.design.widget.TextInputLayout>
 
             <Button
@@ -145,22 +144,22 @@
         android:weightSum="3"
         >
 
+
         <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="20dp"
-                android:layout_marginTop="10dp"
-                android:paddingLeft="5dp"
-                android:paddingRight="5dp"
-                app:errorEnabled="true"
-            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:layout_marginTop="40dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            app:errorEnabled="true"
             app:errorTextAppearance="@style/MyErrorText">
 
 
             <EditText
                 android:id="@+id/et_signup_business_num"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="48dip"
                 android:hint="사업자 등록번호 '-'없이 입력"
                 android:theme="@style/MyEditText" />
 

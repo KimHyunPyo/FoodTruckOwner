@@ -51,10 +51,11 @@ public class FoldingCellListAdapter extends ArrayAdapter<FestivalModel> {
             viewHolder.start_date = (TextView) cell.findViewById(R.id.title_start_date);
             viewHolder.festive = (TextView) cell.findViewById(R.id.title_festive);
             viewHolder.place = (TextView) cell.findViewById(R.id.title_place);
-            viewHolder.requestsCount = (TextView) cell.findViewById(R.id.title_requests_count);
             viewHolder.contentRequestBtn = (TextView) cell.findViewById(R.id.request_btn);
-            viewHolder.folding = (TextView) cell.findViewById(R.id.folding);
-            viewHolder.headImage = (ImageView) cell.findViewById(R.id.festive_image);
+
+            viewHolder.title_recruitment_truck= (TextView)cell.findViewById(R.id.title_recruitment_truck);
+            viewHolder.title_cost = (TextView) cell.findViewById(R.id.title_cost);
+            viewHolder.title_deadline = (TextView) cell.findViewById(R.id.title_deadline);
 
             viewHolder.festive_content_view = (TextView) cell.findViewById(R.id.festive_content_view);
             viewHolder.recruitment_truck = (TextView) cell.findViewById(R.id.recruitment_truck);
@@ -79,7 +80,10 @@ public class FoldingCellListAdapter extends ArrayAdapter<FestivalModel> {
         viewHolder.start_date.setText(item.getEnd_date());
         viewHolder.festive.setText(item.getFestive_title());
         viewHolder.place.setText(item.getPlace());
-        viewHolder.requestsCount.setText(String.valueOf(item.getRequestsCount()));
+
+        viewHolder.title_recruitment_truck.setText(item.getTitle_recruitment_truck());
+        viewHolder.title_cost.setText(item.getTitle_cost());
+        viewHolder.title_deadline.setText(item.getTitle_deadline());
 
         viewHolder.festive_content_view.setText(item.getFestive_content_view());
         viewHolder.recruitment_truck.setText(String.valueOf(item.getRecruitment_truck()));
@@ -181,11 +185,11 @@ public class FoldingCellListAdapter extends ArrayAdapter<FestivalModel> {
     TextView contentRequestBtn;
     TextView festive;
     TextView place;
-    TextView requestsCount;
     TextView start_date;
     TextView end_date;
-    TextView folding;
-    ImageView headImage;
+    TextView title_recruitment_truck;
+        TextView title_cost;
+        TextView title_deadline;
 
         TextView festive_content_view;
         TextView recruitment_truck;
