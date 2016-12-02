@@ -16,7 +16,6 @@ public class PasswdChangeActivity extends BaseDrawerActivity {
         setContentView(R.layout.activity_passwd_change);
         mFragmentManager = getSupportFragmentManager();
         mFragmentTransaction = mFragmentManager.beginTransaction();
-        mFragmentTransaction.replace(R.id.containerView,new PwChangeFragment()).commit();
+        mFragmentTransaction.replace(R.id.containerView, new PwChangeFragment()).commit();
     }
-
 }

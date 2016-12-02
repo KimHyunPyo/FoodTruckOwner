@@ -1,31 +1,22 @@
 package kr.ac.jbnu.se.foodtruckowner.adapter;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import com.google.android.gms.common.api.Api;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
 import kr.ac.jbnu.se.foodtruckowner.service.ApiService;
 import kr.ac.jbnu.se.foodtruckowner.service.ServiceGenerator;
-import kr.ac.jbnu.se.foodtruckowner.ui.modi_dialog_Fragment;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import kr.ac.jbnu.se.foodtruckowner.R;
 import kr.ac.jbnu.se.foodtruckowner.model.MenuModel;
@@ -90,7 +81,6 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MenuViewHolder
                                 deleteMenu(position);
                             }
                         }).show();
-
             }
         });
 
@@ -123,13 +113,6 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MenuViewHolder
             }
         });
         return;
-    }
-
-    //수정 다이얼로그 띄우기
-    private void show_modi_dialog_Fragment() {
-        modi_dialog_Fragment inputDialog = new modi_dialog_Fragment();
-        inputDialog.setDialogTitle("Enter Name");
-        inputDialog.show(fm, "Input Dialog");
     }
 
     private float convertDpToPixel(float dp, Context context) {
