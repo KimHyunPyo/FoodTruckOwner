@@ -49,9 +49,9 @@ public interface ApiService {
     Call<ArrayList<MenuModel>> truck_menus(@Query("foodtruck_id") int foodtruck_id);
 
         //메뉴 추가 요청
-    @FormUrlEncoded
+    @Multipart
     @POST("/owner/add_menu")
-    Call<Boolean> add_menu(@Field("menu_info") JsonObject menu_info);
+    Call<Boolean> add_menu(@Part MultipartBody.Part file, @Part("menu_info") JsonObject menu_info);
 
         //메뉴 삭제 요청
     @GET("/owner/delete_menu")

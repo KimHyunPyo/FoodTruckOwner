@@ -1,10 +1,14 @@
 package kr.ac.jbnu.se.foodtruckowner.ui.navimenu;
 
 
+import android.Manifest;
 import android.content.DialogInterface;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
@@ -52,6 +56,7 @@ public class FragmentMenu extends Fragment {
                 //menuAdapter.addMenu();
             }
         });
+
         return view;
     }
 
