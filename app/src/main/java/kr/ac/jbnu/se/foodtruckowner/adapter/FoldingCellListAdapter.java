@@ -8,8 +8,10 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
- import com.ramotion.foldingcell.FoldingCell;
+import com.ramotion.foldingcell.FoldingCell;
+import com.squareup.picasso.Picasso;
 
 import java.util.HashSet;
  import java.util.List;
@@ -17,6 +19,13 @@ import java.util.HashSet;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import kr.ac.jbnu.se.foodtruckowner.R;
  import kr.ac.jbnu.se.foodtruckowner.model.FestivalModel;
+import kr.ac.jbnu.se.foodtruckowner.model.FoodTruckModel;
+import kr.ac.jbnu.se.foodtruckowner.model.Owner;
+import kr.ac.jbnu.se.foodtruckowner.service.ApiService;
+import kr.ac.jbnu.se.foodtruckowner.service.ServiceGenerator;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 /**
@@ -37,7 +46,7 @@ public class FoldingCellListAdapter extends ArrayAdapter<FestivalModel> {
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         // get item for selected view
-        FestivalModel item = getItem(position);
+        final FestivalModel item = getItem(position);
         // if cell is exists - reuse it, if not - create the new one from resource
         FoldingCell cell = (FoldingCell) convertView;
         ViewHolder viewHolder;
@@ -62,6 +71,8 @@ public class FoldingCellListAdapter extends ArrayAdapter<FestivalModel> {
             viewHolder.request_truck = (TextView) cell.findViewById(R.id.request_truck);
             viewHolder.food_category = (TextView) cell.findViewById(R.id.food_category);
             viewHolder.deadline = (TextView) cell.findViewById(R.id.deadline);
+            viewHolder.festival_image = (ImageView) cell.findViewById(R.id.festive_image);
+            Picasso.with(context).load(ServiceGenerator.API_BASE_URL + item.getImage()).into(viewHolder.festival_image);
 
             cell.setTag(viewHolder);
         } else {
@@ -81,14 +92,14 @@ public class FoldingCellListAdapter extends ArrayAdapter<FestivalModel> {
         viewHolder.festive.setText(item.getFestive_title());
         viewHolder.place.setText(item.getPlace());
 
-        viewHolder.title_recruitment_truck.setText(item.getTitle_recruitment_truck());
+        viewHolder.title_recruitment_truck.setText(item.getRecruitment_truck());
         viewHolder.title_cost.setText(item.getTitle_cost());
-        viewHolder.title_deadline.setText(item.getTitle_deadline());
+        viewHolder.title_deadline.setText(item.getDeadline());
 
         viewHolder.festive_content_view.setText(item.getFestive_content_view());
         viewHolder.recruitment_truck.setText(String.valueOf(item.getRecruitment_truck()));
         viewHolder.request_truck.setText(String.valueOf(item.getRequest_truck()));
-        viewHolder.food_category.setText(item.getFood_category());
+        viewHolder.food_category.setText(item.getSupport_elec());
         viewHolder.deadline.setText(item.getDeadline());
 
         viewHolder.contentRequestBtn.setOnClickListener(new View.OnClickListener() {
@@ -125,9 +136,28 @@ public class FoldingCellListAdapter extends ArrayAdapter<FestivalModel> {
 
                             @Override
 
-                            public void onClick(SweetAlertDialog sDialog) {
+                            public void onClick(final SweetAlertDialog sDialog) {
+                                ApiService service = ServiceGenerator.createService(ApiService.class);
+                                Call<Boolean> call = service.request_festival(Owner.getInstance().getId(), item.getId());
+                                call.enqueue(new Callback<Boolean>() {
+                                    @Override
+                                    public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                                        Boolean actionCheck = response.body();
+                                        if(actionCheck) {
+                                            Toast.makeText(getContext(), "입점 신청 완료", Toast.LENGTH_SHORT).show();
+                                            sDialog.dismiss();
+                                        }
+                                        else {
+                                            Toast.makeText(getContext(), "입점 신청 실패", Toast.LENGTH_SHORT).show();
+                                            sDialog.dismiss();
+                                        }
+                                    }
 
-
+                                    @Override
+                                    public void onFailure(Call<Boolean> call, Throwable t) {
+                                        Log.d("FOLING", t.toString());
+                                    }
+                                });
                             }
 
                         })
@@ -196,6 +226,7 @@ public class FoldingCellListAdapter extends ArrayAdapter<FestivalModel> {
         TextView request_truck;
         TextView food_category;
         TextView deadline;
+        ImageView festival_image;
 
 }
 }
