@@ -1,7 +1,10 @@
 package kr.ac.jbnu.se.foodtruckowner.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
@@ -57,7 +60,23 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MenuViewHolder
 
         holder.title.setText(model.getTitle() + "");
         holder.price.setText(model.getPrice() + "원");
-        Picasso.with(context).load(ServiceGenerator.API_BASE_URL + listitems.get(position).getImage().getUrl()).into(holder.imageview);
+
+        // TODO: 2016-11-30  높이도 리사이징 해줘야함 http://stackoverflow.com/questions/25799967/android-get-drawable-image-after-picasso-loaded
+        //이미지 리사이징
+        float width = ((Activity) context).getWindowManager().getDefaultDisplay().getWidth();
+        float margin = (int) convertDpToPixel(10f, (Activity) context);
+        imageWidth = ((width - (margin)) / 2);
+        imageHeight = (float) (imageWidth * 1.1); //나중에..
+
+        Picasso.with(context)
+                .load(ServiceGenerator.API_BASE_URL + listitems.get(position).getImage().getUrl())
+                .resize((int) imageWidth, (int) imageHeight)
+                .into(holder.imageview);
+        if(listitems.get(position).getImage().getUrl()==null){
+            Bitmap image = BitmapFactory.decodeResource(context.getResources(), R.drawable.no_images);
+            setBitmapImage(image);
+        }
+
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -120,6 +139,22 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MenuViewHolder
         DisplayMetrics metrics = resources.getDisplayMetrics();
         float px = dp * (metrics.densityDpi / 160f);
         return px;
+    }
+    private void setBitmapImage(Bitmap image) {
+        float width = ((Activity) context).getWindowManager().getDefaultDisplay().getWidth();
+        float margin = (int) convertDpToPixel(10f, (Activity) context);
+        // two images, three margins of 10dips
+        imageWidth = ((width - (margin)) / 2);
+        if (image != null) {
+            float i = ((float) imageWidth) / ((float) image.getWidth());
+            if (call.equals("AcitivityTruckMenu"))
+                imageHeight = i * (image.getHeight());
+            else if (call.equals("AcitivityTruckDetail"))
+                imageHeight = imageWidth;
+            holder.imageview.setImageBitmap(Bitmap.createScaledBitmap(image, (int) imageWidth, (int) imageHeight, false));
+        } else {
+            holder.imageview.setImageBitmap(image);
+        }
     }
 
     public class MenuViewHolder extends RecyclerView.ViewHolder {

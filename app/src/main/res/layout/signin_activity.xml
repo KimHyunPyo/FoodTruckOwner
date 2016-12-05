@@ -56,7 +56,7 @@
                 android:hint="비밀번호"
                 android:inputType="textPassword"
                 android:password="true"
-                android:text="12345678"
+                android:text="11111111"
                 android:theme="@style/MyEditText" />
 
             <requestFocus />
