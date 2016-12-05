@@ -6,9 +6,6 @@ import android.os.Build;
 import android.util.AttributeSet;
 import android.widget.FrameLayout;
 
-/**
- * Created by Miroslaw Stanek on 26.12.14.
- */
 public class SquaredFrameLayout extends FrameLayout {
     public SquaredFrameLayout(Context context) {
         super(context);
@@ -27,8 +24,9 @@ public class SquaredFrameLayout extends FrameLayout {
         super(context, attrs, defStyleAttr, defStyleRes);
     }
 
-    @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        super.onMeasure(widthMeasureSpec, widthMeasureSpec);
-    }
+    //이거때문에 뷰 크기 고정됌
+//    @Override
+//    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+//        super.onMeasure(widthMeasureSpec, widthMeasureSpec);
+//    }
 }

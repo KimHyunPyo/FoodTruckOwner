@@ -50,8 +50,12 @@ public class ReviewItemAdapter extends RecyclerView.Adapter<ReviewItemAdapter.Re
     @Override
     public void onBindViewHolder(final ReviewViewHolder holder, final int position) {
 
-        Picasso.with(mContext).load(ServiceGenerator.API_BASE_URL + reviewitems.get(position).getImage()).into(holder.ivFeedCenter);
-        Picasso.with(mContext).load(ServiceGenerator.API_BASE_URL + reviewitems.get(position).getClientImage()).into(holder.userImageView);
+        Picasso.with(mContext).load(ServiceGenerator.API_BASE_URL + reviewitems.get(position).getImage())
+                .resize(holder.ivFeedCenter.getMaxWidth(), holder.ivFeedCenter.getMaxHeight())
+                .into(holder.ivFeedCenter);
+        Picasso.with(mContext).load(ServiceGenerator.API_BASE_URL + reviewitems.get(position).getClientImage())
+                .fit()
+                .into(holder.userImageView);
         holder.ivFeedBottom.setText(reviewitems.get(position).getContent());
         holder.userImageView.setTag(reviewitems.get(position).getClientImage());
         holder.userTextView.setText(reviewitems.get(position).getClientNickname());
@@ -154,7 +158,7 @@ public void onClick(View view) {
             ivLike = (ImageView)v.findViewById(R.id.ivLike);
             tsLikesCounter = (TextSwitcher)v.findViewById(R.id.tsLikesCounter);
             vImageRoot = (FrameLayout)v.findViewById(R.id.vImageRoot);
-            likebutton = (ShineButton)v.findViewById(R.id.po_image2);
+            likebutton = (ShineButton)v.findViewById(R.id.likebtn2);
         }
     }
 }

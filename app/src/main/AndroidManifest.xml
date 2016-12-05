@@ -53,6 +53,7 @@
                 <data android:mimeType="*/*"/>
             </intent-filter>
         </activity>
+        <activity android:name=".ui.CommentsActivity"/>
         <activity
             android:name=".ui.passwdch.PasswdChangeActivity"
             android:label="@string/title_activity_passwd_change"
