@@ -15,11 +15,9 @@ import com.ramotion.foldingcell.FoldingCell;
 
 import java.util.ArrayList;
 
-import cn.pedant.SweetAlert.SweetAlertDialog;
 import kr.ac.jbnu.se.foodtruckowner.R;
 import kr.ac.jbnu.se.foodtruckowner.adapter.FoldingCellListAdapter;
 import kr.ac.jbnu.se.foodtruckowner.model.FestivalModel;
-import kr.ac.jbnu.se.foodtruckowner.model.Owner;
 import kr.ac.jbnu.se.foodtruckowner.service.ApiService;
 import kr.ac.jbnu.se.foodtruckowner.service.ServiceGenerator;
 import retrofit2.Call;
@@ -31,14 +29,14 @@ import retrofit2.Response;
  */
 public class FestiveFragment extends Fragment {
     private ArrayList<FestivalModel> items = new ArrayList<>();
-    ListView theListView;
+    ListView listView;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_festive, null);
 
-        theListView = (ListView) view.findViewById(R.id.mainListView);
+        listView = (ListView) view.findViewById(R.id.mainListView);
 
 
 
@@ -67,10 +65,10 @@ public class FestiveFragment extends Fragment {
                 });
 
                 // set elements to adapter
-                theListView.setAdapter(adapter);
+                listView.setAdapter(adapter);
 
                 // set on click event listener to list view
-                theListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int pos, long l) {
 

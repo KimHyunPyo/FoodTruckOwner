@@ -14,12 +14,11 @@ import com.ramotion.foldingcell.FoldingCell;
 import com.squareup.picasso.Picasso;
 
 import java.util.HashSet;
- import java.util.List;
+import java.util.List;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import kr.ac.jbnu.se.foodtruckowner.R;
- import kr.ac.jbnu.se.foodtruckowner.model.FestivalModel;
-import kr.ac.jbnu.se.foodtruckowner.model.FoodTruckModel;
+import kr.ac.jbnu.se.foodtruckowner.model.FestivalModel;
 import kr.ac.jbnu.se.foodtruckowner.model.Owner;
 import kr.ac.jbnu.se.foodtruckowner.service.ApiService;
 import kr.ac.jbnu.se.foodtruckowner.service.ServiceGenerator;
@@ -34,10 +33,10 @@ import retrofit2.Response;
  */
 public class FoldingCellListAdapter extends ArrayAdapter<FestivalModel> {
 
-    private HashSet<Integer> unfoldedIndexes = new HashSet<>();
-   private View.OnClickListener defaultRequestBtnClickListener;
+    private HashSet<Integer> unFoldedIndexes = new HashSet<>();
+    private View.OnClickListener defaultRequestBtnClickListener;
     private Context context;
-    final int REQ_CODE_SELECT_IMAGE=100;
+    final int REQ_CODE_SELECT_IMAGE = 100;
 
     public FoldingCellListAdapter(Context context, List<FestivalModel> objects) {
         super(context, 0, objects);
@@ -62,7 +61,7 @@ public class FoldingCellListAdapter extends ArrayAdapter<FestivalModel> {
             viewHolder.place = (TextView) cell.findViewById(R.id.title_place);
             viewHolder.contentRequestBtn = (TextView) cell.findViewById(R.id.request_btn);
 
-            viewHolder.title_recruitment_truck= (TextView)cell.findViewById(R.id.title_recruitment_truck);
+            viewHolder.title_recruitment_truck = (TextView) cell.findViewById(R.id.title_recruitment_truck);
             viewHolder.title_cost = (TextView) cell.findViewById(R.id.title_cost);
             viewHolder.title_deadline = (TextView) cell.findViewById(R.id.title_deadline);
 
@@ -77,7 +76,7 @@ public class FoldingCellListAdapter extends ArrayAdapter<FestivalModel> {
             cell.setTag(viewHolder);
         } else {
             // for existing cell set valid valid state(without animation)
-            if (unfoldedIndexes.contains(position)) {
+            if (unFoldedIndexes.contains(position)) {
                 cell.unfold(true);
             } else {
                 cell.fold(true);
@@ -91,21 +90,18 @@ public class FoldingCellListAdapter extends ArrayAdapter<FestivalModel> {
         viewHolder.start_date.setText(item.getEnd_date());
         viewHolder.festive.setText(item.getFestive_title());
         viewHolder.place.setText(item.getPlace());
-
         viewHolder.title_recruitment_truck.setText(item.getRecruitment_truck());
         viewHolder.title_cost.setText(item.getTitle_cost());
         viewHolder.title_deadline.setText(item.getDeadline());
-
         viewHolder.festive_content_view.setText(item.getFestive_content_view());
         viewHolder.recruitment_truck.setText(String.valueOf(item.getRecruitment_truck()));
         viewHolder.request_truck.setText(String.valueOf(item.getRequest_truck()));
         viewHolder.food_category.setText(item.getSupport_elec());
         viewHolder.deadline.setText(item.getDeadline());
-
         viewHolder.contentRequestBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("TAG","떠라! ");
+                Log.d("TAG", "떠라! ");
                 new SweetAlertDialog(getContext(), SweetAlertDialog.WARNING_TYPE)
 
                         .setTitleText("정말 신청하시겠습니까?")
@@ -143,11 +139,10 @@ public class FoldingCellListAdapter extends ArrayAdapter<FestivalModel> {
                                     @Override
                                     public void onResponse(Call<Boolean> call, Response<Boolean> response) {
                                         Boolean actionCheck = response.body();
-                                        if(actionCheck) {
+                                        if (actionCheck) {
                                             Toast.makeText(getContext(), "입점 신청 완료", Toast.LENGTH_SHORT).show();
                                             sDialog.dismiss();
-                                        }
-                                        else {
+                                        } else {
                                             Toast.makeText(getContext(), "입점 신청 실패", Toast.LENGTH_SHORT).show();
                                             sDialog.dismiss();
                                         }
@@ -168,10 +163,10 @@ public class FoldingCellListAdapter extends ArrayAdapter<FestivalModel> {
 /*
      dn
 */
-                // set custom btn handler for list item from that item
+        // set custom btn handler for list item from that item
         if (item.akgetRequestBtnClickListener() != null) {
             //viewHolder.contentRequestBtn.setOnClickListener(item.akgetRequestBtnClickListener());
-             Log.d("클릭", "null아님");
+            Log.d("클릭", "null아님");
         } else {
             // (optionally) add "default" handler if no handler found in item
             //viewHolder.contentRequestBtn.setOnClickListener(defaultRequestBtnClickListener);
@@ -185,18 +180,18 @@ public class FoldingCellListAdapter extends ArrayAdapter<FestivalModel> {
 
     // simple methods for register cell state changes
     public void registerToggle(int position) {
-        if (unfoldedIndexes.contains(position))
+        if (unFoldedIndexes.contains(position))
             registerFold(position);
         else
             registerUnfold(position);
     }
 
     public void registerFold(int position) {
-        unfoldedIndexes.remove(position);
+        unFoldedIndexes.remove(position);
     }
 
     public void registerUnfold(int position) {
-        unfoldedIndexes.add(position);
+        unFoldedIndexes.add(position);
     }
 
     public View.OnClickListener getDefaultRequestBtnClickListener() {
@@ -211,13 +206,13 @@ public class FoldingCellListAdapter extends ArrayAdapter<FestivalModel> {
 
     // View lookup cache
     private static class ViewHolder {
-    TextView year;
-    TextView contentRequestBtn;
-    TextView festive;
-    TextView place;
-    TextView start_date;
-    TextView end_date;
-    TextView title_recruitment_truck;
+        TextView year;
+        TextView contentRequestBtn;
+        TextView festive;
+        TextView place;
+        TextView start_date;
+        TextView end_date;
+        TextView title_recruitment_truck;
         TextView title_cost;
         TextView title_deadline;
 
@@ -228,5 +223,5 @@ public class FoldingCellListAdapter extends ArrayAdapter<FestivalModel> {
         TextView deadline;
         ImageView festival_image;
 
-}
+    }
 }

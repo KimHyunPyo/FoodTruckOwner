@@ -19,9 +19,9 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.settings);
         mPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        Preference pwPref = (Preference) findPreference("passw_set");
-        Preference logout_Pref = (Preference) findPreference("logout");
-        logout_Pref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+        Preference prefPw = (Preference) findPreference("passw_set");
+        Preference prefLogout = (Preference) findPreference("logout");
+        prefLogout.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             public boolean onPreferenceClick(Preference preference) {
                 editor = mPref.edit();
                 editor.putBoolean("auto_login",false);
@@ -31,7 +31,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
                 return false;
             }
         });
-        pwPref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+        prefPw.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             public boolean onPreferenceClick(Preference preference) {
                 Intent i = new Intent(getActivity(), PasswdChangeActivity.class);
                 startActivity(i);
@@ -52,18 +52,18 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
     }
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
-
     }
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         //IT NEVER GETS IN HERE!
+        //자동로그인 스위치 리스너
         if (key.equals("auto_login"))
         {
-            System.out.println("자동로긴 온");
+
         }
         if (key.equals("review_push"))
         {
-            System.out.println("푸쉬 온");
+
         }
 
     }

@@ -30,9 +30,9 @@ import retrofit2.Response;
  */
 public class FragmentTruckReview extends Fragment {
 
-    private ArrayList<ReviewItem> reviewitems = new ArrayList<>();
+    private ArrayList<ReviewItem> reviewItems = new ArrayList<>();
     private ReviewItemAdapter reviewAdapter;
-    private RecyclerView review_view;
+    private RecyclerView reviewView;
     private LinearLayout clContent;
 
     @Override
@@ -41,11 +41,10 @@ public class FragmentTruckReview extends Fragment {
         clContent = (LinearLayout) view.findViewById(R.id.content);
 
         initFT();
-        review_view = (RecyclerView) view.findViewById(R.id.review_view);
+        reviewView = (RecyclerView) view.findViewById(R.id.review_view);
 
         return view;
     }
-
     public boolean onOptionsItemSelected(android.view.MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
@@ -57,7 +56,7 @@ public class FragmentTruckReview extends Fragment {
     }
 
     public void initFT() {
-        reviewitems.clear();
+        reviewItems.clear();
         requestReview(FoodTruckModel.getInstance().getFT_ID());
     }
 
@@ -77,10 +76,10 @@ public class FragmentTruckReview extends Fragment {
                     Log.d("REVIEW", "No Review");
                 } else {
                     for (ReviewItem review : reviewList) {
-                        reviewitems.add(review);
+                        reviewItems.add(review);
                         Log.d("REVIEW", review.getTitle());
                     }
-                    showViewList(reviewitems);
+                    showViewList(reviewItems);
 
                 }
             }
@@ -100,10 +99,10 @@ public class FragmentTruckReview extends Fragment {
             }
         };
 
-        review_view.setHasFixedSize(true);
-        review_view.setLayoutManager(linearLayoutManager);
+        reviewView.setHasFixedSize(true);
+        reviewView.setLayoutManager(linearLayoutManager);
         reviewAdapter = new ReviewItemAdapter(getContext(), listitems);
-        review_view.setAdapter(reviewAdapter);
-        review_view.setItemAnimator(new ReviewAnimator());
+        reviewView.setAdapter(reviewAdapter);
+        reviewView.setItemAnimator(new ReviewAnimator());
     }
 }

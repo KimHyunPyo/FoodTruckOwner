@@ -41,12 +41,12 @@ public class MainActivity extends BaseDrawerActivity {
         View headerView = vNavigation.getHeaderView(0);
         
         String text = FoodTruckModel.getInstance().getFtName();
-        TextView truck_name = (TextView) headerView.findViewById(R.id.nv_truckName);
-        truck_name.setText(text);
+        TextView truckName = (TextView) headerView.findViewById(R.id.nv_truckName);
+        truckName.setText(text);
 
         text = Owner.getInstance().getEmail();
-        TextView owner_name = (TextView) headerView.findViewById(R.id.nv_ownerName);
-        owner_name.setText(text);
+        TextView ownerName = (TextView) headerView.findViewById(R.id.nv_ownerName);
+        ownerName.setText(text);
 
         /**
          * Lets inflate the very first fragment

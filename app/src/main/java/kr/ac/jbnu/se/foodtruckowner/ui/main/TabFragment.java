@@ -20,7 +20,7 @@ public class TabFragment extends Fragment {
 
     public static TabLayout tabLayout;
     public static ViewPager viewPager;
-    public static int int_items = 2;
+    public static int intItems = 2;
 
     @Nullable
     @Override
@@ -78,7 +78,7 @@ public class TabFragment extends Fragment {
         @Override
         public int getCount() {
 
-            return int_items;
+            return intItems;
 
         }
 

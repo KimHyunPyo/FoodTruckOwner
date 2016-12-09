@@ -29,7 +29,7 @@ import retrofit2.Response;
 
 public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MenuViewHolder> {
 
-    private ArrayList<MenuModel> listitems;
+    private ArrayList<MenuModel> listItems;
     private Context context;
     private float imageWidth;
     private float imageHeight;
@@ -37,9 +37,9 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MenuViewHolder
     private String call;
     private FragmentManager fm;
 
-    public MenuAdapter(Context context, ArrayList<MenuModel> listitems, String Call, FragmentManager fm) {
+    public MenuAdapter(Context context, ArrayList<MenuModel> listItems, String Call, FragmentManager fm) {
         this.context = context;
-        this.listitems = listitems;
+        this.listItems = listItems;
         this.call = Call;
         this.fm = fm;
     }
@@ -55,7 +55,7 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MenuViewHolder
 
     @Override
     public void onBindViewHolder(final MenuViewHolder holder, final int position) {
-        final MenuModel model = listitems.get(position);
+        final MenuModel model = listItems.get(position);
         this.holder = holder;
 
         holder.title.setText(model.getTitle() + "");
@@ -69,10 +69,10 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MenuViewHolder
         imageHeight = (float) (imageWidth * 1.1); //나중에..
 
         Picasso.with(context)
-                .load(ServiceGenerator.API_BASE_URL + listitems.get(position).getImage().getUrl())
+                .load(ServiceGenerator.API_BASE_URL + listItems.get(position).getImage().getUrl())
                 .resize((int) imageWidth, (int) imageHeight)
-                .into(holder.imageview);
-        if(listitems.get(position).getImage().getUrl()==null){
+                .into(holder.imageView);
+        if(listItems.get(position).getImage().getUrl()==null){
             Bitmap image = BitmapFactory.decodeResource(context.getResources(), R.drawable.no_images);
             setBitmapImage(image);
         }
@@ -107,19 +107,19 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MenuViewHolder
 
     @Override
     public int getItemCount() {
-        return (null != listitems ? listitems.size() : 0);
+        return (null != listItems ? listItems.size() : 0);
     }
 
     //메뉴 삭제
     public void deleteMenu(final int pos) {
         ApiService service = ServiceGenerator.createService(ApiService.class);
-        Call<Boolean> call = service.delete_menu(listitems.get(pos).getId());
+        Call<Boolean> call = service.delete_menu(listItems.get(pos).getId());
         call.enqueue(new Callback<Boolean>() {
             @Override
             public void onResponse(Call<Boolean> call, Response<Boolean> response) {
                 Boolean result = response.body();
                 if(result == true) {
-                    listitems.remove(pos);
+                    listItems.remove(pos);
                     notifyDataSetChanged();
                 } else {
 
@@ -151,9 +151,9 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MenuViewHolder
                 imageHeight = i * (image.getHeight());
             else if (call.equals("AcitivityTruckDetail"))
                 imageHeight = imageWidth;
-            holder.imageview.setImageBitmap(Bitmap.createScaledBitmap(image, (int) imageWidth, (int) imageHeight, false));
+            holder.imageView.setImageBitmap(Bitmap.createScaledBitmap(image, (int) imageWidth, (int) imageHeight, false));
         } else {
-            holder.imageview.setImageBitmap(image);
+            holder.imageView.setImageBitmap(image);
         }
     }
 
@@ -161,12 +161,12 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MenuViewHolder
         // View holder for griddview recycler view as we used in listview
         public TextView title;
         public TextView price;
-        public ImageView imageview;
+        public ImageView imageView;
 
         public MenuViewHolder(View view) {
             super(view);
             title = (TextView) view.findViewById(R.id.menu_title);
-            imageview = (ImageView) view.findViewById(R.id.image);
+            imageView = (ImageView) view.findViewById(R.id.image);
             price = (TextView) view.findViewById(R.id.price);
         }
     }

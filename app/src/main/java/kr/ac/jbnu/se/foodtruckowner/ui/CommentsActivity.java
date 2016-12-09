@@ -49,11 +49,9 @@ public class CommentsActivity extends AppCompatActivity {
         protected void onCreate (Bundle savedInstanceState){
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_comments);
-
             commentsView = (RecyclerView) findViewById(R.id.rvComments);
             etComment = (EditText) findViewById(R.id.etComment);
             setupToolbar();
-
             initFT();
             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
             commentsView.setLayoutManager(linearLayoutManager);

@@ -2,8 +2,6 @@ package kr.ac.jbnu.se.foodtruckowner.ui.passwdch;
 
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,12 +12,9 @@ import android.widget.Toast;
 import java.util.regex.Pattern;
 
 import kr.ac.jbnu.se.foodtruckowner.R;
-import kr.ac.jbnu.se.foodtruckowner.model.FoodTruckModel;
 import kr.ac.jbnu.se.foodtruckowner.model.Owner;
 import kr.ac.jbnu.se.foodtruckowner.service.ApiService;
 import kr.ac.jbnu.se.foodtruckowner.service.ServiceGenerator;
-import kr.ac.jbnu.se.foodtruckowner.ui.main.TabFragment;
-import kr.ac.jbnu.se.foodtruckowner.ui.navimenu.SettingsFragment;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -29,10 +24,10 @@ import retrofit2.Response;
  */
 public class PwChangeFragment extends Fragment {
 
-    Button bt_pw_ch;
+    Button btChangePw;
 
-    private EditText et_change_pw;
-    private EditText et_pw_confirm;
+    private EditText etChangePw;
+    private EditText etConfirmPw;
 
     public PwChangeFragment() {
     }
@@ -42,17 +37,17 @@ public class PwChangeFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_passwd_change, container, false);
 
-        et_change_pw = (EditText) view.findViewById(R.id.et_pw_2);
-        et_pw_confirm = (EditText) view.findViewById(R.id.et_pw_3);
+        etChangePw = (EditText) view.findViewById(R.id.et_pw_2);
+        etConfirmPw = (EditText) view.findViewById(R.id.et_pw_3);
 
-        bt_pw_ch = (Button) view.findViewById(R.id.bt_pw_ch);
-        bt_pw_ch.setOnClickListener(new View.OnClickListener() {
+        btChangePw = (Button) view.findViewById(R.id.bt_pw_ch);
+        btChangePw.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(check_pw(et_change_pw.getText().toString())) {
+                if(check_pw(etChangePw.getText().toString())) {
                     if(check_pw_confirm()) {
                         ApiService service = ServiceGenerator.createService(ApiService.class);
-                        Call<Integer> call = service.change_password(Owner.getInstance().getId(), et_change_pw.getText().toString(), et_pw_confirm.getText().toString());
+                        Call<Integer> call = service.change_password(Owner.getInstance().getId(), etChangePw.getText().toString(), etConfirmPw.getText().toString());
                         call.enqueue(new Callback<Integer>() {
                             @Override
                             public void onResponse(Call<Integer> call, Response<Integer> response) {
@@ -95,7 +90,7 @@ public class PwChangeFragment extends Fragment {
     }
 
     private boolean check_pw_confirm() {
-        if (et_change_pw.getText().toString().equals(et_pw_confirm.getText().toString())) {
+        if (etChangePw.getText().toString().equals(etConfirmPw.getText().toString())) {
             return true;
         } else {
             return false;

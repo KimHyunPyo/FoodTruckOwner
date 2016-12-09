@@ -46,22 +46,20 @@ import retrofit2.Response;
 import static android.app.Activity.RESULT_OK;
 
 // TODO: 2016-11-27 메뉴 추가시 중복 처리 해야함
-public class modi_dialog_Fragment extends DialogFragment {
-    EditText et_menu_name;
-    EditText et_menu_price;
-    Button bt_done;
-    Button bt_select_im;
+public class InputDialogFragment extends DialogFragment {
+    EditText etMenuName;
+    EditText etMenuPrice;
+    Button btSubmit;
+    Button btselectImage;
     static String DialogboxTitle;
     MenuAdapter menuAdapter;
-
-    private ImageView Iv_menu;
+    private ImageView ivMenu;
     private static final int PICK_FROM_CAMERA = 0;
     private static final int PICK_FROM_ALBUM = 1;
     private static final int CROP_FROM_iMAGE = 2;
     private Uri mImageCaptureUri;
     private String absoultePath;
     private File image;
-
     private DialogInterface.OnDismissListener onDismissListener;
 
     public void setOnDismissListener(DialogInterface.OnDismissListener onDismissListener) {
@@ -73,7 +71,7 @@ public class modi_dialog_Fragment extends DialogFragment {
     }
 
     //---empty constructor required
-    public modi_dialog_Fragment() {
+    public InputDialogFragment() {
 
     }
 
@@ -83,17 +81,12 @@ public class modi_dialog_Fragment extends DialogFragment {
     }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle saveInstanceState) {
-
         Log.d("TAG", "메뉴추가 : 트럭 id " + FoodTruckModel.getInstance().getFT_ID());
-
         View view = inflater.inflate(
                 R.layout.fragment_modi_dialog_, container);
-
-
         if (ContextCompat.checkSelfPermission(getActivity(),
                 Manifest.permission.READ_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED) {
-
             // Should we show an explanation?
             if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(),
                     Manifest.permission.READ_EXTERNAL_STORAGE)) {
@@ -118,19 +111,19 @@ public class modi_dialog_Fragment extends DialogFragment {
 
 
         //---get the EditText and Button views
-        et_menu_name = (EditText) view.findViewById(R.id.et_menu_Name);
-        et_menu_price = (EditText) view.findViewById(R.id.et_menu_price);
-        bt_done = (Button) view.findViewById(R.id.bt_done);
-        bt_select_im = (Button) view.findViewById(R.id.bt_select_im);
-        Iv_menu = (ImageView) view.findViewById(R.id.Iv_menu);
+        etMenuName = (EditText) view.findViewById(R.id.et_menu_Name);
+        etMenuPrice = (EditText) view.findViewById(R.id.et_menu_price);
+        btSubmit = (Button) view.findViewById(R.id.bt_done);
+        btselectImage = (Button) view.findViewById(R.id.bt_select_im);
+        ivMenu = (ImageView) view.findViewById(R.id.Iv_menu);
         //---event handler for the button
-        bt_done.setOnClickListener(new View.OnClickListener() {
+        btSubmit.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                if (!et_menu_name.getText().toString().matches("")) {
-                    if (!et_menu_price.getText().toString().matches("")) {
+                if (!etMenuName.getText().toString().matches("")) {
+                    if (!etMenuPrice.getText().toString().matches("")) {
                         JsonObject addMenuInfo = new JsonObject();
-                        addMenuInfo.addProperty("name", et_menu_name.getText().toString());
-                        addMenuInfo.addProperty("price", et_menu_price.getText().toString());
+                        addMenuInfo.addProperty("name", etMenuName.getText().toString());
+                        addMenuInfo.addProperty("price", etMenuPrice.getText().toString());
                         addMenuInfo.addProperty("image", ""); //이미지 넣어라.
                         addMenuInfo.addProperty("foodtruck_id", FoodTruckModel.getInstance().getFT_ID());
                         requestAddMenu(addMenuInfo);
@@ -140,15 +133,11 @@ public class modi_dialog_Fragment extends DialogFragment {
                 } else {
                     Toast.makeText(getActivity(), "메뉴 이름을 입력하세요.", Toast.LENGTH_LONG).show();
                 }
-                Log.d("TAG", "텍스트?: " + et_menu_name.getText());
-
+                Log.d("TAG", "텍스트?: " + etMenuName.getText());
             }
         });
-
-
-        bt_select_im.setOnClickListener(new View.OnClickListener() {
+        btselectImage.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-
                 DialogInterface.OnClickListener cameraListener = new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -161,7 +150,6 @@ public class modi_dialog_Fragment extends DialogFragment {
                         doTakeAlbumAction();
                     }
                 };
-
                 DialogInterface.OnClickListener cancelListener = new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -179,7 +167,7 @@ public class modi_dialog_Fragment extends DialogFragment {
         });
 
         //---show the keyboard automatically
-        et_menu_name.requestFocus();
+        etMenuName.requestFocus();
         getDialog().getWindow().setSoftInputMode(
                 LayoutParams.SOFT_INPUT_STATE_VISIBLE);
 
@@ -200,6 +188,7 @@ public class modi_dialog_Fragment extends DialogFragment {
         intent.putExtra(android.provider.MediaStore.EXTRA_OUTPUT, mImageCaptureUri);
         startActivityForResult(intent, PICK_FROM_CAMERA);
     }
+
     public void doTakeAlbumAction() // 앨범에서 이미지 가져오기
     {
         // 앨범 호출
@@ -207,27 +196,25 @@ public class modi_dialog_Fragment extends DialogFragment {
         intent.setType(android.provider.MediaStore.Images.Media.CONTENT_TYPE);
         startActivityForResult(intent, PICK_FROM_ALBUM);
     }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode,resultCode,data);
+        super.onActivityResult(requestCode, resultCode, data);
 
-        if(resultCode != RESULT_OK)
+        if (resultCode != RESULT_OK)
             return;
 
-        switch(requestCode)
-        {
-            case PICK_FROM_ALBUM:
-            {
+        switch (requestCode) {
+            case PICK_FROM_ALBUM: {
                 // 이후의 처리가 카메라와 같으므로 일단  break없이 진행합니다.
                 // 실제 코드에서는 좀더 합리적인 방법을 선택하시기 바랍니다.
                 mImageCaptureUri = data.getData();
-                Log.d("SmartWheel",mImageCaptureUri.getPath().toString());
+                Log.d("SmartWheel", mImageCaptureUri.getPath().toString());
 
                 image = FileUtils.getFile(getActivity(), mImageCaptureUri);
             }
 
-            case PICK_FROM_CAMERA:
-            {
+            case PICK_FROM_CAMERA: {
                 // 이미지를 가져온 이후의 리사이즈할 이미지 크기를 결정합니다.
                 // 이후에 이미지 크롭 어플리케이션을 호출하게 됩니다.
                 Intent intent = new Intent("com.android.camera.action.CROP");
@@ -243,27 +230,25 @@ public class modi_dialog_Fragment extends DialogFragment {
                 startActivityForResult(intent, CROP_FROM_iMAGE); // CROP_FROM_CAMERA case문 이동
                 break;
             }
-            case CROP_FROM_iMAGE:
-            {
+            case CROP_FROM_iMAGE: {
                 // 크롭이 된 이후의 이미지를 넘겨 받습니다.
                 // 이미지뷰에 이미지를 보여준다거나 부가적인 작업 이후에
                 // 임시 파일을 삭제합니다.
-                if(resultCode != RESULT_OK) {
+                if (resultCode != RESULT_OK) {
                     return;
                 }
 
                 final Bundle extras = data.getExtras();
 
                 // CROP된 이미지를 저장하기 위한 FILE 경로
-                String filePath = Environment.getExternalStorageDirectory().getAbsolutePath()+
-                        "/SmartWheel/"+System.currentTimeMillis()+".jpg";
+                String filePath = Environment.getExternalStorageDirectory().getAbsolutePath() +
+                        "/SmartWheel/" + System.currentTimeMillis() + ".jpg";
 
-                if(extras != null)
-                {
+                if (extras != null) {
                     //uproadPhoto.bringToFront();
                     Bitmap photo = extras.getParcelable("data"); // CROP된 BITMAP
-                   Iv_menu.setImageBitmap(photo); // 레이아웃의 이미지칸에 CROP된 BITMAP을 보여줌
-                    Iv_menu.bringToFront();
+                    ivMenu.setImageBitmap(photo); // 레이아웃의 이미지칸에 CROP된 BITMAP을 보여줌
+                    ivMenu.bringToFront();
                     storeCropImage(photo, filePath); // CROP된 이미지를 외부저장소, 앨범에 저장한다.
                     absoultePath = filePath;
                     break;
@@ -271,8 +256,7 @@ public class modi_dialog_Fragment extends DialogFragment {
                 }
                 // 임시 파일 삭제
                 File f = new File(mImageCaptureUri.getPath());
-                if(f.exists())
-                {
+                if (f.exists()) {
                     f.delete();
                 }
             }
@@ -281,11 +265,11 @@ public class modi_dialog_Fragment extends DialogFragment {
 
     private void storeCropImage(Bitmap bitmap, String filePath) {
         // SmartWheel 폴더를 생성하여 이미지를 저장하는 방식이다.
-        String dirPath = Environment.getExternalStorageDirectory().getAbsolutePath()+"/SmartWheel";
-        File directory_SmartWheel = new File(dirPath);
+        String dirPath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/SmartWheel";
+        File directorySmartWheel = new File(dirPath);
 
-        if(!directory_SmartWheel.exists()) // SmartWheel 디렉터리에 폴더가 없다면 (새로 이미지를 저장할 경우에 속한다.)
-            directory_SmartWheel.mkdir();
+        if (!directorySmartWheel.exists()) // SmartWheel 디렉터리에 폴더가 없다면 (새로 이미지를 저장할 경우에 속한다.)
+            directorySmartWheel.mkdir();
 
         File copyFile = new File(filePath);
         BufferedOutputStream out = null;
@@ -343,9 +327,9 @@ public class modi_dialog_Fragment extends DialogFragment {
     @Override
     public void onDismiss(DialogInterface dialog) {
         super.onDismiss(dialog);
-        if(onDismissListener != null) {
+        if (onDismissListener != null) {
             onDismissListener.onDismiss(dialog);
         }
-        
+
     }
 }

@@ -34,9 +34,9 @@ public class ReviewItemAdapter extends RecyclerView.Adapter<ReviewItemAdapter.Re
     public static final String ACTION_LIKE_BUTTON_CLICKED = "action_like_button_button";
     public static final String ACTION_LIKE_IMAGE_CLICKED = "action_like_image_button";
 
-    public ReviewItemAdapter(Context c, ArrayList<ReviewItem> listitems) {
+    public ReviewItemAdapter(Context c, ArrayList<ReviewItem> listItems) {
         this.mContext = c;
-        this.reviewitems = listitems;
+        this.reviewitems = listItems;
     }
 
     @Override

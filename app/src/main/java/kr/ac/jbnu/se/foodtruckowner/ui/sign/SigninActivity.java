@@ -27,16 +27,16 @@ import static java.sql.Types.NULL;
 
 public class SigninActivity extends BaseActivity {
     private SharedPreferences mPref;
-    private SharedPreferences pref_id_store;
-    private SharedPreferences pref_store_id;
+    private SharedPreferences prefStoreId;
+    private SharedPreferences prefStoredId;
     private SharedPreferences.Editor editor;
 
     private Toolbar toolbar;
-    boolean at_login = false;
-    private Switch sw_id_store;
-    private Switch sw_auto_login;
-    private EditText et_email;
-    private EditText et_password;
+    boolean atuoLoginFlag = false;
+    private Switch swStoreId;
+    private Switch swLoginAuto;
+    private EditText etEmail;
+    private EditText etPassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,24 +46,25 @@ public class SigninActivity extends BaseActivity {
         overridePendingTransition(R.anim.trans_left_in, R.anim.trans_left_out);
         android.support.v7.widget.Toolbar toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.toolbar);
         mPref = PreferenceManager.getDefaultSharedPreferences(this);
-        at_login = mPref.getBoolean("auto_login", false);
-        pref_id_store = getSharedPreferences("id_store", NULL);
-        pref_store_id = getSharedPreferences("store_id", NULL);
-        et_email = (EditText) findViewById(R.id.et_signin_email);
-        et_password = (EditText) findViewById(R.id.et_signin_pw);
+        atuoLoginFlag = mPref.getBoolean("auto_login", false);
+        prefStoreId = getSharedPreferences("id_store", NULL);
+        prefStoredId = getSharedPreferences("store_id", NULL);
+        etEmail = (EditText) findViewById(R.id.et_signin_email);
+        etPassword = (EditText) findViewById(R.id.et_signin_pw);
 
-        sw_auto_login = (Switch) findViewById(R.id.sw_auto_log);
-        sw_id_store = (Switch) findViewById(R.id.sw_stroe_id);
+        swLoginAuto = (Switch) findViewById(R.id.sw_auto_log);
+        swStoreId = (Switch) findViewById(R.id.sw_stroe_id);
         setSupportActionBar(toolbar);
 
-        sw_auto_login.setChecked(at_login);
-        sw_id_store.setChecked(pref_id_store.getBoolean("id_store", false));
-        if (pref_id_store.getBoolean("id_store", false)) {
-            et_email.setText(pref_store_id.getString("store_id", ""));
+        swLoginAuto.setChecked(atuoLoginFlag);
+        swStoreId.setChecked(prefStoreId.getBoolean("id_store", false));
+        if (prefStoreId.getBoolean("id_store", false)) {
+            etEmail.setText(prefStoredId.getString("store_id", ""));
         }
-        if (at_login == true) {
-            auto_log();
-            System.out.println("자동로긴");
+        if (atuoLoginFlag == true) {
+            login();
+            //자동로그인 일경우 메소드
+
         }
 
     }
@@ -71,31 +72,31 @@ public class SigninActivity extends BaseActivity {
 
     public void login() {
         //자동로그인
-        if (sw_auto_login.isChecked()) {
+        if (swLoginAuto.isChecked()) {
             editor = mPref.edit();
             editor.putBoolean("auto_login", true);
             editor.commit();
         }
         //아이디 기억
-        if (sw_id_store.isChecked()) {
-            editor = pref_id_store.edit();
+        if (swStoreId.isChecked()) {
+            editor = prefStoreId.edit();
             editor.putBoolean("id_store", true);
             editor.commit();
-            editor = pref_store_id.edit();
-            editor.putString("store_id", et_email.getText().toString());
+            editor = prefStoredId.edit();
+            editor.putString("store_id", etEmail.getText().toString());
             editor.commit();
         } else {
             //아이디 기억 안하니까 널값으로
-            editor = pref_id_store.edit();
+            editor = prefStoreId.edit();
             editor.putBoolean("id_store", false);
             editor.commit();
-            editor = pref_store_id.edit();
+            editor = prefStoredId.edit();
             editor.putString("store_id", "");
             editor.commit();
         }
 
         ApiService service = ServiceGenerator.createService(ApiService.class);
-        Call<Owner> convertedContent = service.request_login(et_email.getText().toString(), et_password.getText().toString());
+        Call<Owner> convertedContent = service.request_login(etEmail.getText().toString(), etPassword.getText().toString());
         convertedContent.enqueue(new Callback<Owner>() {
             @Override
             public void onResponse(Call<Owner> call, Response<Owner> response) {
@@ -110,7 +111,7 @@ public class SigninActivity extends BaseActivity {
                     Owner.uniqueInstance = test;
                 }
 
-                if (String.valueOf(Owner.getInstance().getEmail()).equals(et_email.getText().toString())) {
+                if (String.valueOf(Owner.getInstance().getEmail()).equals(etEmail.getText().toString())) {
                     Log.d("TAGG", "로그인성공!");
 
                     //푸드트럭 정보 요청
@@ -121,7 +122,7 @@ public class SigninActivity extends BaseActivity {
                         public void onResponse(Call<FoodTruckModel> call, Response<FoodTruckModel> response) {
                             FoodTruckModel check_data = response.body();
 
-                            if(check_data == null) {
+                            if (check_data == null) {
                                 Log.d("TAGG", "푸드트럭 정보 없음");
                                 Intent loginIntent = new Intent(SigninActivity.this, TruckInfoActivity.class);
                                 startActivity(loginIntent);
@@ -153,11 +154,6 @@ public class SigninActivity extends BaseActivity {
             }
         });
     }
-
-    public void auto_log() {
-        login();
-    }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {

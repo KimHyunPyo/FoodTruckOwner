@@ -2,7 +2,6 @@ package kr.ac.jbnu.se.foodtruckowner.ui.main;
 
 import android.Manifest;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -10,7 +9,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.util.DisplayMetrics;
@@ -18,10 +16,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CompoundButton;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -32,12 +28,10 @@ import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.hedgehog.ratingbar.RatingBar;
@@ -66,7 +60,7 @@ public class FragemantMap extends Fragment implements GoogleApiClient.OnConnecti
     private boolean mResolvingError = false;
 
     private MapView mapview;
-    private LatLng CuttrntLocation;
+    private LatLng cuttrntLocation;
     private double USER_X;
     private double USER_Y;
     private GoogleMap map;
@@ -81,17 +75,19 @@ public class FragemantMap extends Fragment implements GoogleApiClient.OnConnecti
         DisplayMetrics metrics = new DisplayMetrics();
         getActivity().getWindowManager().getDefaultDisplay().getMetrics(metrics);
 
-        int displaywidth =  metrics.widthPixels;
-        int displayheight =  metrics.heightPixels/3;
+
+        //사진 크기 디스플레이 비례 조정 가로 =디스플레이 크기, 세로 = 디스플레이/3
+        int displayWidth =  metrics.widthPixels;
+        int displayHeight =  metrics.heightPixels/3;
         //푸드트럭 메인 이미지 홈 화면에 삽입
         ImageView truckMainImage = (ImageView)view.findViewById(R.id.truck_main_image);
         Picasso.with(getContext())
                 .load(ServiceGenerator.API_BASE_URL + FoodTruckModel.getInstance().getFT_IMAGE_URL())
-                .resize(displaywidth,displayheight)
+                .resize(displayWidth,displayHeight)
                 .into(truckMainImage);
 
-        TextView tvlikes = (TextView) view.findViewById(R.id.tvlikes);
-        tvlikes.setText(""+FoodTruckModel.getInstance().getFtLike());
+        TextView tvLikes = (TextView) view.findViewById(R.id.tvlikes);
+        tvLikes.setText(""+FoodTruckModel.getInstance().getFtLike());
 
         mapview=(MapView)view.findViewById(R.id.map);
         mGoogleApiClient = new GoogleApiClient.Builder(getContext())
@@ -120,7 +116,7 @@ public class FragemantMap extends Fragment implements GoogleApiClient.OnConnecti
                 //gps 사용여부에 따라
                 if(gpsService.isGPSEnabled()) {
                     setCuttrntLocation();   //사용중 - 현재위치에 마커를 찍음
-                    map.animateCamera(CameraUpdateFactory.newLatLngZoom(CuttrntLocation, 17));
+                    map.animateCamera(CameraUpdateFactory.newLatLngZoom(cuttrntLocation, 17));
                 } else {
                     gpsService.showSettingsAlert(); //미사용중 - gps사용을 유도
                }
@@ -132,10 +128,10 @@ public class FragemantMap extends Fragment implements GoogleApiClient.OnConnecti
         turn_buss = (Switch)view.findViewById(R.id.sw_turn_buss);
         turn_buss.setChecked(FoodTruckModel.getInstance().getFtStart());
 
-        final Button btpush  = (Button) view.findViewById(R.id.bt_location_push);
+        final Button btPush  = (Button) view.findViewById(R.id.bt_location_push);
 
-        btpush.setText("위치정보 공개");
-        btpush.setOnClickListener(new Button.OnClickListener(){
+        btPush.setText("위치정보 공개");
+        btPush.setOnClickListener(new Button.OnClickListener(){
 
             @Override
             public void onClick(View v) {
@@ -267,7 +263,7 @@ public class FragemantMap extends Fragment implements GoogleApiClient.OnConnecti
                             map.addMarker(markerOptions).showInfoWindow();
                             USER_X = arg0.latitude;
                             USER_Y = arg0.longitude;
-                            CuttrntLocation = new LatLng(USER_X, USER_Y);
+                            cuttrntLocation = new LatLng(USER_X, USER_Y);
                             // sharedPreference.put(sharedPreference.user_x, String.valueOf(arg0.latitude)); //서버에 넘겨줄 좌표값
                             //sharedPreference.put(sharedPreference.user_y, String.valueOf(arg0.longitude));
                         }
@@ -278,7 +274,7 @@ public class FragemantMap extends Fragment implements GoogleApiClient.OnConnecti
                             map.clear();
                         }
                     });
-                    map.moveCamera(CameraUpdateFactory.newLatLng(CuttrntLocation));
+                    map.moveCamera(CameraUpdateFactory.newLatLng(cuttrntLocation));
                     map.animateCamera(CameraUpdateFactory.zoomTo(17));
                 }
             }
@@ -297,13 +293,13 @@ public class FragemantMap extends Fragment implements GoogleApiClient.OnConnecti
             USER_X = gpsService.getLatitude();
             USER_Y = gpsService.getLongitude();
             // Creating a LatLng object for the current location
-            CuttrntLocation = new LatLng(USER_X, USER_Y);
+            cuttrntLocation = new LatLng(USER_X, USER_Y);
             Log.d("GPS수신......X : ", String.valueOf(USER_X));
             Log.d("GPS수신......Y : ", String.valueOf(USER_Y));
 
             // 마커 설정
             MarkerOptions optFirst = new MarkerOptions();
-            optFirst.position(CuttrntLocation);// 위도 • 경도
+            optFirst.position(cuttrntLocation);// 위도 • 경도
             optFirst.title("현재 위치");// 제목 미리보기
             map.addMarker(optFirst).showInfoWindow();
         }
@@ -353,9 +349,9 @@ public class FragemantMap extends Fragment implements GoogleApiClient.OnConnecti
         Log.d("구글맵", "온커넥티드");
         Location mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
         if (mLastLocation != null) {
-            CuttrntLocation = new LatLng(mLastLocation.getLatitude(),mLastLocation.getLongitude());
+            cuttrntLocation = new LatLng(mLastLocation.getLatitude(),mLastLocation.getLongitude());
             Log.d("구글맵", "현재위치 저장했음" + mLastLocation.getLatitude() + "/" + mLastLocation.getLongitude());
-            map.moveCamera(CameraUpdateFactory.newLatLng(CuttrntLocation));
+            map.moveCamera(CameraUpdateFactory.newLatLng(cuttrntLocation));
             // Map 을 zoom 합니다.
             map.animateCamera(CameraUpdateFactory.zoomTo(13));
         }

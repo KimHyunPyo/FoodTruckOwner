@@ -33,7 +33,6 @@ import java.io.FileOutputStream;
 
 import kr.ac.jbnu.se.foodtruckowner.R;
 import kr.ac.jbnu.se.foodtruckowner.Util.FileUtils;
-import kr.ac.jbnu.se.foodtruckowner.model.FoodTruckModel;
 import kr.ac.jbnu.se.foodtruckowner.model.Owner;
 import kr.ac.jbnu.se.foodtruckowner.service.ApiService;
 import kr.ac.jbnu.se.foodtruckowner.service.ServiceGenerator;
@@ -54,11 +53,12 @@ public class TruckInfoActivity extends AppCompatActivity {
     private ImageView imageUpload;
     private String imageName;
 
-    private EditText truck_name;
-    private Spinner truck_category;
-    private RadioGroup payment_card;
+    private EditText etTruckName;
+    private Spinner spTruckCategory;
+    private RadioGroup rgPaymentCard;
     private Spinner city;
-
+    private Button btInsert;
+    private Button btUpload;
     private File image;
 
     @Override
@@ -67,9 +67,8 @@ public class TruckInfoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_truck_info);
 
         permissionsCheck();
-
-        Button bt_insert = (Button) findViewById(R.id.bt_insert_truck);
-        Button bt_upload = (Button) findViewById(R.id.bt_upload);
+        btInsert = (Button) findViewById(R.id.bt_insert_truck);
+        btUpload = (Button) findViewById(R.id.bt_upload);
         imageUpload = (ImageView) findViewById(R.id.imageUpload);
 
         city = (Spinner) findViewById(R.id.city);
@@ -77,49 +76,49 @@ public class TruckInfoActivity extends AppCompatActivity {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         city.setAdapter(adapter);
 
-        truck_name = (EditText) this.findViewById(R.id.truck_name);
-        truck_category = (Spinner) this.findViewById(R.id.category);
-        payment_card =(RadioGroup)findViewById(R.id.radioPayment);
+        etTruckName = (EditText) this.findViewById(R.id.truck_name);
+        spTruckCategory = (Spinner) this.findViewById(R.id.category);
+        rgPaymentCard = (RadioGroup) findViewById(R.id.radioPayment);
 
-        bt_insert.setOnClickListener(new View.OnClickListener() {
+        btInsert.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Boolean card;
-                int selectedId = payment_card.getCheckedRadioButtonId();
+                int selectedId = rgPaymentCard.getCheckedRadioButtonId();
                 RadioButton selected_radio = (RadioButton) findViewById(selectedId);
-                if(selected_radio.getText().equals("카드결제 가능")) {
+                if (selected_radio.getText().equals("카드결제 가능")) {
                     card = true;
                 } else {
                     card = false;
                 }
 
-                int category = truck_category.getSelectedItemPosition();
-                if(category == 0) {
+                int category = spTruckCategory.getSelectedItemPosition();
+                if (category == 0) {
                     Toast.makeText(getApplicationContext(), "카테고리를 선택하여 주세요.", Toast.LENGTH_SHORT);
                     return;
                 }
 
-                String truck_city;
-                if(city.getSelectedItemPosition() == 0) {
+                String truckCity;
+                if (city.getSelectedItemPosition() == 0) {
                     Toast.makeText(getApplicationContext(), "주 도시를 선택하여 주세요.", Toast.LENGTH_SHORT);
                     return;
                 } else {
-                    truck_city = city.getSelectedItem().toString();
+                    truckCity = city.getSelectedItem().toString();
                 }
 
-                String foodtruck_name = truck_name.getText().toString();
-                if(foodtruck_name.equals("")) {
+                String foodtruckName = etTruckName.getText().toString();
+                if (foodtruckName.equals("")) {
                     Toast.makeText(getApplicationContext(), "푸드트럭 이름을 입력해주세요.", Toast.LENGTH_SHORT);
                     return;
                 }
 
                 //입력받은 정보를 제이슨 객체에 입력
                 JsonObject ob = new JsonObject();
-                ob.addProperty("name", foodtruck_name);
+                ob.addProperty("name", foodtruckName);
                 ob.addProperty("category", category);
                 ob.addProperty("tag", new String());
-                ob.addProperty("payment_card", card);
-                ob.addProperty("region", truck_city);
+                ob.addProperty("rgPaymentCard", card);
+                ob.addProperty("region", truckCity);
                 ob.addProperty("owner_id", Owner.getInstance().getId());
 
 
@@ -132,7 +131,7 @@ public class TruckInfoActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(Call<Boolean> call, Response<Boolean> response) {
                         Boolean check = response.body();
-                        if(check) {
+                        if (check) {
                             Intent loginIntent = new Intent(TruckInfoActivity.this, SigninActivity.class);
                             startActivity(loginIntent);
                             finish();
@@ -160,7 +159,7 @@ public class TruckInfoActivity extends AppCompatActivity {
             }
         });
 
-        bt_upload.setOnClickListener(new View.OnClickListener() {
+        btUpload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -194,7 +193,7 @@ public class TruckInfoActivity extends AppCompatActivity {
             }
 
         });
-}
+    }
 
     public void doTakePhotoAction() // 카메라 촬영 후 이미지 가져오기
     {
@@ -218,25 +217,22 @@ public class TruckInfoActivity extends AppCompatActivity {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode,resultCode,data);
+        super.onActivityResult(requestCode, resultCode, data);
 
-        if(resultCode != RESULT_OK)
+        if (resultCode != RESULT_OK)
             return;
 
-        switch(requestCode)
-        {
-            case PICK_FROM_ALBUM:
-            {
+        switch (requestCode) {
+            case PICK_FROM_ALBUM: {
                 // 이후의 처리가 카메라와 같으므로 일단  break없이 진행합니다.
                 // 실제 코드에서는 좀더 합리적인 방법을 선택하시기 바랍니다.
                 mImageCaptureUri = data.getData();
-                Log.d("SmartWheel",mImageCaptureUri.getPath().toString());
+                Log.d("SmartWheel", mImageCaptureUri.getPath().toString());
 
                 image = FileUtils.getFile(getApplicationContext(), mImageCaptureUri);
             }
 
-            case PICK_FROM_CAMERA:
-            {
+            case PICK_FROM_CAMERA: {
                 // 이미지를 가져온 이후의 리사이즈할 이미지 크기를 결정합니다.
                 // 이후에 이미지 크롭 어플리케이션을 호출하게 됩니다.
                 Intent intent = new Intent("com.android.camera.action.CROP");
@@ -252,24 +248,22 @@ public class TruckInfoActivity extends AppCompatActivity {
                 startActivityForResult(intent, CROP_FROM_iMAGE); // CROP_FROM_CAMERA case문 이동
                 break;
             }
-            case CROP_FROM_iMAGE:
-            {
+            case CROP_FROM_iMAGE: {
                 // 크롭이 된 이후의 이미지를 넘겨 받습니다.
                 // 이미지뷰에 이미지를 보여준다거나 부가적인 작업 이후에
                 // 임시 파일을 삭제합니다.
-                if(resultCode != RESULT_OK) {
+                if (resultCode != RESULT_OK) {
                     return;
                 }
 
                 final Bundle extras = data.getExtras();
 
                 // CROP된 이미지를 저장하기 위한 FILE 경로
-                imageName = System.currentTimeMillis()+".jpg";
-                String filePath = Environment.getExternalStorageDirectory().getAbsolutePath()+
-                        "/SmartWheel/"+ imageName;
+                imageName = System.currentTimeMillis() + ".jpg";
+                String filePath = Environment.getExternalStorageDirectory().getAbsolutePath() +
+                        "/SmartWheel/" + imageName;
 
-                if(extras != null)
-                {
+                if (extras != null) {
                     //uproadPhoto.bringToFront();
                     Bitmap photo = extras.getParcelable("data"); // CROP된 BITMAP
                     imageUpload.setImageBitmap(photo); // 레이아웃의 이미지칸에 CROP된 BITMAP을 보여줌
@@ -281,8 +275,7 @@ public class TruckInfoActivity extends AppCompatActivity {
 
                 // 임시 파일 삭제
                 File f = new File(mImageCaptureUri.getPath());
-                if(f.exists())
-                {
+                if (f.exists()) {
                     f.delete();
                 }
 
@@ -292,10 +285,10 @@ public class TruckInfoActivity extends AppCompatActivity {
 
     private void storeCropImage(Bitmap bitmap, String filePath) {
         // SmartWheel 폴더를 생성하여 이미지를 저장하는 방식이다.
-        String dirPath = Environment.getExternalStorageDirectory().getAbsolutePath()+"/SmartWheel";
+        String dirPath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/SmartWheel";
         File directory_SmartWheel = new File(dirPath);
 
-        if(!directory_SmartWheel.exists()) // SmartWheel 디렉터리에 폴더가 없다면 (새로 이미지를 저장할 경우에 속한다.)
+        if (!directory_SmartWheel.exists()) // SmartWheel 디렉터리에 폴더가 없다면 (새로 이미지를 저장할 경우에 속한다.)
             directory_SmartWheel.mkdir();
 
         File copyFile = new File(filePath);
@@ -307,7 +300,7 @@ public class TruckInfoActivity extends AppCompatActivity {
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
 
             // sendBroadcast를 통해 Crop된 사진을 앨범에 보이도록 갱신한다.
-           sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(copyFile)));
+            sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(copyFile)));
             out.flush();
             out.close();
         } catch (Exception e) {
@@ -316,7 +309,7 @@ public class TruckInfoActivity extends AppCompatActivity {
     }
 
     //안드6.0 부터는 퍼미션 접근 방법이 달라져서 따로 체크해줘야함
-    private void permissionsCheck(){
+    private void permissionsCheck() {
         if (ContextCompat.checkSelfPermission(this,
                 Manifest.permission.READ_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED) {

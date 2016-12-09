@@ -1,31 +1,18 @@
 package kr.ac.jbnu.se.foodtruckowner.ui.sign;
 
-import android.app.Activity;
-import android.content.ActivityNotFoundException;
 import android.content.Intent;
-import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.Color;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
-import android.provider.MediaStore;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.dd.processbutton.iml.ActionProcessButton;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.regex.Pattern;
 
 import kr.ac.jbnu.se.foodtruckowner.R;
@@ -34,18 +21,16 @@ import kr.ac.jbnu.se.foodtruckowner.service.ServiceGenerator;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 // TODO: 2016-11-26 핸드폰인증, 사업자 등록번호 인증 추가필요
 public class SignUpActivity extends AppCompatActivity implements ProgressGenerator.OnCompleteListener {
 
     private Toolbar toolbar;
-    private EditText et_signup_email;
-    private EditText et_signup_pw;
-    private EditText et_signup_pwconfirm;
-    private EditText et_signup_business_num;
-    private EditText et_signup_Ph_num;
+    private EditText etSignupEmail;
+    private EditText etSignupPw;
+    private EditText etSignupConfirmPw;
+    private EditText etSignupBusinessNum;
+    private EditText etSignupPhnum;
     private static final String EXTRAS_ENDLESS_MODE = "EXTRAS_ENDLESS_MODE";
     private int signupStatus = 2; //1은 성공, 2는 실패, 3은 중복
 
@@ -61,30 +46,30 @@ public class SignUpActivity extends AppCompatActivity implements ProgressGenerat
         setContentView(R.layout.signup_activity);
         overridePendingTransition(R.anim.trans_right_in, R.anim.trans_right_out);
 
-        et_signup_email = ((EditText) findViewById(R.id.et_signup_email));
-        et_signup_pw = ((EditText) findViewById(R.id.et_signup_pw));
-        et_signup_pwconfirm = ((EditText) findViewById(R.id.et_signup_pwconfirm));
-        et_signup_business_num = (EditText) findViewById(R.id.et_signup_business_num);
-        et_signup_Ph_num = (EditText) findViewById(R.id.et_signup_Ph_num);
+        etSignupEmail = ((EditText) findViewById(R.id.et_signup_email));
+        etSignupPw = ((EditText) findViewById(R.id.et_signup_pw));
+        etSignupConfirmPw = ((EditText) findViewById(R.id.et_signup_pwconfirm));
+        etSignupBusinessNum = (EditText) findViewById(R.id.et_signup_business_num);
+        etSignupPhnum = (EditText) findViewById(R.id.et_signup_Ph_num);
 
 
-        final ActionProcessButton bt_singup_fragment_login = (ActionProcessButton) findViewById(R.id.bt_singup_login);
+        final ActionProcessButton btSingupFragmentLogin = (ActionProcessButton) findViewById(R.id.bt_singup_login);
         final ProgressGenerator progressGenerator = new ProgressGenerator(this);
 
         Bundle extras = getIntent().getExtras();
         if (extras != null && extras.getBoolean(EXTRAS_ENDLESS_MODE))
-            bt_singup_fragment_login.setMode(ActionProcessButton.Mode.ENDLESS);
+            btSingupFragmentLogin.setMode(ActionProcessButton.Mode.ENDLESS);
         else
-            bt_singup_fragment_login.setMode(ActionProcessButton.Mode.PROGRESS);
+            btSingupFragmentLogin.setMode(ActionProcessButton.Mode.PROGRESS);
 
-        bt_singup_fragment_login.setOnClickListener(new View.OnClickListener() {
+        btSingupFragmentLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (StartSingUp()) {
-                    progressGenerator.start(bt_singup_fragment_login);
+                if (startSingUp()) {
+                    progressGenerator.start(btSingupFragmentLogin);
                     //bt_singup_fragment_login.setEnabled(false);
-                    et_signup_email.setEnabled(false);
-                    et_signup_pw.setEnabled(false);
+                    etSignupEmail.setEnabled(false);
+                    etSignupPw.setEnabled(false);
                 }
             }
         });
@@ -109,26 +94,26 @@ public class SignUpActivity extends AppCompatActivity implements ProgressGenerat
         overridePendingTransition(R.anim.trans_left_in, R.anim.trans_left_out);
     }
 
-    private boolean check_email(String paramString) {
+    private boolean checkEmail(String paramString) {
         return Pattern.compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$").matcher(paramString).matches();
     }
 
-    private boolean check_pw(String paramString) {
+    private boolean checkPw(String paramString) {
         return Pattern.compile("(([A-Za-z0-9]).{7,20})").matcher(paramString).matches();
     }
 
-    private boolean check_pw_confirm() {
-        if (et_signup_pw.getText().toString().equals(et_signup_pwconfirm.getText().toString())) {
+    private boolean checkPwConfirm() {
+        if (etSignupPw.getText().toString().equals(etSignupConfirmPw.getText().toString())) {
             return true;
         } else {
             return false;
         }
     }
 
-    private Boolean StartSingUp() {
-        if (check_email(this.et_signup_email.getText().toString())) {
-            if (check_pw(this.et_signup_pw.getText().toString())) {
-                if (check_pw_confirm()) {
+    private Boolean startSingUp() {
+        if (checkEmail(this.etSignupEmail.getText().toString())) {
+            if (checkPw(this.etSignupPw.getText().toString())) {
+                if (checkPwConfirm()) {
                     getSignUpRequest();
                     return true;
                 }
@@ -145,8 +130,8 @@ public class SignUpActivity extends AppCompatActivity implements ProgressGenerat
     private void getSignUpRequest() {
 
         ApiService service = ServiceGenerator.createService(ApiService.class);
-        Call<Integer> convertedContent = service.owner_join(et_signup_email.getText().toString(), et_signup_pw.getText().toString(),
-                et_signup_Ph_num.getText().toString(), et_signup_business_num.getText().toString());
+        Call<Integer> convertedContent = service.owner_join(etSignupEmail.getText().toString(), etSignupPw.getText().toString(),
+                etSignupPhnum.getText().toString(), etSignupBusinessNum.getText().toString());
 
         convertedContent.enqueue(new Callback<Integer>() {
             @Override

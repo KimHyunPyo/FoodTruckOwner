@@ -1,13 +1,10 @@
 package kr.ac.jbnu.se.foodtruckowner.adapter;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -20,11 +17,11 @@ import kr.ac.jbnu.se.foodtruckowner.model.CommentsModel;
 public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.CommentViewHolder> {
 
     private Context context;
-    private ArrayList<CommentsModel> commentslist;
+    private ArrayList<CommentsModel> commentsList;
 
-    public CommentsAdapter(Context context, ArrayList<CommentsModel> commentslist) {
+    public CommentsAdapter(Context context, ArrayList<CommentsModel> commentsList) {
         this.context = context;
-        this.commentslist = commentslist;
+        this.commentsList = commentsList;
     }
 
     @Override
@@ -37,12 +34,12 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.Commen
 
     @Override
     public void onBindViewHolder(CommentViewHolder holder, int position) {
-        holder.ivUserAvatar.setImageResource(commentslist.get(position).getImage());
-        holder.tvComment.setText(commentslist.get(position).getTitleTextView());
+        holder.ivUserAvatar.setImageResource(commentsList.get(position).getImage());
+        holder.tvComment.setText(commentsList.get(position).getTitleTextView());
     }
     @Override
     public int getItemCount() {
-        return commentslist.size();
+        return commentsList.size();
     }
 
 
